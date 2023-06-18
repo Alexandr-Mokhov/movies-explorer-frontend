@@ -1,11 +1,10 @@
 @import url(./vendor/normalize.css);
-
 @import url(./vendor/fonts/inter.css);
 
 body {
-  margin: 0;
+  background-color: #eee;
 }
 
-/* * {
+* {
 outline: 1px red solid;
-} */
+}
