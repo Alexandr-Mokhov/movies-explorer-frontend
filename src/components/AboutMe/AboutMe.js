@@ -22,21 +22,6 @@ function AboutMe() {
 				</div>
 				<img className="about-me__photo" src={photo} alt="Фото студента" />
 			</div>
-			<p className="about-me__portfolio-title">Портфолио</p>
-			<ul className="about-me__portfolio-list">
-				<li className="about-me__portfolio-item">
-					<p className="about-me__portfolio-item-text">Статичный сайт</p>
-					<a href="#"><div className="about-me__portfolio-item-link" /></a>	
-				</li>
-				<li className="about-me__portfolio-item">
-					<p className="about-me__portfolio-item-text">Адаптивный сайт</p>
-					<a href="#"><div className="about-me__portfolio-item-link" /></a>	
-				</li>
-				<li className="about-me__portfolio-item">
-					<p className="about-me__portfolio-item-text">Одностраничное приложение</p>
-					<a href="#"><div className="about-me__portfolio-item-link" /></a>	
-				</li>
-			</ul>
 		</div>
 	)
 }
