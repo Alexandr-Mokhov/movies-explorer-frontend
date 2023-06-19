@@ -125,6 +125,7 @@
 	.about-project__time-line {
 		margin-top: 60px;
 		height: 35px;
+		grid-template-columns: 1fr 2fr;
 	}
 	
 	.about-project__time-line-text {
@@ -134,6 +135,7 @@
 	
 	.about-project__time-name {
 		margin-top: 10px;
+		grid-template-columns: 1fr 2fr;
 	}
 	
 	.about-project__time-name-text {
