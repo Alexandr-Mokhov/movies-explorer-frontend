@@ -45,6 +45,12 @@
 	color: #FFF;
 }
 
+@media screen and (max-width: 1000px) {
+	.header {
+		padding: 0 30px;
+	}
+}
+
 @media screen and (max-width: 500px) {
   .header__link {
 		font-size: 10px;
