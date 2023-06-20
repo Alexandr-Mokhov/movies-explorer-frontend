@@ -22,7 +22,7 @@ function Header() {
 				</nav>
 				<div className="header__links-authorization">
 					<p className="header__link header__link_type_account">Аккаунт</p>
-					<div className="header__button-account" />
+					<button className="header__button-account" />
 					{/* <div className="header__button-login">
 					<p className="header__link header__link_type_login">Войти</p>
 				</div> */}

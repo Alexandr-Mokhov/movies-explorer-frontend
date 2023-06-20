@@ -9,12 +9,12 @@ import Footer from '../Footer/Footer';
 function Main() {
 	return (
 		<div className="main">
-			{/* <Promo />
+			<Promo />
 			<AboutProject />
 			<Techs />
 			<AboutMe />
 			<Portfolio />
-			<Footer /> */}
+			<Footer />
 		</div>
 	)
 }

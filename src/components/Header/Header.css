@@ -25,6 +25,12 @@
 .header__links-authorization {
 	display: flex;
 	align-items: center;
+	cursor: pointer;
+	transition: .5s ease;
+}
+
+.header__links-authorization:hover {
+	opacity: .7;
 }
 
 .header__navbar {
@@ -47,6 +53,11 @@
 	margin: 0 16px 0 0;
 	text-decoration: none;
 	color: #000;
+	transition: .5s ease;
+}
+
+.header__link-navbar:hover {
+	opacity: .7;
 }
 
 .header__link-navbar_active {
@@ -87,6 +98,11 @@
 	height: 14px;
 	background-repeat: no-repeat;
 	margin-left: 24px;
+	outline: 0;
+	border: 0;
+	padding: 0;
+	background-color: #FFF;
+	cursor: pointer;
 }
 
 @media screen and (max-width: 1000px) {
