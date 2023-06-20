@@ -22,6 +22,7 @@ function SearchForm() {
 				</label>
 			</div>
 			<button className="search-form__button" type="submit">Поиск</button>
+			<div className="search-form__line" />
 		</form>
 	)
 }
