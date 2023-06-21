@@ -2,7 +2,6 @@
 	padding: 62px 70px 10px;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	max-width: calc(100vw - 140px);
 	gap: 20px
 }
 
@@ -10,7 +9,6 @@
 	.movies-list {
 		padding: 62px 30px 10px;
 		grid-template-columns: repeat(3, 1fr);
-		max-width: calc(100vw - 60px);
 	}
 }
 
@@ -25,7 +23,6 @@
 	.movies-list {
 		padding: 32px 10px 10px;
 		grid-template-columns: 1fr;
-		max-width: calc(100vw - 30px);
 		gap: 16px;
 	}
 }
