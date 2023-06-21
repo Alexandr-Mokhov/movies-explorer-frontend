@@ -46,6 +46,12 @@
 	color: #000;
 	text-decoration: none;
 	margin: 0;
+	cursor: pointer;
+	transition: .5s ease;
+}
+
+.footer__link:hover {
+	opacity: .7;
 }
 
 @media screen and (max-width: 1000px) {
