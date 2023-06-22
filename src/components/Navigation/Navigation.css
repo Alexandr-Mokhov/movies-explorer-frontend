@@ -20,6 +20,10 @@
   color: #000;
 }
 
+.navigation__account__light {
+  color: #FFF;
+}
+
 .navigation__account:hover {
   opacity: .7;
 }
@@ -41,6 +45,10 @@
   text-decoration: none;
   color: #000;
   transition: .5s ease;
+}
+
+.navigation__link_light {
+  color: #FFF;
 }
 
 .navigation__link:hover {

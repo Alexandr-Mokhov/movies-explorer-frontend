@@ -7,24 +7,27 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
-import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 import { useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
+  const { pathname } = useLocation();
+
   return (
     <div className="page">
-      <Header loggedIn={loggedIn}/>
-      <Main />
-      {/* <Movies /> */}
-      {/* <SavedMovies /> */}
-      {/* <Profile /> */}
-      {/* <Register /> */}
-      {/* <Login /> */}
-      {/* <NotFound /> */}
-      {/* <Preloader /> */}
-      <Footer />
+      {pathname === "/sign-up" || pathname === "/sign-in" ? '' : <Header loggedIn={loggedIn} />}
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/sign-up" element={<Register />} />
+        <Route path="/sign-in" element={<Login />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/saved-movies" element={<SavedMovies />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {pathname === "/sign-up" || pathname === "/sign-in" ? '' : <Footer />}
     </div>
   );
 }

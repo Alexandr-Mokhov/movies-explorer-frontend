@@ -11,7 +11,6 @@ function SavedMovies() {
       {/* <div className="movies__more">
         <button className="movies__more-button">Еще</button>
       </div> */}
-      <Footer />
     </div>
   )
 }
