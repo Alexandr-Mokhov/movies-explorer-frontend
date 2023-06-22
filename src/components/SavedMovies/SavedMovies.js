@@ -4,16 +4,16 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
 function SavedMovies() {
-	return (
-		<div className="saved-movies">
-			<SearchForm />
-			<MoviesCardList />
-			{/* <div className="movies__more">
-				<button className="movies__more-button">Еще</button>
-			</div> */}
-			<Footer />
-		</div>
-	)
+  return (
+    <div className="saved-movies">
+      <SearchForm />
+      <MoviesCardList />
+      {/* <div className="movies__more">
+        <button className="movies__more-button">Еще</button>
+      </div> */}
+      <Footer />
+    </div>
+  )
 }
 
 export default SavedMovies;
