@@ -6,7 +6,6 @@
 	display: flex;
 	align-items: center;
 	flex-direction: row;
-	justify-content: space-between;
 	padding: 0 70px;
 }
 
@@ -16,7 +15,7 @@
 
 .header__logo {
 	background-image: url(../../images/logo.svg);
-	width: 38px;
+	min-width: 38px;
 	height: 38px;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -36,7 +35,13 @@
 .header__navbar {
 	margin: 0 0 0 44px;
 	display: flex;
-	margin-right: auto;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.header__list {
+	display: flex;
+	align-items: center;
 }
 
 .header__links-navbar {
@@ -94,15 +99,21 @@
 
 .header__button-account {
 	background-image: url(../../images/account-icon.svg);
-	width: 12px;
-	height: 14px;
+	width: 26px;
+	height: 30px;
 	background-repeat: no-repeat;
 	margin-left: 24px;
 	outline: 0;
 	border: 0;
 	padding: 0;
-	background-color: #FFF;
+	background-color: #E5E5E5;
 	cursor: pointer;
+	border-radius: 4px;
+	background-position: center;
+}
+
+.header__menu-button {
+	display: none;
 }
 
 @media screen and (max-width: 1000px) {
@@ -112,9 +123,22 @@
 }
 
 @media screen and (max-width: 800px) {
-  .header__link {
-		font-size: 10px;
-  }
+	.header {
+		padding: 0 30px;
+	}
+
+	.header__navbar {
+		margin: 0 0;
+		flex-direction: column;
+		align-items: center;
+		width: 520px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		background-color: #FFF;
+		z-index: 3;
+		transition: right .5s;
+	}
 
 	.header__button-login {
 		margin-left: 14px;
@@ -122,7 +146,100 @@
 		width: 54px;
 	}
 
-	.header {
-		padding: 0 14px;
+	.header__menu-button {
+		display: block;
+		width: 44px;
+		height: 44px;
+		background-repeat: no-repeat;
+		margin: 0;
+		cursor: pointer;
+		transition: 0.5s ease;
+		background-color: #FFF;
+		border: 0;
+		background-size: contain;
+		padding: 0;
+		position: absolute;
+		right: 30px;
+		top: 15px;
+		z-index: 5;
+	}
+
+	.header__menu-button:hover {
+		opacity: .7;
+	}
+
+	.header__menu-button_open {
+		background-image: url(../../images/burger-menu-open.svg);
+	}
+
+	.header__menu-button_close {
+		background-image: url(../../images/burger-menu-close.svg);
+		width: 22px;
+		height: 22px;
+		top: 26px;
+		right: 22px;
+		position: fixed;
+	}
+
+	.header_type_light {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.header__links-navbar {
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 159px 0 0;
+	}
+
+	.header__links-authorization {
+		margin: 590px 0 90px;
+	}
+
+	.header__link-navbar {
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 35px;
+		margin: 0 0 24px 0;
+	}
+
+	.header__link-navbar_active {
+		border-bottom: 2px solid #000;
+	}
+
+	.header__navbar-overlay {
+		background-color: #000;
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 2;
+		opacity: .3;
+		transition: 0.5s ease;
+	}
+	
+	.header__navbar-close {
+		right: -100%;
+	}
+}
+
+@media screen and (max-width: 545px) {
+	.header__navbar {
+		width: 100%;
+	}
+
+	.header__link-navbar {
+		margin: 0 0 15px 0;
+	}
+
+	.header__links-navbar {
+		margin: 150px 0 0;
+	}
+
+	.header__links-authorization {
+		margin: 440px 0 48px;
 	}
 }

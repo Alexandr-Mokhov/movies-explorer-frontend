@@ -11,14 +11,14 @@ import NotFound from '../NotFound/NotFound';
 function App() {
   return (
     <div className="page">
-      {/* <Header /> */}
-      {/* <Main /> */}
+      <Header />
+      <Main />
       {/* <Movies /> */}
       {/* <SavedMovies /> */}
       {/* <Profile /> */}
       {/* <Register /> */}
       {/* <Login /> */}
-      <NotFound />
+      {/* <NotFound /> */}
     </div>
   );
 }
