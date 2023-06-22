@@ -42,6 +42,11 @@
   background-repeat: no-repeat;
   background-size: contain;
   margin-top: 12px;
+  transition: .5s ease;
+}
+
+.portfolio__item-link:hover {
+  opacity: .7;
 }
 
 @media screen and (max-width: 1000px) {

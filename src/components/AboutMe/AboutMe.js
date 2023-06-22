@@ -18,7 +18,7 @@ function AboutMe() {
             Также увлекаюсь проектированием и конструированием,
             а с недавнего времени увлекся и веб-разработкой.
           </p>
-          <a className="about-me__link-github" href="#">Github</a>
+          <a className="about-me__link" href="#">Github</a>
         </div>
         <img className="about-me__photo" src={photo} alt="Фото студента" />
       </div>

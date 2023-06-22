@@ -40,6 +40,7 @@
   line-height: 16px;
   cursor: pointer;
   transition: .5s ease;
+  text-decoration: none;
 }
 
 .profile__link:hover {
@@ -49,6 +50,7 @@
 .profile__link_type_edit {
   margin: 204px 0 0;
   font-weight: 400;
+  color: #000;
 }
 
 .profile__link_type_exit {

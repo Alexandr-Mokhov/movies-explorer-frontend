@@ -8,12 +8,15 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
+import Footer from '../Footer/Footer';
+import { useState } from 'react';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(true);
   return (
     <div className="page">
-      <Header />
-      {/* <Main /> */}
+      <Header loggedIn={loggedIn}/>
+      <Main />
       {/* <Movies /> */}
       {/* <SavedMovies /> */}
       {/* <Profile /> */}
@@ -21,6 +24,7 @@ function App() {
       {/* <Login /> */}
       {/* <NotFound /> */}
       {/* <Preloader /> */}
+      <Footer />
     </div>
   );
 }
