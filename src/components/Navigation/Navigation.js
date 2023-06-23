@@ -9,28 +9,47 @@ export default function Navigation() {
   return (
     <div className="navigation">
       <button
-        className={`navigation__button-menu ${navMenu ? "navigation__button-menu_close" : "navigation__button-menu_open"}`}
+        className={
+          `navigation__button-menu 
+          ${navMenu ? "navigation__button-menu_type_close" : "navigation__button-menu_type_open"}
+          ${pathname === "/" ? "navigation__button-menu_type_light" : ''}`
+        }
         onClick={() => setNavMenu(!navMenu)}
       />
       <nav className={`navigation__container ${navMenu ? '' : "navigation__container_hide"}`}>
         <ul className="navigation__links">
           <li>
-            <Link className={`navigation__link ${pathname === "/" ? "navigation__link_light" : ''}`} to="/">
+            <Link className={
+              `navigation__link navigation__link_type_main
+              ${pathname === "/" ? "navigation__link_type_active" : ''}`
+            } to="/">
               Главная
             </Link>
           </li>
           <li>
-            <Link className={`navigation__link ${pathname === "/" ? "navigation__link_light" : ''}`} to="/movies">
+            <Link
+              className={
+                `navigation__link 
+                ${pathname === "/" ? "navigation__link_type_light" : ''}
+                ${pathname === "/movies" ? "navigation__link_type_active" : ''}`
+              } to="/movies">
               Фильмы
             </Link>
           </li>
           <li>
-            <Link className={`navigation__link ${pathname === "/" ? "navigation__link_light" : ''}`} to="/saved-movies">
+            <Link
+              className={
+                `navigation__link 
+                ${pathname === "/" ? "navigation__link_type_light" : ''}
+                ${pathname === "/saved-movies" ? "navigation__link_type_active" : ''}`
+              } to="/saved-movies">
               Сохранённые фильмы
             </Link>
           </li>
         </ul>
-        <Link className={`navigation__account ${pathname === "/" ? "navigation__account__light" : ''}`} to="/profile">
+        <Link className={
+            `navigation__account ${pathname === "/" ? (navMenu ? '' : "navigation__account__light") : ''}`
+          } to="/profile">
           Аккаунт
           <div className="navigation__button-account" />
         </Link>

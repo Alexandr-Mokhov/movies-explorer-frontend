@@ -34,7 +34,6 @@
   display: flex;
   align-items: center;
   margin: 0;
-  gap: 16px;
 }
 
 .navigation__link {
@@ -45,18 +44,23 @@
   text-decoration: none;
   color: #000;
   transition: .5s ease;
-}
-
-.navigation__link_light {
-  color: #FFF;
+  margin-right: 16px;
 }
 
 .navigation__link:hover {
   opacity: .7;
 }
 
-.navigation__link_active {
+.navigation__link_type_light {
+  color: #FFF;
+}
+
+.navigation__link_type_active {
   font-weight: 500;
+}
+
+.navigation__link_type_main {
+  display: none;
 }
 
 .navigation__button-account {
@@ -120,17 +124,24 @@
     opacity: .7;
   }
 
-  .navigation__button-menu_open {
-    background-image: url(../../images/burger-menu-open.svg);
+  .navigation__button-menu_type_open {
+    background-image: url(../../images/button-menu-open-black.svg);
   }
 
-  .navigation__button-menu_close {
-    background-image: url(../../images/burger-menu-close.svg);
+  
+  .navigation__button-menu_type_light {
+    background-image: url(../../images/button-menu-open-light.svg);
+    background-color: #073042;
+  }
+
+  .navigation__button-menu_type_close {
+    background-image: url(../../images/button-menu-close.svg);
     width: 22px;
     height: 22px;
     top: 26px;
     right: 22px;
     position: fixed;
+    background-color: #FFF;
   }
 
   .navigation__links {
@@ -146,14 +157,20 @@
   }
 
   .navigation__link {
+    display: block;
     font-size: 18px;
     font-weight: 500;
     line-height: 35px;
     margin: 0 0 24px 0;
+    color: #000;
   }
 
-  .navigation__link_active {
+  .navigation__link_type_active {
     border-bottom: 2px solid #000;
+  }
+
+  .navigation__link_type_main {
+    display: block;
   }
 
   .navigation__overlay {
