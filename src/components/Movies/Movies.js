@@ -1,9 +1,8 @@
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Footer from '../Footer/Footer';
 
-function Movies() {
+export default function Movies() {
   return (
     <div className="movies">
       <SearchForm />
@@ -14,5 +13,3 @@ function Movies() {
     </div>
   )
 }
-
-export default Movies;

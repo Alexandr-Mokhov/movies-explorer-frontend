@@ -17,6 +17,11 @@
   height: 38px;
   background-repeat: no-repeat;
   background-size: contain;
+  transition: .5s ease;
+}
+
+.header__logo:hover {
+  opacity: .7;
 }
 
 .header__links-authorization {

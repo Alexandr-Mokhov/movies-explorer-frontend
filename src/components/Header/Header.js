@@ -2,11 +2,11 @@ import './Header.css';
 import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
 
-function Header({loggedIn}) {
+export default function Header({loggedIn}) {
   const { pathname } = useLocation();
   return (
     <div className={`header ${pathname !== "/" && "header_light"}`}>
-      <div className="header__logo" />
+      <Link className="header__logo" to="/"/>
       {loggedIn ? <Navigation /> :
       <div className="header__links-authorization">
         <Link className="header__link header__link_register" to="/sign-up">Регистрация</Link>
@@ -16,5 +16,3 @@ function Header({loggedIn}) {
     </div>
   );
 }
-
-export default Header;

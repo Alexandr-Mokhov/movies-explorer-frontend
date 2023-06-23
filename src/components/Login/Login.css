@@ -5,6 +5,15 @@
   margin: 0 auto;
 }
 
+.login__main-link {
+  cursor: pointer;
+  transition: .5s ease;
+}
+
+.login__main-link:hover {
+  opacity: .7;
+}
+
 .login__head-logo {
   background-image: url(../../images/logo.svg);
   width: 38px;
@@ -131,22 +140,22 @@
     width: 38px;
     margin-top: 26px;
   }
-  
+
   .login__title {
     margin: 50px 0 80px;
     text-align: center;
   }
-  
+
   .login__form {
     width: 100%;
   }
-  
+
   .login__button {
     font-size: 12px;
     line-height: 14px;
     margin: 285px 0 14px;
   }
-  
+
   .login__register {
     font-size: 12px;
     line-height: 15px;

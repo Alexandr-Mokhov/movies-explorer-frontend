@@ -1,7 +1,7 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+export default function MoviesCardList() {
   return (
     <div className="movies-list">
       <MoviesCard />
@@ -9,9 +9,6 @@ function MoviesCardList() {
       <MoviesCard />
       <MoviesCard />
       <MoviesCard />
-
     </div>
   )
 }
-
-export default MoviesCardList;

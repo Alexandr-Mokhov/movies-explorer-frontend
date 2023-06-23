@@ -1,6 +1,6 @@
 import './Profile.css';
 
-function Profile() {
+export default function Profile() {
   return (
     <div className="profile">
       <h2 className="profile__greetings">Привет, Александр!</h2>
@@ -17,5 +17,3 @@ function Profile() {
     </div>
   )
 }
-
-export default Profile;

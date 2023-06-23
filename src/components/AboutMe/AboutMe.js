@@ -1,7 +1,7 @@
 import './AboutMe.css';
 import photo from '../../images/photo.jpg';
 
-function AboutMe() {
+export default function AboutMe() {
   return (
     <div className="about-me" id="about-me">
       <h2 className="about-me__title">Студент</h2>
@@ -18,12 +18,17 @@ function AboutMe() {
             Также увлекаюсь проектированием и конструированием,
             а с недавнего времени увлекся и веб-разработкой.
           </p>
-          <a className="about-me__link" href="#">Github</a>
+          <a
+            className="about-me__link"
+            href="https://github.com/Alexandr-Mokhov"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github
+          </a>
         </div>
         <img className="about-me__photo" src={photo} alt="Фото студента" />
       </div>
     </div>
   )
 }
-
-export default AboutMe;

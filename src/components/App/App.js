@@ -11,7 +11,7 @@ import Footer from '../Footer/Footer';
 import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
-function App() {
+export default function App() {
   const [loggedIn, setLoggedIn] = useState(true);
   const { pathname } = useLocation();
 
@@ -31,5 +31,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

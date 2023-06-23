@@ -1,10 +1,13 @@
+import { Link } from 'react-router-dom';
 import './Register.css';
 
-function Register() {
+export default function Register() {
   return (
     <div className="register">
       <div className="register__head">
-        <div className="register__head-logo" />
+        <Link className="register__main-link" to="/">
+          <div className="register__head-logo" />
+        </Link>
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
       <form className="register__form">
@@ -18,10 +21,11 @@ function Register() {
         <input className="register__input register__input-password" value="123456" type="password" />
         <span className="register__input-error">Что-то пошло не так...</span>
         <button className="register__button">Зарегистрироваться</button>
-        <p className="register__login">Уже зарегистрированы? <a className="register__login-link" href="#">Войти</a></p>
+        <p className="register__login">
+          Уже зарегистрированы?&nbsp;&nbsp;
+          <Link className="register__login-link" to="/sign-in">Войти</Link>
+        </p>
       </form>
     </div>
   )
 }
-
-export default Register;

@@ -167,7 +167,7 @@
     opacity: .3;
     transition: 0.5s ease;
   }
-  
+
   .navigation__container_hide {
     right: -100%;
   }

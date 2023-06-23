@@ -1,9 +1,8 @@
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Footer from '../Footer/Footer';
 
-function SavedMovies() {
+export default function SavedMovies() {
   return (
     <div className="saved-movies">
       <SearchForm />
@@ -14,5 +13,3 @@ function SavedMovies() {
     </div>
   )
 }
-
-export default SavedMovies;

@@ -1,6 +1,6 @@
 import './AboutProject.css';
 
-function AboutProject() {
+export default function AboutProject() {
   return (
     <div className="about-project" id="about-project">
       <h2 className="about-project__title">О проекте</h2>
@@ -8,11 +8,15 @@ function AboutProject() {
       <div className="about-project__info">
         <div className="about-project__info-stages">
           <p className="about-project__info-title">Дипломный проект включал 5 этапов</p>
-          <p className="about-project__info-subtitle">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
+          <p className="about-project__info-subtitle">
+            Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
+          </p>
         </div>
         <div className="about-project__info-weeks">
           <p className="about-project__info-title">На выполнение диплома ушло 5 недель</p>
-          <p className="about-project__info-subtitle">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
+          <p className="about-project__info-subtitle">
+            У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
+          </p>
         </div>
       </div>
       <div className="about-project__time-line">
@@ -26,5 +30,3 @@ function AboutProject() {
     </div>
   )
 }
-
-export default AboutProject;

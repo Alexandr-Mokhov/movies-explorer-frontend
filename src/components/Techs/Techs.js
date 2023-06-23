@@ -1,6 +1,6 @@
 import './Techs.css';
 
-function Techs() {
+export default function Techs() {
   return (
     <div className="techs" id="techs">
       <h2 className="techs__title">Технологии</h2>
@@ -21,5 +21,3 @@ function Techs() {
     </div>
   )
 }
-
-export default Techs;

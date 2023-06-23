@@ -19,7 +19,7 @@
   margin: 0 0 184px;
 }
 
-.not-found__link-back {
+.not-found__back {
   text-decoration: none;
   color: #3456F3;
   cursor: pointer;
@@ -28,9 +28,11 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
+  background-color: #FFF;
+  border: none;
 }
 
-.not-found__link-back:hover {
+.not-found__back:hover {
   opacity: .7;
 }
 
