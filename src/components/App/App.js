@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const { pathname } = useLocation();
 
   return (
@@ -21,10 +21,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/sign-up" element={<Register />} />
-        <Route path="/sign-in" element={<Login />} />
+        <Route path="/sign-in" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {pathname === "/sign-up" || pathname === "/sign-in" ? '' : <Footer />}

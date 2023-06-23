@@ -1,7 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
-export default function Login() {
+export default function Login({ loggedIn, setLoggedIn}) {
+  const navigate = useNavigate();
+  
+  function onSign() {
+    setLoggedIn(!loggedIn);
+    navigate("/");
+  }
+
   return (
     <div className="login">
       <div className="login__head">
@@ -17,7 +24,7 @@ export default function Login() {
         <label className="login__label">Пароль</label>
         <input className="login__input login__input-password" value="" type="password" />
         <span className="login__input-error"></span>
-        <button className="login__button">Войти</button>
+        <button className="login__button" onClick={onSign}>Войти</button>
         <p className="login__register">
           Еще не зарегистрированы?&nbsp;&nbsp;
           <Link className="login__register-link" to="/sign-up">Регистрация</Link>

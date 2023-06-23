@@ -1,19 +1,37 @@
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
+import { useState } from 'react';
 
-export default function Profile() {
+export default function Profile({ loggedIn, setLoggedIn }) {
+  const [profileEdit, setProfileEdit] = useState(false);
+  const navigate = useNavigate();
+
+  function changeProfileEdit() {
+    setProfileEdit(!profileEdit);
+  }
+
+  function onSignOut() {
+    setLoggedIn(!loggedIn);
+    navigate("/");
+  }
+
   return (
     <div className="profile">
       <h2 className="profile__greetings">Привет, Александр!</h2>
-      <div className="profile__container">
-        <p className="profile__title">Имя</p>
-        <p className="profile__title profile__title_type_value">Александр</p>
-      </div>
-      <div className="profile__container">
-        <p className="profile__title">E-mail</p>
-        <p className="profile__title profile__title_type_value">pochta@mail.ru</p>
-      </div>
-      <a className="profile__link profile__link_type_edit" href="#">Редактировать</a>
-      <a className="profile__link profile__link_type_exit" href="#">Выйти из аккаунта</a>
+      <form className="profile__form">
+        <div className="profile__container">
+          <label className="profile__label">Имя</label>
+          <input className="profile__input profile__input-name" value="Александр" type="text" disabled={!profileEdit} />
+        </div>
+        <div className="profile__container">
+          <label className="profile__label">E-mail</label>
+          <input className="profile__input profile__input-email" value="pochta@mail.ru" type="email" disabled={!profileEdit} />
+        </div>
+        <span className="profile__error"></span>
+        {profileEdit && <button className="profile__button profile__button_type_save" onClick={changeProfileEdit}>Сохранить</button>}
+      </form>
+      {!profileEdit && <button className="profile__button profile__button_type_edit" onClick={changeProfileEdit}>Редактировать</button>}
+      {!profileEdit && <button className="profile__button profile__button_type_exit" onClick={onSignOut}>Выйти из аккаунта</button>}
     </div>
   )
 }
