@@ -37,6 +37,8 @@
   text-align: end;
   width: 100%;
   border: none;
+  background-color: #FFF;
+  color: #000;
 }
 
 .profile__label {

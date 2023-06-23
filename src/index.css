@@ -1,10 +1,6 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/inter.css);
 
-body {
-  background-color: #eee;
-}
-
 * {
-  outline: 1px red solid;
+  /* outline: 1px red solid; */
 }

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import './Navigation.css';
 import { useState } from 'react';
 
@@ -19,37 +19,32 @@ export default function Navigation() {
       <nav className={`navigation__container ${navMenu ? '' : "navigation__container_hide"}`}>
         <ul className="navigation__links">
           <li>
-            <Link className={
-              `navigation__link navigation__link_type_main
-              ${pathname === "/" ? "navigation__link_type_active" : ''}`
-            } to="/">
+            <NavLink to="/" className={
+              ({ isActive }) => `navigation__link navigation__link_type_main ${isActive ? "navigation__link_type_active" : ''}`
+            }>
               Главная
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
-              className={
-                `navigation__link 
-                ${pathname === "/" ? "navigation__link_type_light" : ''}
-                ${pathname === "/movies" ? "navigation__link_type_active" : ''}`
-              } to="/movies">
+            <NavLink to="/movies" className={
+              ({ isActive }) => `navigation__link ${isActive ? "navigation__link_type_active" : ''}
+              ${pathname === "/" ? "navigation__link_type_light" : ''}`
+            }>
               Фильмы
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
-              className={
-                `navigation__link 
-                ${pathname === "/" ? "navigation__link_type_light" : ''}
-                ${pathname === "/saved-movies" ? "navigation__link_type_active" : ''}`
-              } to="/saved-movies">
+            <NavLink to="/saved-movies" className={
+              ({ isActive }) => `navigation__link ${isActive ? "navigation__link_type_active" : ''}
+              ${pathname === "/" ? "navigation__link_type_light" : ''}`
+            }>
               Сохранённые фильмы
-            </Link>
+            </NavLink>
           </li>
         </ul>
-        <Link className={
-            `navigation__account ${pathname === "/" ? (navMenu ? '' : "navigation__account__light") : ''}`
-          } to="/profile">
+        <Link to="/profile" className={
+          `navigation__account ${pathname === "/" ? (navMenu ? '' : "navigation__account__light") : ''}`
+        }>
           Аккаунт
           <div className="navigation__button-account" />
         </Link>

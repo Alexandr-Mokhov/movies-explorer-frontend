@@ -44,11 +44,11 @@
   opacity: .7;
 }
 
-.header__link_register {
+.header__link_type_light {
   color: #FFF;
 }
 
-.header__link_login {
+.header__link_type_login {
   height: 32px;
   width: 76px;
   background-color: #2BE080;
