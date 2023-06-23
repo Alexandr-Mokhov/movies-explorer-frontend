@@ -8,8 +8,7 @@ export default function Navigation() {
 
   return (
     <div className="navigation">
-      <button
-        className={
+      <button className={
           `navigation__button-menu 
           ${navMenu ? "navigation__button-menu_type_close" : "navigation__button-menu_type_open"}
           ${pathname === "/" ? "navigation__button-menu_type_light" : ''}`

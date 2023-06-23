@@ -18,13 +18,13 @@ export default function Register() {
       </div>
       <form className="register__form">
         <label className="register__label">Имя</label>
-        <input className="register__input register__input-name" value="Александр" type="text" />
+        <input className="register__input register__input_type_name" value="Александр" type="text" />
         <span className="register__input-error"></span>
         <label className="register__label">E-mail</label>
-        <input className="register__input register__input-email" value="pochta@mail.ru" type="email" />
+        <input className="register__input register__input_type_email" value="pochta@mail.ru" type="email" />
         <span className="register__input-error"></span>
         <label className="register__label">Пароль</label>
-        <input className="register__input register__input-password" value="123456" type="password" />
+        <input className="register__input register__input_type_password" value="123456" type="password" />
         <span className="register__input-error">Что-то пошло не так...</span>
         <button className="register__button" onClick={onSignIn}>Зарегистрироваться</button>
         <p className="register__login">

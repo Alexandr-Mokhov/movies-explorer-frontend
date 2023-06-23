@@ -54,7 +54,7 @@
   cursor: pointer;
 }
 
-.login__input-password {
+.login__input_type_password {
   color: #FF3055;
 }
 

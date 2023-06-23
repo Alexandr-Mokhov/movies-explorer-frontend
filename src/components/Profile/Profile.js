@@ -21,11 +21,11 @@ export default function Profile({ loggedIn, setLoggedIn }) {
       <form className="profile__form">
         <div className="profile__container">
           <label className="profile__label">Имя</label>
-          <input className="profile__input profile__input-name" value="Александр" type="text" disabled={!profileEdit} />
+          <input className="profile__input profile__input_type_name" value="Александр" type="text" disabled={!profileEdit} />
         </div>
         <div className="profile__container">
           <label className="profile__label">E-mail</label>
-          <input className="profile__input profile__input-email" value="pochta@mail.ru" type="email" disabled={!profileEdit} />
+          <input className="profile__input profile__input_type_email" value="pochta@mail.ru" type="email" disabled={!profileEdit} />
         </div>
         <span className="profile__error"></span>
         {profileEdit && <button className="profile__button profile__button_type_save" onClick={changeProfileEdit}>Сохранить</button>}
