@@ -6,7 +6,7 @@ export default function Header({ loggedIn }) {
   const { pathname } = useLocation();
 
   return (
-    <div className={`header ${pathname !== "/" && "header_light"}`}>
+    <header className={`header ${pathname !== "/" && "header_light"}`}>
       <Link className="header__logo" to="/" />
       {
         loggedIn ? <Navigation /> :
@@ -19,6 +19,6 @@ export default function Header({ loggedIn }) {
             <Link className="header__link header__link_type_login" to="/sign-in">Войти</Link>
           </div>
       }
-    </div>
+    </header>
   );
 }

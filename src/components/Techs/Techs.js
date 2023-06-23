@@ -2,7 +2,7 @@ import './Techs.css';
 
 export default function Techs() {
   return (
-    <div className="techs" id="techs">
+    <section className="techs" id="techs">
       <h2 className="techs__title">Технологии</h2>
       <div className="techs__line"></div>
       <div className="techs__container">
@@ -18,6 +18,6 @@ export default function Techs() {
           <li className="techs__grid-item">mongoDB</li>
         </ul>
       </div>
-    </div>
+    </section>
   )
 }

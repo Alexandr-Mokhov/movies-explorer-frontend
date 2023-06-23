@@ -2,7 +2,7 @@ import './Promo.css';
 
 export default function Promo() {
   return (
-    <div className="promo">
+    <section className="promo">
       <div className="promo__logo" />
       <div className="promo__info">
         <h1 className="promo__title">Учебный проект студента факультета Веб&#8209;разработки.</h1>
@@ -19,6 +19,6 @@ export default function Promo() {
           </li>
         </ul>
       </div>
-    </div>
+    </section>
   )
 }
