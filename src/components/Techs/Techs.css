@@ -8,11 +8,8 @@
   font-size: 22px;
   font-weight: 400;
   line-height: 27px;
-}
-
-.techs__line {
-  border-top: 1px solid #000;
-  margin-top: 23px;
+  min-height: 50px;
+  border-bottom: 1px solid #000;
 }
 
 .techs__container {
@@ -87,6 +84,7 @@
     height: 57px;
     font-size: 12px;
     line-height: 15px;
+    box-sizing: border-box;
   }
 }
 
@@ -98,6 +96,7 @@
   .techs__title {
     font-size: 18px;
     line-height: 22px;
+    min-height: 55px;
   }
 
   .techs__line {

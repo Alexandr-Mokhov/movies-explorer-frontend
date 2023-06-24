@@ -1,5 +1,5 @@
 .about-me {
-  padding: 110px 70px 125px;
+  padding: 110px 70px 100px;
 }
 
 .about-me__title {
@@ -7,11 +7,8 @@
   font-weight: 400;
   line-height: 27px;
   margin: 0;
-}
-
-.about-me__line {
-  border-top: 1px solid #000;
-  margin-top: 23px;
+  min-height: 50px;
+  border-bottom: 1px solid #000;
 }
 
 .about-me__container {
@@ -121,6 +118,12 @@
 @media screen and (max-width: 500px) {
   .about-me {
     padding: 70px 14px;
+  }
+
+  .about-me__title {
+    font-size: 18px;
+    line-height: 22px;
+    min-height: 55px;
   }
 
   .about-me__photo {

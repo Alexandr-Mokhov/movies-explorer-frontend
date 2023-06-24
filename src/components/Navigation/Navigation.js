@@ -15,7 +15,7 @@ export default function Navigation() {
         }
         onClick={() => setNavMenu(!navMenu)}
       />
-      <nav className={`navigation__container ${navMenu ? '' : "navigation__container_hide"}`}>
+      <nav className={`navigation__container ${navMenu ? '' : "navigation__container_type_hide"}`}>
         <ul className="navigation__links">
           <li>
             <NavLink to="/" className={
@@ -45,7 +45,7 @@ export default function Navigation() {
           `navigation__account ${pathname === "/" ? (navMenu ? '' : "navigation__account__light") : ''}`
         }>
           Аккаунт
-          <div className="navigation__button-account" />
+          <div className="navigation__icon-account" />
         </Link>
       </nav>
       <div className={`${navMenu ? "navigation__overlay" : ''}`} />

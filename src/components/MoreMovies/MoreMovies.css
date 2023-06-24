@@ -1,0 +1,28 @@
+.more-movies {
+  display: flex;
+  justify-content: center;
+  padding: 50px 10px 78px;
+}
+
+.more-movies__button {
+  width: 320px;
+  height: 36px;
+  background-color: #E5E5E5;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  cursor: pointer;
+  transition: .5s ease;
+}
+
+.more-movies__button:hover {
+  opacity: .7;
+}
+
+@media screen and (max-width: 500px) {
+  .more-movies__button {
+    max-width: 240px;
+  }
+}

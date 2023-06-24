@@ -1,16 +1,24 @@
 .profile {
-  height: 480px;
-  padding: 74px 30px 70px;
+  height: calc(100vh - 140px - 74px);
+  max-height: 486px;
+  padding: 74px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: column;
+
 }
 
 .profile__greetings {
   font-size: 24px;
   font-weight: 500;
   line-height: 29px;
-  margin: 0 0 103px;
+  margin: 0 0 106px;
   text-align: center;
 }
 
@@ -24,30 +32,34 @@
   border-bottom: 1px solid #E8E8E8;
 }
 
-.profile__form {
-  display: flex;
-  flex-direction: column;
-}
-
 .profile__input {
-  margin: 18px 0;
+  margin: 15px 0;
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
   text-align: end;
   width: 100%;
-  border: none;
   background-color: #FFF;
   color: #000;
 }
 
+.profile__input:disabled {
+  border: none;
+  border: 2px solid #FFF;
+}
+
 .profile__label {
-  margin: 18px 0;
+  margin: 15px 0;
   font-size: 11px;
   font-weight: 500;
   line-height: 16px;
   width: 100px;
+}
 
+.profile__buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0;
 }
 
 .profile__button {
@@ -72,11 +84,11 @@
   color: #FFF;
   font-size: 14px;
   line-height: 17px;
-  margin-top: 220px;
+  margin-bottom: 70px;
 }
 
 .profile__button_type_edit {
-  margin: 204px 0 0;
+  margin: 0;
   font-weight: 400;
   color: #000;
 }
@@ -89,21 +101,23 @@
 @media screen and (max-width: 800px) {
   .profile {
     padding: 0 30px 0;
-    align-items: center;
-    justify-content: center;
-    height: 1024px;
+    height: calc(100vh - 74px);
+  }
+
+  .profile__form {
+    margin: 235px 0 0;
   }
 
   .profile__greetings {
-    margin: 0 0 90px;
+    margin: 0 0 80px;
   }
 
-  .profile__link_type_edit {
-    margin: 205px 0 0;
+  .profile__button_type_edit {
+    margin: 20px 0 0;
   }
 
-  .profile__link_type_exit {
-    margin: 16px 0 35px;
+  .profile__button_type_exit {
+    margin: 15px 0 200px;
   }
 }
 
@@ -120,6 +134,10 @@
   .profile__container {
     width: 100%;
   }
+
+  .profile__button_type_save {
+    width: 100%;
+  }  
 
   .profile__link_type_edit {
     margin: 400px 0 0;

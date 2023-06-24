@@ -14,7 +14,6 @@ export default function MoviesCard() {
           <div className="movies-card__favorites-heart movies-card__favorites-heart_active" />
         </div>
       </div>
-      <div className="movies-card__line" />
       <p className="movies-card__time">1ч 42м</p>
     </div>
   )

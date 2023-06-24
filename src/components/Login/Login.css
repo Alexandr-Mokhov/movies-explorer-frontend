@@ -1,8 +1,12 @@
 .login {
-  height: 560px;
+  height: calc(100vh - 140px);
+  max-height: 560px;
   width: 396px;
   padding: 70px 0;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .login__main-link {
@@ -73,6 +77,11 @@
   color: #FF3055;
 }
 
+.login__buttons-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .login__button {
   background-color: #3456F3;
   height: 45px;
@@ -84,7 +93,7 @@
   line-height: 17px;
   transition: .5s ease;
   cursor: pointer;
-  margin: 200px 0 16px;
+  margin: 20px 0 16px;
 }
 
 .login__button:hover {
@@ -113,13 +122,8 @@
 
 @media screen and (max-width: 800px) {
   .login {
-    height: 1024px;
-    width: 396px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: calc(100vh - 232px - 232px);
+    padding: 232px 0;
   }
 }
 

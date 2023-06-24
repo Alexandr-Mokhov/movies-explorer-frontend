@@ -1,15 +1,18 @@
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import MoreMovies from '../MoreMovies/MoreMovies';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
-export default function Movies() {
+export default function Movies({ loggedIn }) {
   return (
     <section className="movies">
+      <Header loggedIn={loggedIn} />
       <SearchForm />
       <MoviesCardList />
-      <div className="movies__more">
-        <button className="movies__more-button">Еще</button>
-      </div>
+      <MoreMovies />
+      <Footer />
     </section>
   )
 }

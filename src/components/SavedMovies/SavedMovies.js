@@ -1,15 +1,16 @@
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
-export default function SavedMovies() {
+export default function SavedMovies({ loggedIn }) {
   return (
     <section className="saved-movies">
+      <Header loggedIn={loggedIn} />
       <SearchForm />
       <MoviesCardList />
-      {/* <div className="movies__more">
-        <button className="movies__more-button">Еще</button>
-      </div> */}
+      <Footer />
     </section>
   )
 }
