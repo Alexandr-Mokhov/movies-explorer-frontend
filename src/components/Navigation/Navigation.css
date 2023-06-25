@@ -165,7 +165,7 @@
   }
 
   .navigation__account {
-    margin: 20px 0 90px;
+    margin: 40px 0 90px;
     line-height: 16px;
     align-items: center;
   }
@@ -194,24 +194,27 @@
   }
 
   .navigation__button-menu {
-    width: 40px;
+    width: 37px;
     height: 40px;
+    right: 15px;
+    top: 17px;
   }
 
   .navigation__button-menu_type_close {
-    width: 22px;
-    height: 22px;
+    width: 23px;
+    height: 23px;
   }
 
   .navigation__links {
-    margin: 150px 0 0;
+    margin: 142px 0 0;
   }
 
   .navigation__link {
     margin: 0 0 15px 0;
+    min-height: 30px;
   }
 
   .navigation__account {
-    margin: 440px 0 48px;
+    margin: 40px 0 50px;
   }
 }

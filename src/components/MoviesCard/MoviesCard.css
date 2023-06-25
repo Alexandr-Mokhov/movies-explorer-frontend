@@ -83,6 +83,10 @@
     height: 168px;
   }
 
+  .movies-card__container {
+    min-height: 59px;
+  }
+
   .movies-card__name {
     font-size: 12px;
     line-height: 15px;

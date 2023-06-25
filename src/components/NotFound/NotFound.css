@@ -55,7 +55,8 @@
 
 @media screen and (max-width: 500px) {
   .not-found {
-    padding-top: 329px;
+    padding-top: 85px;
+    height: calc(100vh - 85px);
   }
 
   .not-found__title {
@@ -65,12 +66,12 @@
   }
 
   .not-found__subtitle {
-    margin: 0 0 284px;
+    margin: 0 0 20px;
     font-size: 12px;
     line-height: 15px;
   }
 
-  .not-found__link-back {
+  .not-found__back {
     margin-bottom: 30px;
     font-size: 12px;
     line-height: 15px;

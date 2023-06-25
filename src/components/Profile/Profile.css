@@ -123,23 +123,28 @@
 
 @media screen and (max-width: 500px) {
   .profile {
-    padding: 0 30px;
-    height: 780px;
+    padding: 0 30px 0;
+    height: calc(100vh - 74px);
+    max-height: 706px;
   }
 
-  .profile__greetings {
-    margin: 80px 0 64px;
+  .profile__form {
+    margin: 70px 0 0;
   }
 
   .profile__container {
     width: 100%;
   }
 
-  .profile__button_type_save {
-    width: 100%;
-  }  
+  .profile__greetings {
+    margin: 0 0 63px;
+  }
 
-  .profile__link_type_edit {
-    margin: 400px 0 0;
+  .profile__button_type_edit {
+    margin: 20px 0 0;
+  }
+
+  .profile__button_type_exit {
+    margin: 13px 0 39px;
   }
 }
