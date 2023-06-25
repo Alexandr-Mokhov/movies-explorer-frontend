@@ -1,36 +1,62 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
+import Form from '../Form/Form';
+import { useFormWithValidation } from '../../utils/formValidator';
 
-export default function Login({ loggedIn, setLoggedIn }) {
+export default function Login({ loggedIn, setLoggedIn, isLoading }) {
   const navigate = useNavigate();
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  function onSign() {
-    setLoggedIn(!loggedIn);
+  function handleSubmit(evt) {
+    evt.preventDefault();
     navigate("/");
+    setLoggedIn(true);
   }
 
   return (
     <div className="login">
-      <form className="login__form">
-        <div className="login__head">
-          <Link className="login__main-link" to="/">
-            <div className="login__head-logo" />
-          </Link>
-          <h2 className="login__title">Рады видеть!</h2>
-        </div>
-        <label className="login__label">E-mail</label>
-        <input className="login__input login__input_type_email" value="pochta@mail.ru" type="email" />
-        <span className="login__input-error"></span>
-        <label className="login__label">Пароль</label>
-        <input className="login__input login__input_type_password" value="" type="password" />
-        <span className="login__input-error"></span>
-      </form>
-      <div className="login__buttons-container">
-        <button className="login__button" onClick={onSign}>Войти</button>
-        <p className="login__register">
-          Еще не зарегистрированы?&nbsp;&nbsp;
-          <Link className="login__register-link" to="/sign-up">Регистрация</Link>
-        </p>
+      <div className="login__container">
+        <Link className="login__link" to="/"><div className="login__logo" /></Link>
+        <h2 className="login__title">Добро пожаловать!</h2>
+        <Form
+          name={"login"}
+          buttonText={isLoading ? 'Вход...' : 'Войти'}
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+          isDisabledButton={!isValid}
+        >
+          <label className="form__label">E-mail</label>
+          <input
+            id="input-email"
+            className={`form__input ${!errors['email'] || 'form__input_type_error'}`}
+            name="email"
+            type="email"
+            placeholder="Ваша почта"
+            required
+            value={values['email'] || ''}
+            onChange={handleChange}
+            autoComplete="off"
+          />
+          <span className={`form__input-error ${!errors['email'] || 'form__input-error_active'}`}>
+            {errors['email']}
+          </span>
+          <label className="form__label">Пароль</label>
+          <input
+            id="input-password"
+            className={`form__input ${!errors['password'] || 'form__input_type_error'}`}
+            name="password"
+            type="password"
+            placeholder="Пароль"
+            required
+            minLength="4"
+            value={values['password'] || ''}
+            onChange={handleChange}
+            autoComplete="off"
+          />
+          <span className={`form__input-error ${!errors['password'] || 'form__input-error_active'}`}>
+            {errors['password']}
+          </span>
+        </Form>
       </div>
     </div>
   )

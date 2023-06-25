@@ -1,38 +1,78 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './Register.css';
+import Form from '../Form/Form';
+import { useFormWithValidation } from '../../utils/formValidator';
 
-export default function Register() {
+export default function Register({ isLoading }) {
   const navigate = useNavigate();
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  function onSignIn() {
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
     navigate("/sign-in");
   }
 
   return (
     <div className="register">
-      <form className="register__form">
-        <div className="register__head">
-          <Link className="register__main-link" to="/">
-            <div className="register__head-logo" />
-          </Link>
-          <h2 className="register__title">Добро пожаловать!</h2>
-        </div>
-        <label className="register__label">Имя</label>
-        <input className="register__input register__input_type_name" value="Александр" type="text" />
-        <span className="register__input-error"></span>
-        <label className="register__label">E-mail</label>
-        <input className="register__input register__input_type_email" value="pochta@mail.ru" type="email" />
-        <span className="register__input-error"></span>
-        <label className="register__label">Пароль</label>
-        <input className="register__input register__input_type_password" value="123456" type="password" />
-        <span className="register__input-error">Что-то пошло не так...</span>
-      </form>
-      <div className="register__buttons-container">
-        <button className="register__button" onClick={onSignIn}>Зарегистрироваться</button>
-        <p className="register__login">
-          Уже зарегистрированы?&nbsp;&nbsp;
-          <Link className="register__login-link" to="/sign-in">Войти</Link>
-        </p>
+      <div className="register__container">
+        <Link className="register__link" to="/"><div className="register__logo" /></Link>
+        <h2 className="register__title">Добро пожаловать!</h2>
+        <Form
+          name={"register"}
+          buttonText={isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
+          isDisabledButton={!isValid}
+        >
+          <label className="form__label">Имя</label>
+          <input
+            id="input-name"
+            className={`form__input ${!errors['name'] || 'form__input_type_error'}`}
+            name="name"
+            type="text"
+            placeholder="Ваше имя"
+            required
+            maxLength="45"
+            value={values['name'] || ''}
+            onChange={handleChange}
+            autoComplete="off"
+          />
+          <span className={`form__input-error ${!errors['name'] || 'form__input-error_active'}`}>
+            {errors['name']}
+          </span>
+          <label className="form__label">E-mail</label>
+          <input
+            id="input-email"
+            className={`form__input ${!errors['email'] || 'form__input_type_error'}`}
+            name="email"
+            type="email"
+            placeholder="Ваша почта"
+            required
+            value={values['email'] || ''}
+            onChange={handleChange}
+            autoComplete="off"
+          />
+          <span className={`form__input-error ${!errors['email'] || 'form__input-error_active'}`}>
+            {errors['email']}
+          </span>
+          <label className="form__label">Пароль</label>
+          <input
+            id="input-password"
+            className={`form__input ${!errors['password'] || 'form__input_type_error'}`}
+            name="password"
+            type="password"
+            placeholder="Пароль"
+            required
+            minLength="4"
+            value={values['password'] || ''}
+            onChange={handleChange}
+            autoComplete="off"
+          />
+          <span className={`form__input-error ${!errors['password'] || 'form__input-error_active'}`}>
+            {errors['password']}
+          </span>
+        </Form>
       </div>
     </div>
   )

@@ -1,32 +1,27 @@
 .register {
-  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 }
 
-.register__form {
-  display: flex;
-  flex-direction: column;
+.register__container {
   margin-top: 70px;
 }
 
-.register__main-link {
+.register__link {
   cursor: pointer;
   transition: .5s ease;
 }
 
-.register__main-link:hover {
+.register__link:hover {
   opacity: .7;
 }
 
-.register__head-logo {
+.register__logo {
   background-image: url(../../images/logo.svg);
   width: 38px;
   height: 38px;
   background-repeat: no-repeat;
-  width: 396px;
 }
 
 .register__title {
@@ -36,95 +31,13 @@
   line-height: 29px;
 }
 
-.register__label {
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 12px;
-  color: #A0A0A0;
-  margin: 0;
-}
-
-.register__input {
-  border: none;
-  border-bottom: 1px solid #E8E8E8;
-  height: 29px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.register__input_type_password {
-  color: #FF3055;
-}
-
-.register__input:focus {
-  border: none;
-  border-bottom: 1px solid #3456F3;
-  outline: none;
-}
-
-.register__input-error {
-  min-height: 22px;
-  margin: 3px 0;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 11px;
-  color: #FF3055;
-}
-
-.register__buttons-container {
-  display: flex;
-  flex-direction: column;
-  width: 396px;
-}
-
-.register__button {
-  background-color: #3456F3;
-  height: 45px;
-  border: none;
-  border-radius: 5px;
-  color: #FFF;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 17px;
-  transition: .5s ease;
-  cursor: pointer;
-  margin: 20px 0 16px;
-}
-
-.register__button:hover {
-  opacity: .7;
-}
-
-.register__login {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 17px;
-  color: #A0A0A0;
-  text-align: center;
-  margin: 0;
-}
-
-.register__login-link {
-  text-decoration: none;
-  color: #3456F3;
-  transition: .5s ease;
-  cursor: pointer;
-}
-
-.register__login-link:hover {
-  opacity: .7;
-}
-
 @media screen and (max-width: 800px) {
   .register {
     min-height: 77.3vh;
     padding: 0 30px;
   }
 
-  .register__form {
+  .register__container {
     margin-top: 232px;
   }
 }
@@ -132,41 +45,19 @@
 @media screen and (max-width: 500px) {
   .register {
     padding: 0 30px;
-    min-height: 96vh;
+    min-height: 100vh;
   }
 
-  .register__form {
-    margin-top: 56px;
-    width: 100%;
-  }
-
-  .register__head {
+  .register__container {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .register__head-logo {
-    width: 38px;
+    margin-top: 56px;
+    width: 100%;
   }
 
   .register__title {
     margin: 50px 0 80px;
     text-align: center;
-  }
-
-  .register__buttons-container {
-    width: 100%;
-  }
-
-  .register__button {
-    font-size: 12px;
-    line-height: 14px;
-    margin: 20px 0 14px;
-  }
-
-  .register__login {
-    font-size: 12px;
-    line-height: 15px;
   }
 }
