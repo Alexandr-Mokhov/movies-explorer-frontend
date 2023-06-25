@@ -1,5 +1,5 @@
 .portfolio {
-  padding: 0 70px 80px;
+  padding: 0 70px 88px;
 }
 
 .portfolio__title {
@@ -7,7 +7,7 @@
   font-weight: 400;
   line-height: 20px;
   color: #A0A0A0;
-  margin: 0 0 50px;
+  margin: 0 0 29px;
 }
 
 .portfolio__list {
@@ -16,26 +16,30 @@
 }
 
 .portfolio__item {
-  border-bottom: 1px solid #E8E8E8;
-  margin: 25px 0;
+  border-top: 1px solid #E8E8E8;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 89px;
+}
+
+.portfolio__item:first-of-type {
+  border-top: 1px solid #FFF;
+}
+
+.portfolio__link {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
-}
-
-.portfolio__item:last-of-type {
-  border-bottom: 1px solid #FFF;
-  padding-bottom: 0;
-}
-
-.portfolio__item-text {
   font-size: 30px;
   font-weight: 400;
   line-height: 50px;
   margin: 0;
-  min-height: 65px;
 }
 
-.portfolio__item-link {
+.portfolio__link-arrow {
   background-image: url(../../images/arrow-link.svg);
   width: 20px;
   height: 20px;
@@ -45,56 +49,44 @@
   transition: .5s ease;
 }
 
-.portfolio__item-link:hover {
+.portfolio__link-arrow:hover {
   opacity: .7;
 }
 
 @media screen and (max-width: 1000px) {
   .portfolio {
-    padding: 0 50px 58px;
+    padding: 0 50px 55px;
   }
 
   .portfolio__title {
-    margin: 0 0 50px;
+    margin: 0 0 33px;
   }
 
-  .portfolio__item {
-    margin: 15px 0;
-    padding-bottom: 10px;
-  }
-
-  .portfolio__item-text {
+  .portfolio__link {
     font-size: 28px;
-  }
-
-  .portfolio__item-link {
-    width: 20px;
-    height: 20px;
-    margin-top: 17px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .portfolio {
-    padding: 0 14px 70px;
+    padding: 0 14px 30px;
   }
 
   .portfolio__title {
     font-size: 14px;
-    margin: 0 0 40px;
+    margin: 0 0 20px;
   }
 
   .portfolio__item {
-    margin: 15px 0;
-    padding-bottom: 10px;
+    min-height: 68px;
   }
 
-  .portfolio__item-text {
+  .portfolio__link {
     font-size: 16px;
     line-height: 28px;
   }
 
-  .portfolio__item-link {
+  .portfolio__link-arrow {
     width: 12px;
     height: 12px;
     margin-top: 8px;
