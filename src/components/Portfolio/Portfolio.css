@@ -37,6 +37,12 @@
   font-weight: 400;
   line-height: 50px;
   margin: 0;
+  transition: .5s ease;
+  letter-spacing: -1.2px;
+}
+
+.portfolio__link:hover {
+  opacity: .7;
 }
 
 .portfolio__link-arrow {
@@ -46,11 +52,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   margin-top: 17px;
-  transition: .5s ease;
-}
-
-.portfolio__link-arrow:hover {
-  opacity: .7;
 }
 
 @media screen and (max-width: 1000px) {
@@ -84,6 +85,7 @@
   .portfolio__link {
     font-size: 16px;
     line-height: 28px;
+    letter-spacing: 0.5px;
   }
 
   .portfolio__link-arrow {
