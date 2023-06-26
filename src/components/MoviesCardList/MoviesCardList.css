@@ -14,7 +14,6 @@
 
 @media screen and (max-width: 800px) {
   .movies-list {
-    padding: 80px 30px 10px;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
@@ -24,6 +23,6 @@
   .movies-list {
     padding: 40px 10px 10px;
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 35px;
   }
 }

@@ -1,8 +1,8 @@
-import './Profile.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Header from '../Header/Header';
 import { useFormWithValidation } from '../../utils/formValidator';
+import './Profile.css';
 
 export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
   const [profileEdit, setProfileEdit] = useState(false);

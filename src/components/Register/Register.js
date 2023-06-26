@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
-import './Register.css';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
+import './Register.css';
 
 export default function Register({ isLoading }) {
   const navigate = useNavigate();

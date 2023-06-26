@@ -1,6 +1,6 @@
-import './Header.css';
-import Navigation from '../Navigation/Navigation';
 import { Link, useLocation } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
+import './Header.css';
 
 export default function Header({ loggedIn }) {
   const { pathname } = useLocation();

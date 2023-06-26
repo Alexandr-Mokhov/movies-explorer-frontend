@@ -53,10 +53,10 @@
   width: 100%;
   background-color: #FFF;
   color: #000;
+  border: 2px solid #3456F3;
 }
 
 .profile__input:disabled {
-  border: none;
   border: 2px solid #FFF;
 }
 
