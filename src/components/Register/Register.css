@@ -9,8 +9,10 @@
 }
 
 .register__link {
+  display: block;
   cursor: pointer;
   transition: .5s ease;
+  width: 38px;
 }
 
 .register__link:hover {

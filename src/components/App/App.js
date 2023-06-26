@@ -21,7 +21,7 @@ export default function App() {
         <Route path="/sign-in" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} isLoading={isLoading} />} />
         <Route path="/movies" element={<Movies loggedIn={loggedIn} />} />
         <Route path="/saved-movies" element={<SavedMovies loggedIn={loggedIn} />} />
-        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} isLoading={isLoading} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

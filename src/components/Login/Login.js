@@ -37,9 +37,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
             onChange={handleChange}
             autoComplete="off"
           />
-          <span className={`form__input-error ${!errors['email'] || 'form__input-error_active'}`}>
-            {errors['email']}
-          </span>
+          <span className="form__input-error">{errors['email']}</span>
           <label className="form__label">Пароль</label>
           <input
             id="input-password"
@@ -53,9 +51,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
             onChange={handleChange}
             autoComplete="off"
           />
-          <span className={`form__input-error ${!errors['password'] || 'form__input-error_active'}`}>
-            {errors['password']}
-          </span>
+          <span className="form__input-error">{errors['password']}</span>
         </Form>
       </div>
     </div>

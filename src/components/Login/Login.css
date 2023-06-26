@@ -9,8 +9,10 @@
 }
 
 .login__link {
+  display: block;
   cursor: pointer;
   transition: .5s ease;
+  width: 38px;
 }
 
 .login__link:hover {
