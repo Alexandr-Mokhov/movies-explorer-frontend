@@ -1,8 +1,14 @@
 import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import './MoviesCard.css';
 
 export default function MoviesCard() {
   const { pathname } = useLocation();
+  const [isLiked, setIsLiked] = useState(false);
+
+  function handleLikeClick() {
+    setIsLiked(!isLiked);
+  }
 
   return (
     <div className="movies-card">
@@ -13,7 +19,12 @@ export default function MoviesCard() {
       />
       <div className="movies-card__container">
         <h3 className="movies-card__name">33 слова о дизайне</h3>
-        <button className={`movies-card__favorites ${pathname === "/movies" ? "movies-card__favorites_active" : 'movies-card__favorites_delete'}`} type="button" />
+        <button
+          className={`movies-card__favorites ${pathname === "/saved-movies" && 'movies-card__favorites_delete'}
+            ${isLiked && 'movies-card__favorites_active'}`}
+          type="button"
+          onClick={handleLikeClick}
+        />
       </div>
       <p className="movies-card__time">1ч 42м</p>
     </div>
