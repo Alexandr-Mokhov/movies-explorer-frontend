@@ -9,7 +9,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    navigate("/");
+    navigate("/movies");
     setLoggedIn(true);
   }
 

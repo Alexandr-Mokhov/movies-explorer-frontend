@@ -1,18 +1,18 @@
 .movies-card {
   display: grid;
   align-self: flex-start;
+  transition: .5s ease;
+}
+
+.movies-card:hover {
+  opacity: .7;
 }
 
 .movies-card__image {
   max-width: 100%;
   min-height: 150px;
   object-fit: cover;
-  transition: .5s ease;
   cursor: pointer;
-}
-
-.movies-card__image:hover {
-  opacity: .7;
 }
 
 .movies-card__container {
@@ -54,6 +54,15 @@
 
 .movies-card__favorites_active {
   background-image: url(../../images/favorites-active.svg);
+}
+
+.movies-card__favorites_delete {
+  background-image: url(../../images/favorites-delete.svg);
+  display: none;
+}
+
+.movies-card:hover .movies-card__favorites_delete {
+  display: block;
 }
 
 .movies-card__time {

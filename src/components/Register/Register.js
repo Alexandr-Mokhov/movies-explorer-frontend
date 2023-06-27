@@ -3,14 +3,15 @@ import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import './Register.css';
 
-export default function Register({ isLoading }) {
+export default function Register({ setLoggedIn, isLoading }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    navigate("/sign-in");
+    navigate("/movies");
+    setLoggedIn(true);
   }
 
   return (
