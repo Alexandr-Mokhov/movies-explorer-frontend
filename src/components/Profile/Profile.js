@@ -30,9 +30,9 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
       <Header loggedIn={loggedIn} />
       <div className="profile">
         <form className="profile__form" onSubmit={handleSubmit} noValidate>
-          <div className="profile__container">
-            <h2 className="profile__title">Привет, {userName}!</h2>
-            <div className="profile__container-input">
+          <h2 className="profile__title">Привет, {userName}!</h2>
+          <div className="profile__form-container">
+            <div className="profile__inputs-container">
               <label className="profile__label">Имя</label>
               <input
                 id="input-name"
@@ -49,7 +49,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
               />
             </div>
             <span className="profile__input-error">{errors['name']}</span>
-            <div className="profile__container-input">
+            <div className="profile__inputs-container">
               <label className="profile__label">E-mail</label>
               <input
                 id="input-email"
@@ -68,17 +68,17 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
           </div>
           {profileEdit &&
             <button
-              className={`form__button form__button_type_${isLoading || !isValid ? 'inactive' : 'active'}`}
+              className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid ? 'inactive' : 'active'}`}
               type="submit"
               disabled={isLoading || !isValid}
             >
               Сохранить
             </button>}
+          {!profileEdit && <div className="profile__buttons">
+            <button className="profile__button profile__button_type_edit" onClick={changeProfileEdit}>Редактировать</button>
+            <button className="profile__button profile__button_type_exit" onClick={onSignOut}>Выйти из аккаунта</button>
+          </div>}
         </form>
-        {!profileEdit && <div className="profile__buttons">
-          <button className="profile__button profile__button_type_edit" onClick={changeProfileEdit}>Редактировать</button>
-          <button className="profile__button profile__button_type_exit" onClick={onSignOut}>Выйти из аккаунта</button>
-        </div>}
       </div>
     </>
   )
