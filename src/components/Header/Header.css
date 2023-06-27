@@ -1,6 +1,6 @@
 .header {
   background-color: #073042;
-  height: 74px;
+  min-height: 74px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,7 +14,7 @@
 .header__logo {
   background-image: url(../../images/logo.svg);
   min-width: 38px;
-  height: 38px;
+  min-height: 38px;
   background-repeat: no-repeat;
   background-size: contain;
   transition: .5s ease;
@@ -49,7 +49,7 @@
 }
 
 .header__link_type_login {
-  height: 32px;
+  min-height: 32px;
   width: 76px;
   background-color: #2BE080;
   border-radius: 3px;
@@ -71,7 +71,7 @@
   }
 
   .header__link_type_login {
-    height: 26px;
+    min-height: 26px;
     width: 54px;
     margin-left: 14px;
   }

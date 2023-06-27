@@ -6,7 +6,7 @@
 
 .more-movies__button {
   width: 320px;
-  height: 36px;
+  min-height: 36px;
   background-color: #E5E5E5;
   border: none;
   border-radius: 6px;

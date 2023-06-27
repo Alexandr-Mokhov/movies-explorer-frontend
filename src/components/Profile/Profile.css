@@ -98,7 +98,7 @@
 
 .profile__button_type_save {
   width: 410px;
-  height: 45px;
+  min-height: 45px;
   border-radius: 3px;
   color: #FFF;
   font-size: 14px;

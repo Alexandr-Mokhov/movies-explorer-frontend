@@ -6,7 +6,7 @@
 }
 
 .search-form__input {
-  height: 68px;
+  min-height: 68px;
   border: 2px solid #A0A0A0;
   border-radius: 8px;
   opacity: .4;
@@ -26,7 +26,7 @@
   right: 82px;
   background-color: #3456F3;
   width: 100px;
-  height: 52px;
+  min-height: 52px;
   border: none;
   border-radius: 5px;
   color: #FFF;
@@ -81,7 +81,7 @@
   left: 0;
   top: 1px;
   width: 34px;
-  height: 14px;
+  min-height: 14px;
   background-color: #2BE080;
   border-radius: 20px;
   transition: background-color .5s;
@@ -94,7 +94,7 @@
   left: 22px;
   top: 3px;
   width: 10px;
-  height: 10px;
+  min-height: 10px;
   background-color: #FFF;
   border-radius: 10px;
   transition: background-color .5s, left .5s;
@@ -133,11 +133,11 @@
     top: 76px;
     right: 20px;
     width: 80px;
-    height: 44px;
+    min-height: 44px;
   }
 
   .search-form__input {
-    height: 52px;
+    min-height: 52px;
     padding-left: 12px;
   }
 
