@@ -7,7 +7,7 @@
 .form__container {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 385px);
+  min-height: calc(100vh - 375px);
 }
 
 .form__label {
@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   width: 396px;
-  margin: 0 0 20px;
+  margin: 10px 0 0;
 }
 
 .form__button {
@@ -65,7 +65,7 @@
   line-height: 17px;
   transition: .5s ease;
   cursor: pointer;
-  margin: 20px 0 16px;
+  margin: 0 0 16px;
 }
 
 .form__button_type_active {
@@ -104,7 +104,7 @@
 
 @media screen and (max-width: 800px) {
   .form__container {
-    min-height: calc(100vh - 709px);
+    min-height: 32vh;
   }
 }
 
@@ -114,7 +114,7 @@
   }
 
   .form__container {
-    min-height: calc(100vh - 377px);
+    min-height: calc(100vh - 380px);
   }
 
   .form__buttons-container {
@@ -124,17 +124,11 @@
   .form__button {
     font-size: 12px;
     line-height: 14px;
-    margin: 20px 0 14px;
+    margin: 10px 0 14px;
   }
 
   .form__login {
     font-size: 12px;
     line-height: 15px;
-  }
-}
-
-@media screen and (min-height: 1100px) {
-  .form__container {
-    min-height: 400px;
   }
 }
