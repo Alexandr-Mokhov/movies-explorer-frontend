@@ -10,9 +10,7 @@ export default function MoviesCard() {
       />
       <div className="movies-card__container">
         <h3 className="movies-card__name">33 слова о дизайне</h3>
-        <div className="movies-card__favorites">
-          <div className="movies-card__favorites-heart movies-card__favorites-heart_active" />
-        </div>
+        <button className="movies-card__favorites movies-card__favorites_active" type="button" />
       </div>
       <p className="movies-card__time">1ч 42м</p>
     </div>

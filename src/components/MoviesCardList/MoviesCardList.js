@@ -4,7 +4,7 @@ import './MoviesCardList.css';
 // импортировал просто модули карточек для наглядности верстки, при работе с апи будут загружаться нужные карточки
 export default function MoviesCardList() {
   return (
-    <div className="movies-list">
+    <section className="movies-list">
       <MoviesCard />
       <MoviesCard />
       <MoviesCard />
@@ -21,6 +21,6 @@ export default function MoviesCardList() {
       <MoviesCard />
       <MoviesCard />
       <MoviesCard />
-    </div>
+    </section>
   )
 }

@@ -34,11 +34,16 @@
 }
 
 .promo__nav-tab {
-  list-style: none;
   padding: 0;
   margin: 146px 0 0;
   display: flex;
   gap: 10px;
+}
+
+.promo__nav-tab-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .promo__button {

@@ -14,10 +14,10 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
   }
 
   return (
-    <div className="login">
+    <main className="login">
       <div className="login__container">
         <Link className="login__link" to="/"><div className="login__logo" /></Link>
-        <h2 className="login__title">Рады видеть!</h2>
+        <h1 className="login__title">Рады видеть!</h1>
         <Form
           name={"login"}
           buttonText={isLoading ? 'Вход...' : 'Войти'}
@@ -54,6 +54,6 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
           <span className="form__input-error">{errors['password']}</span>
         </Form>
       </div>
-    </div>
+    </main>
   )
 }

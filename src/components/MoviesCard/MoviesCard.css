@@ -34,30 +34,26 @@
   min-width: 24px;
   height: 24px;
   border-radius: 12px;
-  background-color: #E5E5E5;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: .5s ease;
   margin-top: 10px;
+  border: none;
+  background-image: url(../../images/favorites.svg);
+  width: 11px;
+  min-height: 10px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .movies-card__favorites:hover {
   opacity: .7;
 }
 
-.movies-card__favorites-heart {
-  background-image: url(../../images/heart-favorites.svg);
-  width: 11px;
-  min-height: 10px;
-  margin-top: 2px;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.movies-card__favorites-heart_active {
-  background-image: url(../../images/heart-favorites-active.svg);
+.movies-card__favorites_active {
+  background-image: url(../../images/favorites-active.svg);
 }
 
 .movies-card__time {

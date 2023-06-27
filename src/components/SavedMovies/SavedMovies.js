@@ -1,16 +1,12 @@
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import './SavedMovies.css';
 
-export default function SavedMovies({ loggedIn }) {
+export default function SavedMovies() {
   return (
-    <section className="saved-movies">
-      <Header loggedIn={loggedIn} />
+    <main className="saved-movies" aria-label="Сохранённые фильмы">
       <SearchForm />
       <MoviesCardList />
-      <Footer />
-    </section>
+    </main>
   )
 }

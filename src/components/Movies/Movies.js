@@ -1,18 +1,14 @@
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MoreMovies from '../MoreMovies/MoreMovies';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import './Movies.css';
 
-export default function Movies({ loggedIn }) {
+export default function Movies() {
   return (
-    <section className="movies">
-      <Header loggedIn={loggedIn} />
+    <main className="movies" aria-label="Фильмы">
       <SearchForm />
       <MoviesCardList />
       <MoreMovies />
-      <Footer />
-    </section>
+    </main>
   )
 }

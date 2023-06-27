@@ -14,10 +14,10 @@ export default function Register({ isLoading }) {
   }
 
   return (
-    <div className="register">
+    <main className="register">
       <div className="register__container">
         <Link className="register__link" to="/"><div className="register__logo" /></Link>
-        <h2 className="register__title">Добро пожаловать!</h2>
+        <h1 className="register__title">Добро пожаловать!</h1>
         <Form
           name={"register"}
           buttonText={isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
@@ -68,6 +68,6 @@ export default function Register({ isLoading }) {
           <span className="form__input-error">{errors['password']}</span>
         </Form>
       </div>
-    </div>
+    </main>
   )
 }
