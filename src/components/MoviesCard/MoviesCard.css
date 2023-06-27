@@ -1,5 +1,6 @@
 .movies-card {
   display: grid;
+  align-self: flex-start;
 }
 
 .movies-card__image {
