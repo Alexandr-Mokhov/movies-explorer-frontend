@@ -45,7 +45,6 @@
 
   .register__container {
     min-height: calc(100vh - 464px);
-    margin-top: 0px;
   }
 
   .register__title {
