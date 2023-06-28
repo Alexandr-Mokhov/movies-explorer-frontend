@@ -9,7 +9,7 @@
 .promo__logo {
   min-width: 310px;
   min-height: 304px;
-  background-image: url(../../images/promo-logo.svg);
+  background-image: url(../../images/promo-logo.png);
   background-repeat: no-repeat;
   background-size: contain;
 }
