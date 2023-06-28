@@ -6,7 +6,7 @@
 }
 
 .movies-card:hover {
-  opacity: .7;
+  opacity: .8;
 }
 
 .movies-card__image {
@@ -58,11 +58,11 @@
 
 .movies-card__favorites_delete {
   background-image: url(../../images/favorites-delete.svg);
-  display: none;
+  opacity: 0;
 }
 
 .movies-card:hover .movies-card__favorites_delete {
-  display: block;
+  opacity: 1;
 }
 
 .movies-card__time {

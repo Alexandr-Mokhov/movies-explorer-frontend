@@ -9,10 +9,10 @@ export default function Navigation() {
   return (
     <div className="navigation">
       <button className={
-          `navigation__button-menu 
+        `navigation__button-menu 
           ${navMenu ? "navigation__button-menu_type_close" : "navigation__button-menu_type_open"}
           ${pathname === "/" ? "navigation__button-menu_type_light" : ''}`
-        }
+      }
         onClick={() => setNavMenu(!navMenu)}
       />
       <nav className={`navigation__container ${navMenu ? '' : "navigation__container_type_hide"}`}>
@@ -41,9 +41,7 @@ export default function Navigation() {
             </NavLink>
           </li>
         </ul>
-        <Link to="/profile" className={
-          `navigation__account ${pathname === "/" ? (navMenu ? '' : "navigation__account__light") : ''}`
-        }>
+        <Link to="/profile" className={`navigation__account ${pathname === "/" ? (navMenu ? '' : "navigation__account__light") : ''}`}>
           Аккаунт
           <div className="navigation__icon-account" />
         </Link>
