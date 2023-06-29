@@ -1,7 +1,13 @@
 .more-movies {
   display: flex;
   justify-content: center;
-  padding: 50px 10px 78px;
+  padding: 50px 70px 78px;
+}
+
+.more-movies__container {
+  width: 1140px;
+  display: flex;
+  justify-content: center;
 }
 
 .more-movies__button {
@@ -21,7 +27,23 @@
   opacity: .7;
 }
 
+@media screen and (max-width: 1280px) {
+  .more-movies__container {
+    width: 100%;
+  }
+}
+/* 
+@media screen and (max-width: 1000px) {
+  .more-movies {
+    padding: 50px 50px 78px;
+  }
+} */
+
 @media screen and (max-width: 500px) {
+  .more-movies {
+    padding: 50px 14px 78px;
+  }
+
   .more-movies__button {
     max-width: 240px;
   }

@@ -1,8 +1,14 @@
 .search-form {
   padding: 70px 70px 12px;
   display: flex;
+  justify-content: center;
+}
+
+.search-form__container {
+  display: flex;
   flex-direction: column;
   position: relative;
+  width: 1140px;
 }
 
 .search-form__input-container {
@@ -114,9 +120,15 @@
   left: 2px;
 }
 
+@media screen and (max-width: 1280px) {
+  .search-form__container {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .search-form {
-    padding: 70px 30px 10px;
+    padding: 70px 50px 10px;
   }
 
   .search-form__button {
@@ -126,6 +138,12 @@
   .search-form__checkbox-container {
     margin-top: 26px;
     min-height: 70px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .search-form {
+    padding: 70px 30px 10px;
   }
 }
 

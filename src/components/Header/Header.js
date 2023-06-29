@@ -6,9 +6,9 @@ export default function Header({ loggedIn }) {
   const { pathname } = useLocation();
 
   return (
-    <>
+    <header className={`header ${pathname !== "/" && "header_light"}`}>
       {pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile" ?
-        <header className={`header ${pathname !== "/" && "header_light"}`}>
+        <header className="header__container">
           <Link className="header__logo" to="/" />
           {
             loggedIn ? <Navigation /> :
@@ -21,6 +21,6 @@ export default function Header({ loggedIn }) {
           }
         </header>
         : ''}
-    </>
+    </header>
   );
 }

@@ -1,5 +1,13 @@
 .about-me {
+  display: flex;
+  justify-content: center;
   padding: 110px 70px 100px;
+}
+
+.about-me__container {
+  width: 1140px;
+  display: flex;
+  flex-direction: column;
 }
 
 .about-me__title {
@@ -12,7 +20,7 @@
   letter-spacing: -0.88px;
 }
 
-.about-me__container {
+.about-me__info {
   display: flex;
   justify-content: space-between;
   padding-top: 66px;
@@ -66,6 +74,12 @@
   margin-left: 50px;
 }
 
+@media screen and (max-width: 1280px) {
+  .about-me__container {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .about-me {
     padding: 90px 50px;
@@ -100,7 +114,7 @@
     padding: 70px 50px;
   }
 
-  .about-me__container {
+  .about-me__info {
     flex-direction: column-reverse;
     align-items: center;
     padding-top: 60px;
