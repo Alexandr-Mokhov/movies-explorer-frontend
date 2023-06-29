@@ -18,7 +18,7 @@ export default function MoviesCard() {
         alt="33 слова о дизайне"
       />
       <div className="movies-card__container">
-        <h3 className="movies-card__name">33 слова о дизайне</h3>
+        <h2 className="movies-card__name">33 слова о дизайне</h2>
         <button
           className={`movies-card__favorites ${pathname === "/saved-movies" && 'movies-card__favorites_delete'}
             ${isLiked && 'movies-card__favorites_active'}`}

@@ -25,7 +25,7 @@
 }
 
 .login__logo {
-  background-image: url(../../images/logo.svg);
+  background-image: url(../../images/logo-main.svg);
   width: 38px;
   min-height: 38px;
   background-repeat: no-repeat;
@@ -64,11 +64,11 @@
   }
 
   .login__logo {
-    margin-top: 3.5vh;
+    margin-top: 25px;
   }
 
   .login__title {
-    margin: 6.35vh 0 10.65vh;
+    margin: 50px 0 82px;
     text-align: center;
   }
 }

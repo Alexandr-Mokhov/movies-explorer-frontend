@@ -15,7 +15,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
 
   return (
     <main className="login">
-      <div className="login__container">
+      <section className="login__container">
         <Link className="login__link" to="/"><div className="login__logo" /></Link>
         <h1 className="login__title">Рады видеть!</h1>
         <Form
@@ -53,7 +53,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
           />
           <span className="form__input-error">{errors['password']}</span>
         </Form>
-      </div>
+      </section>
     </main>
   )
 }

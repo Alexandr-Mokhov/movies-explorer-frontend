@@ -16,7 +16,7 @@ export default function Register({ setLoggedIn, isLoading }) {
 
   return (
     <main className="register">
-      <div className="register__container">
+      <section className="register__container">
         <Link className="register__link" to="/"><div className="register__logo" /></Link>
         <h1 className="register__title">Добро пожаловать!</h1>
         <Form
@@ -68,7 +68,7 @@ export default function Register({ setLoggedIn, isLoading }) {
           />
           <span className="form__input-error">{errors['password']}</span>
         </Form>
-      </div>
+      </section>
     </main>
   )
 }
