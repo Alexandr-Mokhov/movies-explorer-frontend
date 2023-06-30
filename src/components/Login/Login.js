@@ -25,10 +25,10 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
           isLoading={isLoading}
           isDisabledButton={!isValid}
         >
-          <label className="form__label">E-mail</label>
+          <label className="form__label" htmlFor="input-email">E-mail</label>
           <input
             id="input-email"
-            className={`form__input ${!errors['email'] || 'form__input_type_error'}`}
+            className={`form__input ${errors['email'] && 'form__input_type_error'}`}
             name="email"
             type="email"
             placeholder="Ваша почта"
@@ -38,10 +38,10 @@ export default function Login({ loggedIn, setLoggedIn, isLoading }) {
             autoComplete="off"
           />
           <span className="form__input-error">{errors['email']}</span>
-          <label className="form__label">Пароль</label>
+          <label className="form__label" htmlFor="input-password">Пароль</label>
           <input
             id="input-password"
-            className={`form__input ${!errors['password'] || 'form__input_type_error'}`}
+            className={`form__input ${errors['password'] && 'form__input_type_error'}`}
             name="password"
             type="password"
             placeholder="Пароль"

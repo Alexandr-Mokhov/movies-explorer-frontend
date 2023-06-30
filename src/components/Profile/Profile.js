@@ -31,10 +31,10 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
           <h1 className="profile__title">Привет, {userName}!</h1>
           <div className="profile__form-container">
             <div className="profile__inputs-container">
-              <label className="profile__label">Имя</label>
+              <label className="profile__label" htmlFor="input-name">Имя</label>
               <input
                 id="input-name"
-                className={`profile__input ${!errors['name'] || 'profile__input_type_error'}`}
+                className={`profile__input ${errors['name'] && 'profile__input_type_error'}`}
                 name="name"
                 type="text"
                 placeholder="Ваше имя"
@@ -48,10 +48,10 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
             </div>
             <span className="profile__input-error">{errors['name']}</span>
             <div className="profile__inputs-container">
-              <label className="profile__label">E-mail</label>
+              <label className="profile__label" htmlFor="input-email">E-mail</label>
               <input
                 id="input-email"
-                className={`profile__input ${!errors['email'] || 'profile__input_type_error'}`}
+                className={`profile__input ${errors['email'] && 'profile__input_type_error'}`}
                 name="email"
                 type="email"
                 placeholder="Ваша почта"

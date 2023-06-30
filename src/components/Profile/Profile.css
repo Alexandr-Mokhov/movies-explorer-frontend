@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content:space-between;
   width: 410px;
-  min-height: calc(100vh - 211px);
+  min-height: clamp(200px, 70vh, 490px);
 }
 
 .profile__title {
@@ -129,8 +129,8 @@
 
 @media screen and (max-width: 800px) {
   .profile__form {
-    min-height: calc(100vh - 570px);
-    margin-bottom: 4vh;
+    min-height: clamp(200px, 45vh, 452px);
+    margin-bottom: 3.6vh;
   }
 
   .profile__form-container {
@@ -144,14 +144,18 @@
   }
 
   .profile__form {
-    min-height: calc(100vh - 176px);
+    min-height: clamp(100px, 78vh, 650px);
     margin-bottom: 0;
-    margin-top: 3.5vh;
+    margin-top: 2.7vh;
     width: 100%;
   }
 
   .profile__form-container {
-    margin-bottom: 38vh;
+    margin-bottom: min(41vh, 320px);
+  }
+
+  .profile__title {
+    margin: 1.3vh 0 clamp(10px, 4vh, 25px);
   }
 
   .profile__inputs-container {

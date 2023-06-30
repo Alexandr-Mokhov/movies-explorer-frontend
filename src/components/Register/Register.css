@@ -7,10 +7,8 @@
 }
 
 .register__container {
-  min-height: calc(100vh - 140px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .register__link {
@@ -32,7 +30,7 @@
 }
 
 .register__title {
-  margin: 10px 0;
+  margin: clamp(10px, 6vh, 42px) 0;
   font-size: 24px;
   font-weight: 500;
   line-height: 29px;
@@ -41,10 +39,6 @@
 @media screen and (max-width: 800px) {
   .register {
     padding: 0 30px;
-  }
-
-  .register__container {
-    min-height: calc(100vh - 464px);
   }
 
   .register__title {
@@ -64,11 +58,11 @@
   }
 
   .register__logo {
-    margin-top: 25px;
+    margin-top: min(25px, 3vh);
   }
 
   .register__title {
-    margin: 50px 0 82px;
+    margin: clamp(20px, 7vh, 50px) 0 clamp(20px, 10.5vh, 82px);
     text-align: center;
   }
 }
