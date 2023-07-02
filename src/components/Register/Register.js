@@ -1,10 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
-import { registerUser } from '../../utils/auth';
+import { registerUser, authorizeUser } from '../../utils/auth';
 import './Register.css';
 
-export default function Register({ setLoggedIn, isLoading, setIsLoading }) {
+export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
@@ -19,12 +19,28 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading }) {
     })
       .then((res) => {
         if (res.email) {
-          setLoggedIn(true);
-          navigate('/movies', { replace: true });
-          resetForm();
+          setCurrentUser({ name: res.name, email: res.email });
+          localStorage.setItem('name', res.name);
+          localStorage.setItem('email', res.email);
         } else {
           return Promise.reject(res.status);
         }
+      })
+      .then(() => {
+        authorizeUser({
+          email: values['email'],
+          password: values['password'],
+        })
+          .then((res) => {
+            if (res.token) {
+              localStorage.setItem('token', res.token);
+              setLoggedIn(true);
+              navigate('/movies', { replace: true });
+              resetForm();
+            } else {
+              return Promise.reject(res.status);
+            }
+          })
       })
       .catch((err) => {
         console.log(err);

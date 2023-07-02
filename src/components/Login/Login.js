@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import { authorizeUser } from '../../utils/auth';
 import './Login.css';
 
-export default function Login({ loggedIn, setLoggedIn, isLoading, setIsLoading }) {
+export default function Login({ loggedIn, setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
@@ -20,7 +20,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading, setIsLoading }
         if (res.token) {
           localStorage.setItem('token', res.token);
           setLoggedIn(true);
-          navigate('/movies', {replace: true});
+          navigate('/movies', { replace: true });
           resetForm();
         } else {
           return Promise.reject(res.status);
