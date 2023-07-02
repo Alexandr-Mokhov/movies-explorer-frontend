@@ -13,14 +13,14 @@ import './App.css';
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const isLoading = false;
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="page">
       <Header loggedIn={loggedIn} />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/sign-up" element={<Register setLoggedIn={setLoggedIn} isLoading={isLoading} />} />
+        <Route path="/sign-up" element={<Register setLoggedIn={setLoggedIn} isLoading={isLoading} setIsLoading={setIsLoading} />} />
         <Route path="/sign-in" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} isLoading={isLoading} />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />

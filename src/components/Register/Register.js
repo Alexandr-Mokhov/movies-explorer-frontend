@@ -1,17 +1,37 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
+import { registerUser } from '../../utils/auth';
 import './Register.css';
 
-export default function Register({ setLoggedIn, isLoading }) {
+export default function Register({ setLoggedIn, isLoading, setIsLoading }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-
   function handleSubmit(evt) {
     evt.preventDefault();
-    navigate("/movies");
-    setLoggedIn(true);
+    setIsLoading(true);
+
+    registerUser({
+      name: values['name'],
+      email: values['email'],
+      password: values['password'],
+    })
+      .then((res) => {
+        if (res.email) {
+          setLoggedIn(true);
+          navigate("/movies", { replace: true });
+          resetForm();
+        } else {
+          return Promise.reject(res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
