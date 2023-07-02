@@ -1,16 +1,38 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormWithValidation } from '../../utils/formValidator';
 import Form from '../Form/Form';
+import { authorizeUser } from '../../utils/auth';
 import './Login.css';
 
-export default function Login({ loggedIn, setLoggedIn, isLoading }) {
+export default function Login({ loggedIn, setLoggedIn, isLoading, setIsLoading }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    navigate("/movies");
-    setLoggedIn(true);
+    setIsLoading(true);
+
+    authorizeUser({
+      email: values['email'],
+      password: values['password'],
+    })
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem('token', res.token);
+          setLoggedIn(true);
+          navigate('/movies', {replace: true});
+          resetForm();
+        } else {
+          return Promise.reject(res.status);
+        }
+      })
+      .catch((err) => {
+        setLoggedIn(false);
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   return (

@@ -20,11 +20,30 @@ export default function App() {
       <Header loggedIn={loggedIn} />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/sign-up" element={<Register setLoggedIn={setLoggedIn} isLoading={isLoading} setIsLoading={setIsLoading} />} />
-        <Route path="/sign-in" element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} isLoading={isLoading} />} />
+        <Route path="/sign-up" element={
+          <Register
+            setLoggedIn={setLoggedIn}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+        } />
+        <Route path="/sign-in" element={
+          <Login
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+        } />
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/profile" element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} isLoading={isLoading} />} />
+        <Route path="/profile" element={
+          <Profile
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+            isLoading={isLoading}
+          />
+        } />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

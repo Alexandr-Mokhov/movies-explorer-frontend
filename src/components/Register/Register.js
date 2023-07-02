@@ -20,10 +20,10 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading }) {
       .then((res) => {
         if (res.email) {
           setLoggedIn(true);
-          navigate("/movies", { replace: true });
+          navigate('/movies', { replace: true });
           resetForm();
         } else {
-          return Promise.reject(res);
+          return Promise.reject(res.status);
         }
       })
       .catch((err) => {
