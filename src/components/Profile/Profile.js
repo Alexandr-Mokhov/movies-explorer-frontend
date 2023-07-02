@@ -74,7 +74,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
                 placeholder="Ваше имя"
                 required
                 maxLength="45"
-                value={profileEdit ? values['name'] : currentUser.name}
+                value={profileEdit ? values['name'] : currentUser.name || ''}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
@@ -90,7 +90,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
                 type="email"
                 placeholder="Ваша почта"
                 required
-                value={profileEdit ? values['email'] : currentUser.email}
+                value={profileEdit ? values['email'] : currentUser.email || ''}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}

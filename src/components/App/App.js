@@ -10,6 +10,7 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import Footer from '../Footer/Footer';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 
 export default function App() {
@@ -46,10 +47,10 @@ export default function App() {
               setCurrentUser={setCurrentUser}
             />
           } />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route path="/movies" element={<ProtectedRouteElement element={Movies} loggedIn={loggedIn} />} />
+          <Route path="/saved-movies" element={<ProtectedRouteElement element={SavedMovies} loggedIn={loggedIn} />} />
           <Route path="/profile" element={
-            <Profile
+            <ProtectedRouteElement element={Profile}
               loggedIn={loggedIn}
               setLoggedIn={setLoggedIn}
               isLoading={isLoading}
