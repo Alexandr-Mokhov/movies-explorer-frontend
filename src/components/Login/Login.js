@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormWithValidation } from '../../utils/formValidator';
 import Form from '../Form/Form';
-import { authorizeUser } from '../../utils/auth';
+import { authorizeUser } from '../../utils/MainApi';
 import './Login.css';
 
 export default function Login({ loggedIn, setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {

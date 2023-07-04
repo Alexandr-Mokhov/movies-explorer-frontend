@@ -1,13 +1,6 @@
-import { useFormWithValidation } from '../../utils/formValidator';
 import './SearchForm.css';
 
-export default function SearchForm() {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    resetForm();
-  }
+export default function SearchForm({ values, handleChange, isValid, handleSubmit }) {
 
   return (
     <section className="search-form">
@@ -24,12 +17,13 @@ export default function SearchForm() {
               onChange={handleChange}
               autoComplete="off"
               required
+              minLength="1"
             />
-            <button className="search-form__button" type="submit">Поиск</button>
+            <button className="search-form__button" type="submit" disabled={!isValid}>Поиск</button>
           </div>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" defaultChecked/>
+              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" defaultChecked />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>

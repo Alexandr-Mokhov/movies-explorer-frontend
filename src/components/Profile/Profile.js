@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
-import { updateUserInfo } from '../../utils/auth';
+import { updateUserInfo } from '../../utils/MainApi';
 import './Profile.css';
 
 export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading, currentUser, setCurrentUser }) {
