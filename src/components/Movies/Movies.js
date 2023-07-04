@@ -15,6 +15,7 @@ export default function Movies() {
   const [isChecked, setIsChecked] = useState(false);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
   const [notFoundMovies, setNotFoundMovies] = useState(false);
+  const [errorFoundMovies, setErrorFoundMovies] = useState(false);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -32,6 +33,7 @@ export default function Movies() {
   function handleSubmit(evt) {
     evt.preventDefault();
     setPreloaderEnabled(true);
+    setErrorFoundMovies(false);
     if (value === '') {
       setIsValid(false);
     } else {
@@ -53,7 +55,10 @@ export default function Movies() {
           localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
           localStorage.setItem('shortFilms', isChecked);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          setErrorFoundMovies(true);
+          console.log(err);
+        })
         .finally(() => {
           setButtonDisabled(false);
           setPreloaderEnabled(false);
@@ -72,7 +77,12 @@ export default function Movies() {
         isChecked={isChecked}
         setIsChecked={setIsChecked}
       />
-      {preloaderEnabled ? <Preloader /> : <MoviesCardList foundMovies={foundMovies} notFoundMovies={notFoundMovies} />}
+      {preloaderEnabled ? <Preloader /> :
+        <MoviesCardList
+          foundMovies={foundMovies}
+          notFoundMovies={notFoundMovies}
+          errorFoundMovies={errorFoundMovies}
+        />}
       {/* <MoreMovies /> */}
     </main>
   )
