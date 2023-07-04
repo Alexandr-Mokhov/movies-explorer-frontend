@@ -1,6 +1,17 @@
 import './SearchForm.css';
 
-export default function SearchForm({ value, handleSubmit, handleChange, isValid }) {
+export default function SearchForm({ 
+  value, 
+  handleSubmit, 
+  handleChange, 
+  isValid, 
+  buttonDisabled,
+  isChecked, 
+  setIsChecked }) {
+    
+  function handleChecked() {
+    setIsChecked(!isChecked)
+  }
 
   return (
     <section className="search-form">
@@ -17,14 +28,14 @@ export default function SearchForm({ value, handleSubmit, handleChange, isValid 
               onChange={handleChange}
               autoComplete="off"
             />
-            <button className="search-form__button" type="submit">Поиск</button>
+            <button className="search-form__button" type="submit" disabled={buttonDisabled}>Поиск</button>
           </div>
           <span className={`search-form__input-error ${!isValid ? 'search-form__input-error_active' : ''}`}>
             Нужно ввести ключевое слово!
           </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" defaultChecked />
+              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>
