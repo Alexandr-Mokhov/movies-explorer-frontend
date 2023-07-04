@@ -6,7 +6,6 @@ export default function MoviesCard({ movies }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
 
-  console.log(movies);
   function handleLikeClick() {
     setIsLiked(!isLiked);
   }
