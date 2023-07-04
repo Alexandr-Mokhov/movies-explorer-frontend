@@ -35,3 +35,10 @@ export const updateUserInfo = ({ name, email }) => {
 		body: JSON.stringify({ name, email }),
 	})
 }
+
+export const checkToken = () => {
+  return request('/users/me', {
+    method: 'GET',
+    headers: setHeaders(),
+  });
+}

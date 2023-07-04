@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -11,18 +11,40 @@ import NotFound from '../NotFound/NotFound';
 import Footer from '../Footer/Footer';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
+import { checkToken } from '../../utils/MainApi';
 import './App.css';
 
 export default function App() {
+  const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
 
   useEffect(() => {
-    const name = localStorage.getItem('name');
-    const email = localStorage.getItem('email');
-    setCurrentUser({ name: name, email: email });
-  }, [])
+    tokenCheck();
+  }, [loggedIn]);
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('token');
+
+    if (jwt) {
+      checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            setCurrentUser({ name: res.name, email: res.email });
+            localStorage.setItem('name', res.name);
+            localStorage.setItem('email', res.email);
+            setLoggedIn(true);
+            navigate('/movies', { replace: true });
+          } else {
+            return Promise.reject(res.status);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 
   return (
     <div className="page">
