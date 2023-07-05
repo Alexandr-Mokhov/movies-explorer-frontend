@@ -35,6 +35,14 @@ export default function Movies() {
     }
   }
 
+  useEffect(() => {
+    if (localStorage.movieSearchText) {
+      setValue(localStorage.getItem('movieSearchText'));
+      setIsChecked(JSON.parse(localStorage.getItem('shortFilms')));
+      setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')))
+    }
+  }, [])
+
   function handleSubmit(evt) {
     evt.preventDefault();
     setPreloaderEnabled(true);

@@ -55,6 +55,9 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
     localStorage.removeItem('token');
     localStorage.removeItem('name');
     localStorage.removeItem('email');
+    localStorage.removeItem('movieSearchText');
+    localStorage.removeItem('shortFilms');
+    localStorage.removeItem('foundMovies');
     navigate('/', { replace: true });
   }
 

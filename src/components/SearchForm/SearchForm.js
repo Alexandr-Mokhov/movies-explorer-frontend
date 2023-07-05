@@ -35,7 +35,7 @@ export default function SearchForm({
           </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} />
+              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={isChecked} />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>
