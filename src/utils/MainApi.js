@@ -42,3 +42,37 @@ export const checkToken = () => {
     headers: setHeaders(),
   });
 }
+
+export function addStatusFavorite(movie) {
+  return request(`/movies`, {
+    method: 'POST',
+    headers: setHeaders(),
+		body: JSON.stringify({
+			country: movie.country,
+			director: movie.director,
+			duration: movie.duration,
+			year: movie.year,
+			description: movie.description,
+			image: `https://api.nomoreparties.co${movie.image.url}`,
+			trailerLink: movie.trailerLink,
+			thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
+			movieId: movie.id,
+			nameRU: movie.nameRU,
+			nameEN: movie.nameEN,
+		}),
+  });
+}
+
+export function deleteStatusFavorite(movie) {
+  return request(`/movies/${movie._id}`, {
+    method: 'DELETE',
+    headers: setHeaders(),
+  });
+}
+
+export function getSavedMovies() {
+  return request(`/movies/`, {
+    method: 'GET',
+    headers: setHeaders(),
+  });
+}

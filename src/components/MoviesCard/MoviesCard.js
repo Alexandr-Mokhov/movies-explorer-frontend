@@ -1,13 +1,47 @@
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
 import './MoviesCard.css';
 
-export default function MoviesCard({ movies }) {
+export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
 
+
+  useEffect(() => {
+    if (selectedFilms[0]) {
+      selectedFilms.map((item) => {
+        // console.log(item, movie);
+        if (item.movieId === movie.id) {
+          setIsLiked(true);
+          movie.movieId = item.movieId;
+          movie._id = item._id;
+        }
+      })
+    }
+  }, [selectedFilms, setSelectedFilms])
+
   function handleLikeClick() {
-    setIsLiked(!isLiked);
+    if (isLiked || pathname === "/saved-movies") {
+      console.log(selectedFilms, movie);
+      deleteStatusFavorite(movie)
+        .then(() => {
+          setIsLiked(false);
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      addStatusFavorite(movie)
+        .then(() => {
+          setIsLiked(true);
+          setSelectedFilms([...selectedFilms, movie]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   function getTimeFromMins(mins) {
@@ -18,13 +52,15 @@ export default function MoviesCard({ movies }) {
 
   return (
     <div className="movies-card">
-      <img
-        className="movies-card__image"
-        src={`https://api.nomoreparties.co/${movies.image.url}`}
-        alt={movies.nameRU}
-      />
+      <a href={movie.trailerLink} target="_blank" rel="noreferrer">
+        <img
+          className="movies-card__image"
+          src={movie.image.url ? `https://api.nomoreparties.co/${movie.image.url}` : movie.image}
+          alt={movie.nameRU}
+        />
+      </a>
       <div className="movies-card__container">
-        <h2 className="movies-card__name">{movies.nameRU}</h2>
+        <h2 className="movies-card__name">{movie.nameRU}</h2>
         <button
           className={`movies-card__favorites ${pathname === "/saved-movies" && 'movies-card__favorites_delete'}
             ${isLiked && 'movies-card__favorites_active'}`}
@@ -32,7 +68,7 @@ export default function MoviesCard({ movies }) {
           onClick={handleLikeClick}
         />
       </div>
-      <p className="movies-card__time">{getTimeFromMins(movies.duration)}</p>
+      <p className="movies-card__time">{getTimeFromMins(movie.duration)}</p>
     </div>
   )
 }

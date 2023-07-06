@@ -7,7 +7,7 @@ import Preloader from '../Preloader/Preloader';
 import { useResize } from '../../utils/checkResize';
 import './Movies.css';
 
-export default function Movies() {
+export default function Movies({ selectedFilms, setSelectedFilms }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -21,7 +21,7 @@ export default function Movies() {
   const [startingItems, setStartingItems] = useState(5);
   const [additionalItems, setAdditionalItems] = useState(2);
   const windowWidth = useResize();
-
+console.log(selectedFilms);
   const handleChange = (event) => {
     setValue(event.target.value);
     event.target.value === '' ? setIsValid(false) : setIsValid(true);
@@ -85,7 +85,8 @@ export default function Movies() {
 
   function handleClickMore() {
     setStartingItems(startingItems + additionalItems);
-    foundMovies.length > startingItems + additionalItems ? setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
+    foundMovies.length > startingItems + additionalItems ? 
+    setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
   }
 
   useEffect(() => {
@@ -125,7 +126,9 @@ export default function Movies() {
           notFoundMovies={notFoundMovies}
           errorFoundMovies={errorFoundMovies}
           startingItems={startingItems}
-        />}
+          selectedFilms={selectedFilms} 
+          setSelectedFilms={setSelectedFilms}
+    />}
       {buttonMoreDisplay && <MoreMovies handleClickMore={handleClickMore} />}
     </main>
   )

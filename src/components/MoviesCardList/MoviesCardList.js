@@ -1,9 +1,38 @@
+import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
-export default function MoviesCardList({ foundMovies, notFoundMovies, errorFoundMovies, startingItems }) {
+export default function MoviesCardList({
+  foundMovies,
+  notFoundMovies,
+  errorFoundMovies,
+  startingItems,
+  selectedFilms,
+  setSelectedFilms }) {
 
-  const visibleItems = () => foundMovies.slice(0, startingItems).map((movie, i) => <MoviesCard movies={movie} key={i} />);
+  const { pathname } = useLocation();
+
+  const movieSavedItems = () => {
+    if (selectedFilms[0]) {
+      return selectedFilms.map((movieItem, i) => {
+        return <MoviesCard
+          movie={movieItem}
+          selectedFilms={selectedFilms}
+          setSelectedFilms={setSelectedFilms}
+          key={i} />
+      })
+    }
+  }
+
+  const movieFoundItems = () => {
+    return foundMovies.slice(0, startingItems).map((movieItem, i) => {
+      return <MoviesCard
+        movie={movieItem}
+        selectedFilms={selectedFilms}
+        setSelectedFilms={setSelectedFilms}
+        key={i} />
+    });
+  }
 
   return (
     <section className="movies-list">
@@ -14,7 +43,7 @@ export default function MoviesCardList({ foundMovies, notFoundMovies, errorFound
         Подождите немного и попробуйте ещё раз.
       </h3>}
       <div className="movies-list__container">
-        {visibleItems()}
+        {pathname === '/movies' ? movieFoundItems() : movieSavedItems()}
       </div>
     </section>
   )

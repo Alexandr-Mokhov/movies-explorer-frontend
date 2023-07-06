@@ -12,6 +12,7 @@ import Footer from '../Footer/Footer';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 import { checkToken } from '../../utils/MainApi';
+import { getSavedMovies } from '../../utils/MainApi';
 import './App.css';
 
 export default function App() {
@@ -19,10 +20,23 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
+  const [selectedFilms, setSelectedFilms] = useState([]);
 
   useEffect(() => {
     tokenCheck();
   }, [loggedIn]);
+
+  useEffect(() => {
+    getSavedMovies()
+      .then((res) => {
+        setSelectedFilms(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [])
+  
+  console.log(selectedFilms);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
@@ -69,8 +83,20 @@ export default function App() {
               setCurrentUser={setCurrentUser}
             />
           } />
-          <Route path="/movies" element={<ProtectedRouteElement element={Movies} loggedIn={loggedIn} />} />
-          <Route path="/saved-movies" element={<ProtectedRouteElement element={SavedMovies} loggedIn={loggedIn} />} />
+          <Route path="/movies" element={
+            <ProtectedRouteElement
+              element={Movies}
+              loggedIn={loggedIn}
+              selectedFilms={selectedFilms}
+              setSelectedFilms={setSelectedFilms}
+            />} />
+          <Route path="/saved-movies" element={
+            <ProtectedRouteElement
+              element={SavedMovies}
+              loggedIn={loggedIn}
+              selectedFilms={selectedFilms}
+              setSelectedFilms={setSelectedFilms}
+            />} />
           <Route path="/profile" element={
             <ProtectedRouteElement element={Profile}
               loggedIn={loggedIn}
