@@ -11,11 +11,9 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
   useEffect(() => {
     if (selectedFilms[0]) {
       selectedFilms.map((item) => {
-        // console.log(item, movie);
         if (item.movieId === movie.id) {
           setIsLiked(true);
-          movie.movieId = item.movieId;
-          movie._id = item._id;
+          movie._id = item._id
         }
       })
     }
@@ -23,20 +21,19 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
 
   function handleLikeClick() {
     if (isLiked || pathname === "/saved-movies") {
-      console.log(selectedFilms, movie);
       deleteStatusFavorite(movie)
         .then(() => {
           setIsLiked(false);
-
+          setSelectedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
       addStatusFavorite(movie)
-        .then(() => {
+        .then((res) => {
           setIsLiked(true);
-          setSelectedFilms([...selectedFilms, movie]);
+          setSelectedFilms([...selectedFilms, res]);
         })
         .catch((err) => {
           console.log(err);

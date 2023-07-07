@@ -21,7 +21,7 @@ export default function Movies({ selectedFilms, setSelectedFilms }) {
   const [startingItems, setStartingItems] = useState(5);
   const [additionalItems, setAdditionalItems] = useState(2);
   const windowWidth = useResize();
-console.log(selectedFilms);
+
   const handleChange = (event) => {
     setValue(event.target.value);
     event.target.value === '' ? setIsValid(false) : setIsValid(true);
@@ -91,9 +91,9 @@ console.log(selectedFilms);
 
   useEffect(() => {
     if (windowWidth >= 1000) {
-      setStartingItems(12);
+      setStartingItems(16);
       setAdditionalItems(4);
-    } else if (windowWidth >= 768) {
+    } else if (windowWidth >= 800) {
       setStartingItems(12);
       setAdditionalItems(3);
     } else if (windowWidth >= 500) {

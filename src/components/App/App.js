@@ -35,12 +35,9 @@ export default function App() {
         console.log(err);
       })
   }, [])
-  
-  console.log(selectedFilms);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
-
     if (jwt) {
       checkToken(jwt)
         .then((res) => {
@@ -103,7 +100,6 @@ export default function App() {
               setLoggedIn={setLoggedIn}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
-              currentUser={currentUser}
               setCurrentUser={setCurrentUser}
             />
           } />

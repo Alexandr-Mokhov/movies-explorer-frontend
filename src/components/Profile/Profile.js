@@ -1,14 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { updateUserInfo } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 
-export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading, currentUser, setCurrentUser }) {
+export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const [profileEdit, setProfileEdit] = useState(false);
   const [isMatches, setIsMatches] = useState(true);
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const currentUser = useContext(CurrentUserContext);
 
   function changeProfileEdit() {
     setProfileEdit(!profileEdit);
