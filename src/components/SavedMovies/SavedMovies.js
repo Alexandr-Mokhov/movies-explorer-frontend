@@ -6,16 +6,28 @@ import './SavedMovies.css';
 export default function SavedMovies({ selectedFilms, setSelectedFilms }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [foundSavedMovies, setFoundSavedMovies] = useState([]);
+  const [searched, setSearched] = useState(false);
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    event.target.value === '' ? setIsValid(false) : setIsValid(true);
+    if (event.target.value === '') {
+      setIsValid(false);
+      setSearched(false);
+      setFoundSavedMovies([]);
+    } else {
+      setIsValid(true);
+    }
   };
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setSearched(true);
+    selectedFilms.filter(movie => {
+      if (movie.nameRU.toLowerCase().includes(value.toLowerCase()) && (isChecked ? movie.duration < 40 : true))
+      foundSavedMovies.push(movie);
+    })
   }
 
   return (
@@ -25,12 +37,11 @@ export default function SavedMovies({ selectedFilms, setSelectedFilms }) {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         isValid={isValid}
-        buttonDisabled={buttonDisabled}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
       />
       <MoviesCardList
-        selectedFilms={selectedFilms}
+        selectedFilms={searched ? foundSavedMovies : selectedFilms}
         setSelectedFilms={setSelectedFilms}
       />
     </main>
