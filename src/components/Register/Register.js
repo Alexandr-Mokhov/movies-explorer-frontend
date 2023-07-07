@@ -74,6 +74,7 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
             value={values['name'] || ''}
             onChange={handleChange}
             autoComplete="off"
+            pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
           />
           <span className="form__input-error">{errors['name']}</span>
           <label className="form__label" htmlFor="input-email">E-mail</label>
@@ -87,6 +88,7 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
             value={values['email'] || ''}
             onChange={handleChange}
             autoComplete="off"
+            pattern=".+@.+\.[a-z]{2,}"
           />
           <span className="form__input-error">{errors['email']}</span>
           <label className="form__label" htmlFor="input-password">Пароль</label>

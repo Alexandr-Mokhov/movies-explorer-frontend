@@ -58,6 +58,7 @@ export default function Login({ loggedIn, setLoggedIn, isLoading, setIsLoading, 
             value={values['email'] || ''}
             onChange={handleChange}
             autoComplete="off"
+            pattern=".+@.+\.[a-z]{2,}"
           />
           <span className="form__input-error">{errors['email']}</span>
           <label className="form__label" htmlFor="input-password">Пароль</label>

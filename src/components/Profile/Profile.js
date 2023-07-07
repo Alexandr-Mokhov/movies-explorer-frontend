@@ -83,6 +83,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
+                pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
               />
             </div>
             <span className="profile__input-error">{errors['name']}</span>
@@ -99,6 +100,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
+                pattern=".+@.+\.[a-z]{2,}"
               />
             </div>
             <span className="profile__input-error">{errors['email']}</span>
