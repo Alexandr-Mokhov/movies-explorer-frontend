@@ -5,12 +5,13 @@ import { updateUserInfo } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 
-export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
+export default function Profile({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const [profileEdit, setProfileEdit] = useState(false);
   const [isMatches, setIsMatches] = useState(true);
   const navigate = useNavigate();
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
+  const [errorText, setErrorText] = useState('');
 
   function changeProfileEdit() {
     setProfileEdit(!profileEdit);
@@ -28,6 +29,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
   function handleSubmit(evt) {
     evt.preventDefault();
     setIsLoading(true);
+    setErrorText('');
 
     updateUserInfo({
       name: values['name'],
@@ -44,6 +46,13 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
         }
       })
       .catch((err) => {
+        if (err === 409) {
+          setErrorText('Пользователь с таким email уже существует.');
+        } else if (err === 500) {
+          setErrorText('500 На сервере произошла ошибка.');
+        } else {
+          setErrorText('При обновлении профиля произошла ошибка.');
+        }
         console.log(err);
       })
       .finally(() => {
@@ -51,7 +60,7 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
         setIsMatches(true);
       })
   }
-  
+
   function onSignOut() {
     setLoggedIn(false);
     localStorage.removeItem('token');
@@ -105,14 +114,16 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading, setIsLoading
             </div>
             <span className="profile__input-error">{errors['email']}</span>
           </div>
-          {profileEdit &&
+          {profileEdit && <div className="profile__profile-edit">
+            <span className="profile__error">{errorText}</span>
             <button
               className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`}
               type="submit"
               disabled={isLoading || !isValid || isMatches}
             >
               {!isLoading ? 'Сохранить' : 'Сохранение...'}
-            </button>}
+            </button>
+          </div>}
           {!profileEdit && <div className="profile__buttons">
             <button className="profile__button profile__button_type_edit" onClick={changeProfileEdit}>Редактировать</button>
             <button className="profile__button profile__button_type_exit" onClick={onSignOut}>Выйти из аккаунта</button>

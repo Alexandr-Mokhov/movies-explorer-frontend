@@ -7,7 +7,7 @@
 .form__container {
   display: flex;
   flex-direction: column;
-  min-height: clamp(210px, 46vh, 350px);
+  min-height: clamp(210px, 41vh, 350px);
 }
 
 .form__label {
@@ -53,6 +53,16 @@
   flex-direction: column;
   width: 396px;
   margin: 10px 0 0;
+}
+
+.form__error {
+  color: #FF004C;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 14px;
+  margin-bottom: 20px;
+  min-height: 14px;
 }
 
 .form__button {
@@ -104,7 +114,7 @@
 
 @media screen and (max-width: 800px) {
   .form__container {
-  min-height: clamp(210px, 31.5vh, 350px);
+    min-height: clamp(210px, 28.5vh, 350px);
   }
 }
 
@@ -114,7 +124,7 @@
   }
 
   .form__container {
-  min-height: clamp(210px, 52vh, 400px);
+    min-height: clamp(210px, 47vh, 400px);
   }
 
   .form__buttons-container {

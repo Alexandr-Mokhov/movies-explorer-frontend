@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Form.css';
 
-export default function Form({ children, name, buttonText, onSubmit, isLoading, isDisabledButton }) {
+export default function Form({ children, name, buttonText, onSubmit, isLoading, isDisabledButton, errorText }) {
 
   return (
     <form className="form" onSubmit={onSubmit} name={name} noValidate>
@@ -9,6 +9,7 @@ export default function Form({ children, name, buttonText, onSubmit, isLoading, 
         {children}
       </div>
       <div className="form__buttons-container">
+        <span className="form__error">{errorText}</span>
         <button
           className={`form__button form__button_type_${isLoading || isDisabledButton ? 'inactive' : 'active'}`}
           type="submit"

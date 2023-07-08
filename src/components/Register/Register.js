@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
@@ -7,10 +8,12 @@ import './Register.css';
 export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const [errorText, setErrorText] = useState('');
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setIsLoading(true);
+    setErrorText('');
 
     registerUser({
       name: values['name'],
@@ -43,6 +46,13 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
           })
       })
       .catch((err) => {
+        if (err === 409) {
+          setErrorText('Пользователь с таким email уже существует.');
+        } else if (err === 500) {
+          setErrorText('500 На сервере произошла ошибка.');
+        } else {
+          setErrorText('При регистрации пользователя произошла ошибка.');
+        }
         console.log(err);
       })
       .finally(() => {
@@ -61,6 +71,7 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
           onSubmit={handleSubmit}
           isLoading={isLoading}
           isDisabledButton={!isValid}
+          errorText={errorText}
         >
           <label className="form__label" htmlFor="input-name">Имя</label>
           <input
