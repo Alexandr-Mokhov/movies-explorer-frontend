@@ -21,7 +21,8 @@ export default function Movies({
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [shortFilms, setShortFilms] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [shortFilms, setShortFilms] = useState([]);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
   const [errorFoundMovies, setErrorFoundMovies] = useState(false);
   const [buttonMoreDisplay, setButtonMoreDisplay] = useState(false);
@@ -31,22 +32,22 @@ export default function Movies({
 
   useEffect(() => {
     settingAmountFilms();
-    handleVisibilityButtonMore()
+    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
   }, [windowWidth]);
 
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
-      setShortFilms(JSON.parse(localStorage.getItem('shortFilms')));
+      setIsChecked(JSON.parse(localStorage.getItem('shortFilms')));
       setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
   }, [])
 
   useEffect(() => {
-    handleVisibilityButtonMore();
+    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
     handleNotFoundMovies();
     savingLocalData();
-  }, [foundMovies])
+  }, [foundMovies, shortFilms])
 
   function handleChange(event) {
     setValue(event.target.value);
@@ -75,45 +76,59 @@ export default function Movies({
     }
   }
 
-  function handleVisibilityButtonMore() {
-    foundMovies.length > startingItems + additionalItems ?
+  function handleVisibilityButtonMore(listFilms) {
+    listFilms.length > startingItems + additionalItems ?
       setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
   }
 
   function handleNotFoundMovies() {
-    foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    if (isChecked) {
+      shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    } else {
+      foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    }
   }
 
   function savingLocalData() {
     localStorage.setItem('movieSearchText', value);
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('shortFilms', shortFilms);
+    localStorage.setItem('shortFilms', JSON.stringify(isChecked));
   }
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    setPreloaderEnabled(true);
-    setErrorFoundMovies(false);
-    setButtonMoreDisplay(false);
-    setButtonDisabled(true);
+  useEffect(() => {
+    handleShowShortFilms();
+    handleVisibilityButtonMore(shortFilms);
+    setIsValid(true);
+    setValue(localStorage.getItem('movieSearchText'));
+  }, [isChecked])
+
+  function handleShowShortFilms() {
     if (value === '') {
       setIsValid(false);
     } else {
+      setPreloaderEnabled(true);
+      setButtonDisabled(true);
       setIsValid(true);
-      setFoundMovies([]);
       if (movies[0]) {
-        setFoundMovies(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
-        handleVisibilityButtonMore();
-        setPreloaderEnabled(false);
         setButtonDisabled(false);
+        setPreloaderEnabled(false);
+        if (!isChecked) {
+          handleVisibilityButtonMore(foundMovies);
+          setFoundMovies(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+          setValue(localStorage.getItem('movieSearchText'));
+        } else {
+          handleVisibilityButtonMore(shortFilms);
+          setShortFilms(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
+        }
       } else {
         getAllMovies()
           .then((res) => {
             setMovies(res);
-            setFoundMovies(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+            setShortFilms(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
+            savingLocalData();
           })
           .then(() => {
-            handleVisibilityButtonMore();
+            handleVisibilityButtonMore(shortFilms);
           })
           .catch((err) => {
             setErrorFoundMovies(true);
@@ -127,9 +142,71 @@ export default function Movies({
     }
   }
 
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    setPreloaderEnabled(true);
+    setErrorFoundMovies(false);
+    setButtonDisabled(true);
+    if (value === '') {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+      setFoundMovies([]);
+      if (movies[0]) {
+        setPreloaderEnabled(false);
+        setButtonDisabled(false);
+        if (!isChecked) {
+          handleVisibilityButtonMore(foundMovies);
+          setFoundMovies(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+        } else {
+          handleVisibilityButtonMore(shortFilms);
+          setShortFilms(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
+          savingLocalData();
+        }
+      } else {
+        if (!isChecked) {
+          getAllMovies()
+            .then((res) => {
+              setMovies(res);
+              setFoundMovies(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+            })
+            .then(() => {
+              handleVisibilityButtonMore(foundMovies);
+            })
+            .catch((err) => {
+              setErrorFoundMovies(true);
+              console.log(err);
+            })
+            .finally(() => {
+              setButtonDisabled(false);
+              setPreloaderEnabled(false);
+            })
+        } else {
+          getAllMovies()
+            .then((res) => {
+              setMovies(res);
+              setShortFilms(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
+              savingLocalData();
+            })
+            .then(() => {
+              handleVisibilityButtonMore(shortFilms);
+            })
+            .catch((err) => {
+              setErrorFoundMovies(true);
+              console.log(err);
+            })
+            .finally(() => {
+              setButtonDisabled(false);
+              setPreloaderEnabled(false);
+            })
+        }
+      }
+    }
+  }
+
   function handleClickMore() {
     setStartingItems(startingItems + additionalItems);
-    handleVisibilityButtonMore();
+    handleVisibilityButtonMore(foundMovies);
   }
 
   return (
@@ -140,8 +217,8 @@ export default function Movies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        shortFilms={shortFilms}
-        setShortFilms={setShortFilms}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
       />
       {preloaderEnabled ? <Preloader /> :
         <MoviesCardList
@@ -151,6 +228,8 @@ export default function Movies({
           startingItems={startingItems}
           selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
+          shortFilms={shortFilms}
+          isChecked={isChecked}
         />}
       {buttonMoreDisplay && <MoreMovies handleClickMore={handleClickMore} />}
     </main>

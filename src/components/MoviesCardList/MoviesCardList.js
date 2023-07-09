@@ -8,9 +8,31 @@ export default function MoviesCardList({
   errorFoundMovies,
   startingItems,
   selectedFilms,
-  setSelectedFilms }) {
-
+  setSelectedFilms,
+  shortFilms,
+  isChecked,
+}) {
   const { pathname } = useLocation();
+
+  const movieFoundItems = () => {
+    if (isChecked) {
+      return shortFilms.map((movieItem) => {
+        return <MoviesCard
+          movie={movieItem}
+          selectedFilms={selectedFilms}
+          setSelectedFilms={setSelectedFilms}
+          key={movieItem.id} />
+      });
+    } else {
+      return foundMovies.slice(0, startingItems).map((movieItem) => {
+        return <MoviesCard
+          movie={movieItem}
+          selectedFilms={selectedFilms}
+          setSelectedFilms={setSelectedFilms}
+          key={movieItem.id} />
+      });
+    }
+  }
 
   const movieSavedItems = () => {
     if (selectedFilms[0]) {
@@ -22,16 +44,6 @@ export default function MoviesCardList({
           key={movieItem.movieId} />
       })
     }
-  }
-
-  const movieFoundItems = () => {
-    return foundMovies.slice(0, startingItems).map((movieItem) => {
-      return <MoviesCard
-        movie={movieItem}
-        selectedFilms={selectedFilms}
-        setSelectedFilms={setSelectedFilms}
-        key={movieItem.id} />
-    });
   }
 
   return (

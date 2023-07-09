@@ -1,16 +1,17 @@
 import './SearchForm.css';
 
-export default function SearchForm({ 
-  value, 
-  handleSubmit, 
-  handleChange, 
-  isValid, 
+export default function SearchForm({
+  value,
+  handleSubmit,
+  handleChange,
+  isValid,
   buttonDisabled,
-  shortFilms, 
-  setShortFilms }) {
-    
+  isChecked,
+  setIsChecked,
+}) {
+
   function handleChecked() {
-    setShortFilms(!shortFilms)
+    setIsChecked(!isChecked);
   }
 
   return (
@@ -35,7 +36,7 @@ export default function SearchForm({
           </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={shortFilms} />
+              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={isChecked} />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>

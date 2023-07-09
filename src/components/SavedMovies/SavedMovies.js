@@ -12,7 +12,8 @@ export default function SavedMovies({
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  const [shortFilms, setShortFilms] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [shortFilms, setShortFilms] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [searched, setSearched] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
