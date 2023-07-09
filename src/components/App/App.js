@@ -24,6 +24,7 @@ export default function App() {
   const [selectedFilms, setSelectedFilms] = useState([]);
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
+  const [notFoundMovies, setNotFoundMovies] = useState(false);
 
   useEffect(() => {
     tokenCheck();
@@ -93,6 +94,8 @@ export default function App() {
               setFoundMovies={setFoundMovies}
               movies={movies}
               setMovies={setMovies}
+              notFoundMovies={notFoundMovies}
+              setNotFoundMovies={setNotFoundMovies}
             />} />
           <Route path="/saved-movies" element={
             <ProtectedRouteElement
@@ -100,6 +103,8 @@ export default function App() {
               loggedIn={loggedIn}
               selectedFilms={selectedFilms}
               setSelectedFilms={setSelectedFilms}
+              notFoundMovies={notFoundMovies}
+              setNotFoundMovies={setNotFoundMovies}
             />} />
           <Route path="/profile" element={
             <ProtectedRouteElement element={Profile}

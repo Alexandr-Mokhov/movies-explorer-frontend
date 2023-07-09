@@ -6,11 +6,11 @@ export default function SearchForm({
   handleChange, 
   isValid, 
   buttonDisabled,
-  isChecked, 
-  setIsChecked }) {
+  shortFilms, 
+  setShortFilms }) {
     
   function handleChecked() {
-    setIsChecked(!isChecked)
+    setShortFilms(!shortFilms)
   }
 
   return (
@@ -35,7 +35,7 @@ export default function SearchForm({
           </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={isChecked} />
+              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={shortFilms} />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>

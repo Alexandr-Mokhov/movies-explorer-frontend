@@ -15,13 +15,14 @@ export default function Movies({
   setMovies,
   foundMovies,
   setFoundMovies,
+  notFoundMovies,
+  setNotFoundMovies,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const [shortFilms, setShortFilms] = useState(false);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
-  const [notFoundMovies, setNotFoundMovies] = useState(false);
   const [errorFoundMovies, setErrorFoundMovies] = useState(false);
   const [buttonMoreDisplay, setButtonMoreDisplay] = useState(false);
   const [startingItems, setStartingItems] = useState(5);
@@ -36,7 +37,7 @@ export default function Movies({
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
-      setIsChecked(JSON.parse(localStorage.getItem('shortFilms')));
+      setShortFilms(JSON.parse(localStorage.getItem('shortFilms')));
       setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
   }, [])
@@ -86,7 +87,7 @@ export default function Movies({
   function savingLocalData() {
     localStorage.setItem('movieSearchText', value);
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('shortFilms', isChecked);
+    localStorage.setItem('shortFilms', shortFilms);
   }
 
   function handleSubmit(evt) {
@@ -139,8 +140,8 @@ export default function Movies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        shortFilms={shortFilms}
+        setShortFilms={setShortFilms}
       />
       {preloaderEnabled ? <Preloader /> :
         <MoviesCardList
