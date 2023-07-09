@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
@@ -6,25 +7,29 @@ import './MoviesCard.css';
 export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
-
+  const [likeDisabled, setLikeDisabled] = useState(false);
 
   useEffect(() => {
     if (selectedFilms[0]) {
-      selectedFilms.map((item) => {
-        if (item.movieId === movie.id) {
-          setIsLiked(true);
-          movie._id = item._id
-        }
-      })
+      selectedFilms.map((item) => checkValues(item));
     }
-  }, [selectedFilms, setSelectedFilms])
+  }, [selectedFilms, movie])
+
+  function checkValues(item) {
+    if (item.movieId === movie.id) {
+      setIsLiked(true);
+      movie._id = item._id;
+    }
+  }
 
   function handleLikeClick() {
+    setLikeDisabled(true);
     if (isLiked || pathname === "/saved-movies") {
       deleteStatusFavorite(movie)
         .then(() => {
           setIsLiked(false);
           setSelectedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+          setLikeDisabled(false);
         })
         .catch((err) => {
           console.log(err);
@@ -34,6 +39,7 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
         .then((res) => {
           setIsLiked(true);
           setSelectedFilms([...selectedFilms, res]);
+          setLikeDisabled(false);
         })
         .catch((err) => {
           console.log(err);
@@ -63,6 +69,7 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
             ${isLiked && 'movies-card__favorites_active'}`}
           type="button"
           onClick={handleLikeClick}
+          disabled={likeDisabled}
         />
       </div>
       <p className="movies-card__time">{getTimeFromMins(movie.duration)}</p>

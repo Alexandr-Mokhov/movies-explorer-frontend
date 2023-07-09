@@ -9,25 +9,25 @@ export default function SavedMovies({ selectedFilms, setSelectedFilms }) {
   const [isChecked, setIsChecked] = useState(false);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [searched, setSearched] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const handleChange = (event) => {
+  function handleChange(event) {
     setValue(event.target.value);
     if (event.target.value === '') {
       setIsValid(false);
       setSearched(false);
-      setFoundSavedMovies([]);
+      setButtonDisabled(true);
     } else {
       setIsValid(true);
+      setButtonDisabled(false);
+
     }
   };
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setSearched(true);
-    selectedFilms.filter(movie => {
-      if (movie.nameRU.toLowerCase().includes(value.toLowerCase()) && (isChecked ? movie.duration < 40 : true))
-      foundSavedMovies.push(movie);
-    })
+    setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
   }
 
   return (
@@ -37,6 +37,7 @@ export default function SavedMovies({ selectedFilms, setSelectedFilms }) {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         isValid={isValid}
+        buttonDisabled={buttonDisabled}
         isChecked={isChecked}
         setIsChecked={setIsChecked}
       />

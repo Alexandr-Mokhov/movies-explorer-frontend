@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -21,6 +22,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [selectedFilms, setSelectedFilms] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [foundMovies, setFoundMovies] = useState([]);
 
   useEffect(() => {
     tokenCheck();
@@ -86,6 +89,10 @@ export default function App() {
               loggedIn={loggedIn}
               selectedFilms={selectedFilms}
               setSelectedFilms={setSelectedFilms}
+              foundMovies={foundMovies}
+              setFoundMovies={setFoundMovies}
+              movies={movies}
+              setMovies={setMovies}
             />} />
           <Route path="/saved-movies" element={
             <ProtectedRouteElement

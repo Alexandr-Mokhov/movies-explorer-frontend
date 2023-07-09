@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -7,11 +8,16 @@ import Preloader from '../Preloader/Preloader';
 import { useResize } from '../../utils/checkResize';
 import './Movies.css';
 
-export default function Movies({ selectedFilms, setSelectedFilms }) {
+export default function Movies({
+  selectedFilms,
+  setSelectedFilms,
+  movies,
+  setMovies,
+  foundMovies,
+  setFoundMovies,
+}) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  const [movies, setMovies] = useState([]);
-  const [foundMovies, setFoundMovies] = useState([]);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
@@ -22,74 +28,37 @@ export default function Movies({ selectedFilms, setSelectedFilms }) {
   const [additionalItems, setAdditionalItems] = useState(2);
   const windowWidth = useResize();
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    event.target.value === '' ? setIsValid(false) : setIsValid(true);
-  };
-
-  function handleNotFoundMovies(foundMovies) {
-    if (foundMovies.length === 0) {
-      setNotFoundMovies(true);
-    } else {
-      setNotFoundMovies(false);
-    }
-  }
+  useEffect(() => {
+    settingAmountFilms();
+    handleVisibilityButtonMore()
+  }, [windowWidth]);
 
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
       setIsChecked(JSON.parse(localStorage.getItem('shortFilms')));
-      setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')))
+      setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
   }, [])
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    setPreloaderEnabled(true);
-    setErrorFoundMovies(false);
-    setButtonMoreDisplay(false);
-    if (value === '') {
+  useEffect(() => {
+    handleVisibilityButtonMore();
+    handleNotFoundMovies();
+    savingLocalData();
+  }, [foundMovies])
+
+  function handleChange(event) {
+    setValue(event.target.value);
+    if (event.target.value === '') {
       setIsValid(false);
+      setButtonDisabled(true);
     } else {
       setIsValid(true);
-      setButtonDisabled(true);
-      getAllMovies()
-        .then((res) => {
-          setMovies(res);
-          foundMovies.length = 0;
-          res.filter(movie => {
-            if (movie.nameRU.toLowerCase().includes(value.toLowerCase()) && (isChecked ? movie.duration < 40 : true)) {
-              foundMovies.push(movie);
-            }
-          });
-        })
-        .then(() => {
-          handleNotFoundMovies(foundMovies);
-          localStorage.setItem('movieSearchText', value);
-          localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-          localStorage.setItem('shortFilms', isChecked);
-          if (foundMovies.length > 4) {
-            setButtonMoreDisplay(true);
-          }
-        })
-        .catch((err) => {
-          setErrorFoundMovies(true);
-          console.log(err);
-        })
-        .finally(() => {
-          setButtonDisabled(false);
-          setPreloaderEnabled(false);
-        })
+      setButtonDisabled(false);
     }
   }
 
-  function handleClickMore() {
-    setStartingItems(startingItems + additionalItems);
-    foundMovies.length > startingItems + additionalItems ? 
-    setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
-  }
-
-  useEffect(() => {
+  function settingAmountFilms() {
     if (windowWidth >= 1000) {
       setStartingItems(16);
       setAdditionalItems(4);
@@ -103,11 +72,64 @@ export default function Movies({ selectedFilms, setSelectedFilms }) {
       setStartingItems(5);
       setAdditionalItems(2);
     }
+  }
 
-    if (foundMovies.length > 4) {
-      setButtonMoreDisplay(true);
+  function handleVisibilityButtonMore() {
+    foundMovies.length > startingItems + additionalItems ?
+      setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
+  }
+
+  function handleNotFoundMovies() {
+    foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+  }
+
+  function savingLocalData() {
+    localStorage.setItem('movieSearchText', value);
+    localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+    localStorage.setItem('shortFilms', isChecked);
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    setPreloaderEnabled(true);
+    setErrorFoundMovies(false);
+    setButtonMoreDisplay(false);
+    setButtonDisabled(true);
+    if (value === '') {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+      setFoundMovies([]);
+      if (movies[0]) {
+        setFoundMovies(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+        handleVisibilityButtonMore();
+        setPreloaderEnabled(false);
+        setButtonDisabled(false);
+      } else {
+        getAllMovies()
+          .then((res) => {
+            setMovies(res);
+            setFoundMovies(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+          })
+          .then(() => {
+            handleVisibilityButtonMore();
+          })
+          .catch((err) => {
+            setErrorFoundMovies(true);
+            console.log(err);
+          })
+          .finally(() => {
+            setButtonDisabled(false);
+            setPreloaderEnabled(false);
+          })
+      }
     }
-  }, [windowWidth]);
+  }
+
+  function handleClickMore() {
+    setStartingItems(startingItems + additionalItems);
+    handleVisibilityButtonMore();
+  }
 
   return (
     <main className="movies" aria-label="Фильмы">
@@ -126,9 +148,9 @@ export default function Movies({ selectedFilms, setSelectedFilms }) {
           notFoundMovies={notFoundMovies}
           errorFoundMovies={errorFoundMovies}
           startingItems={startingItems}
-          selectedFilms={selectedFilms} 
+          selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
-    />}
+        />}
       {buttonMoreDisplay && <MoreMovies handleClickMore={handleClickMore} />}
     </main>
   )

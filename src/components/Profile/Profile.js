@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
@@ -24,7 +25,7 @@ export default function Profile({ setLoggedIn, isLoading, setIsLoading, setCurre
 
   useEffect(() => {
     values['name'] === currentUser.name && values['email'] === currentUser.email ? setIsMatches(true) : setIsMatches(false);
-  }, [values['name'], values['email']])
+  }, [values])
 
   function handleSubmit(evt) {
     evt.preventDefault();
