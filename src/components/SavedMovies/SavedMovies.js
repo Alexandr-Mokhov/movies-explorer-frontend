@@ -24,8 +24,8 @@ export default function SavedMovies({
 
   useEffect(() => {
     handleNotFoundMovies();
-  }, [foundSavedMovies])
-
+  }, [foundSavedMovies, shortFilms, isChecked])
+console.log(foundSavedMovies);
   function handleChange(evt) {
     setValue(evt.target.value);
     if (evt.target.value === '') {
@@ -36,17 +36,48 @@ export default function SavedMovies({
     } else {
       setIsValid(true);
       setButtonDisabled(false);
+      // setSearched(true);
     }
   };
+
+  function handleChecked() {
+    setIsChecked(!isChecked);
+    if (!isChecked) {
+      if (searched) {
+        setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())
+          && movie.duration < 40));
+          console.log('сработал Чекбокс, был Выключен');
+      } else {
+        setShortFilms(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())
+          && movie.duration < 40));
+        console.log('сработал Чекбокс, был Выключен');
+      }
+    } else {
+      console.log('сработал Чекбокс, был Включен');
+      setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+    }
+
+  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setSearched(true);
-    setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+    if (!isChecked) {
+      console.log('сработал Поиск, чекбокс был Выключен');
+      setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+    } else {
+      console.log('сработал Поиск, чекбокс был Включен');
+      setShortFilms(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())
+        && movie.duration < 40));
+    }
   }
 
   function handleNotFoundMovies() {
-    foundSavedMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    if (isChecked) {
+      shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    } else {
+      foundSavedMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    }
   }
 
   return (
@@ -57,11 +88,11 @@ export default function SavedMovies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        shortFilms={shortFilms}
-        setShortFilms={setShortFilms}
+        isChecked={isChecked}
+        handleChecked={handleChecked}
       />
       <MoviesCardList
-        selectedFilms={searched ? foundSavedMovies : selectedFilms}
+        selectedFilms={isChecked ? (searched ? foundSavedMovies : shortFilms) : (searched ? foundSavedMovies : selectedFilms)}
         setSelectedFilms={setSelectedFilms}
         notFoundMovies={notFoundMovies}
       />

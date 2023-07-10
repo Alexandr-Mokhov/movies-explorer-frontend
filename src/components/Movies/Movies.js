@@ -89,7 +89,7 @@ export default function Movies({
       foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
     }
     if (foundMovies.length === 0) {
-      setNotFoundMovies(false);
+      setNotFoundMovies(true);
     }
   }
 

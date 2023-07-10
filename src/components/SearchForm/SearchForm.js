@@ -7,14 +7,8 @@ export default function SearchForm({
   isValid,
   buttonDisabled,
   isChecked,
-  setIsChecked,
   handleChecked
 }) {
-
-  // function handleChecked() {
-  //   setIsChecked(!isChecked);
-  // }
-
   return (
     <section className="search-form">
       <div className="search-form__container">
