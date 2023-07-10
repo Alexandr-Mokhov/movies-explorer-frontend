@@ -17,6 +17,8 @@
 
 * [Ссылка на pull-request](https://github.com/Alexandr-Mokhov/movies-explorer-frontend/pull/2)
 
+* [Ссылка на сервер](https://diploma.mokhov.nomoredomains.rocks)
+
 * [Ссылка на макет в Figma](https://disk.yandex.ru/d/BFSuppEDJl4NqA)
 
 * [Ссылка на github репозиторий](https://github.com/Alexandr-Mokhov/movies-explorer-frontend/tree/level-3)

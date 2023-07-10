@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -25,6 +25,8 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [notFoundMovies, setNotFoundMovies] = useState(false);
+  const [isTokenChecked, setIsTokenChecked] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     tokenCheck();
@@ -39,6 +41,10 @@ export default function App() {
     }
   }, [loggedIn]);
 
+  useEffect(() => {
+      navigate(pathname, { replace: true });
+  }, [isTokenChecked]);
+
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
     if (jwt) {
@@ -49,7 +55,7 @@ export default function App() {
             localStorage.setItem('name', res.name);
             localStorage.setItem('email', res.email);
             setLoggedIn(true);
-            navigate('/movies', { replace: true });
+            setIsTokenChecked(true);
           } else {
             return Promise.reject(res.status);
           }
