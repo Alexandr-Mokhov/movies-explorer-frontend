@@ -38,7 +38,8 @@ export default function Movies({
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
-      setIsChecked(JSON.parse(localStorage.getItem('shortFilms')));
+      setIsChecked(JSON.parse(localStorage.getItem('shortFilmsIsChecked')));
+      setShortFilms(JSON.parse(localStorage.getItem('shortFilms')));
       setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
   }, [])
@@ -49,9 +50,9 @@ export default function Movies({
     savingLocalData();
   }, [foundMovies, shortFilms])
 
-  function handleChange(event) {
-    setValue(event.target.value);
-    if (event.target.value === '') {
+  function handleChange(evt) {
+    setValue(evt.target.value);
+    if (evt.target.value === '') {
       setIsValid(false);
       setButtonDisabled(true);
     } else {
@@ -92,54 +93,69 @@ export default function Movies({
   function savingLocalData() {
     localStorage.setItem('movieSearchText', value);
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('shortFilms', JSON.stringify(isChecked));
+    localStorage.setItem('shortFilmsIsChecked', JSON.stringify(isChecked));
+    localStorage.setItem('shortFilms', JSON.stringify(shortFilms));
   }
 
-  useEffect(() => {
-    handleShowShortFilms();
-    handleVisibilityButtonMore(shortFilms);
-    setIsValid(true);
-    setValue(localStorage.getItem('movieSearchText'));
-  }, [isChecked])
+  function filterMovies(moviesList, short) {
+    return moviesList.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) &&
+      (short ? movie.duration < 40 : true));
+  }
 
-  function handleShowShortFilms() {
+  function handleGetAllMovies(moviesList) {
+    getAllMovies()
+    .then((res) => {
+      setMovies(res);
+      moviesList === foundMovies ? 
+      setFoundMovies(filterMovies(res, false)) : 
+      setShortFilms(filterMovies(res, true));
+    })
+    .then(() => {
+      handleVisibilityButtonMore(moviesList);
+    })
+    .catch((err) => {
+      setErrorFoundMovies(true);
+      console.log(err);
+    })
+    .finally(() => {
+      setButtonDisabled(false);
+      setPreloaderEnabled(false);
+    })
+  }
+
+  function handleChecked() {
+    !isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
+    setButtonDisabled(true);
     if (value === '') {
       setIsValid(false);
     } else {
       setPreloaderEnabled(true);
-      setButtonDisabled(true);
+      setErrorFoundMovies(false);
+      savingLocalData();
       setIsValid(true);
       if (movies[0]) {
         setButtonDisabled(false);
         setPreloaderEnabled(false);
-        if (!isChecked) {
+        if (isChecked) {
+          // console.log('сработал Чекбокс был Включен, поиск Фаунд из ЛокалСтораж');
           handleVisibilityButtonMore(foundMovies);
-          setFoundMovies(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
-          setValue(localStorage.getItem('movieSearchText'));
+          setFoundMovies(filterMovies(movies, false));
         } else {
+          // console.log('сработал Чекбокс был Выключен, поиск Шорт из ЛокалСтораж');
           handleVisibilityButtonMore(shortFilms);
-          setShortFilms(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
+          setShortFilms(filterMovies(movies, true));
         }
       } else {
-        getAllMovies()
-          .then((res) => {
-            setMovies(res);
-            setShortFilms(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
-            savingLocalData();
-          })
-          .then(() => {
-            handleVisibilityButtonMore(shortFilms);
-          })
-          .catch((err) => {
-            setErrorFoundMovies(true);
-            console.log(err);
-          })
-          .finally(() => {
-            setButtonDisabled(false);
-            setPreloaderEnabled(false);
-          })
+        if (isChecked) {
+          // console.log('сработал Чекбокс был Включен, поиск Фаунд из Сервера');
+          handleGetAllMovies(foundMovies);
+        } else {
+          // console.log('сработал Чекбокс был Выключен, поиск Шорт из Сервера');
+          handleGetAllMovies(shortFilms);
+        }
       }
     }
+    setIsChecked(!isChecked);
   }
 
   function handleSubmit(evt) {
@@ -150,55 +166,27 @@ export default function Movies({
     if (value === '') {
       setIsValid(false);
     } else {
+      savingLocalData();
       setIsValid(true);
-      setFoundMovies([]);
       if (movies[0]) {
         setPreloaderEnabled(false);
         setButtonDisabled(false);
         if (!isChecked) {
+          // console.log('сработал Поиск чекбокс был Выключен, поиск Фаунд из ЛокалСтораж');
           handleVisibilityButtonMore(foundMovies);
-          setFoundMovies(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+          setFoundMovies(filterMovies(movies, false));
         } else {
+          // console.log('сработал Поиск чекбокс был Включен, поиск Шорт из ЛокалСтораж');
           handleVisibilityButtonMore(shortFilms);
-          setShortFilms(movies.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
-          savingLocalData();
+          setShortFilms(filterMovies(movies, true));
         }
       } else {
         if (!isChecked) {
-          getAllMovies()
-            .then((res) => {
-              setMovies(res);
-              setFoundMovies(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
-            })
-            .then(() => {
-              handleVisibilityButtonMore(foundMovies);
-            })
-            .catch((err) => {
-              setErrorFoundMovies(true);
-              console.log(err);
-            })
-            .finally(() => {
-              setButtonDisabled(false);
-              setPreloaderEnabled(false);
-            })
+          // console.log('сработал Поиск чекбокс был Выключен, поиск Фаунд из Сервера');
+          handleGetAllMovies(foundMovies);
         } else {
-          getAllMovies()
-            .then((res) => {
-              setMovies(res);
-              setShortFilms(res.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) && movie.duration < 40));
-              savingLocalData();
-            })
-            .then(() => {
-              handleVisibilityButtonMore(shortFilms);
-            })
-            .catch((err) => {
-              setErrorFoundMovies(true);
-              console.log(err);
-            })
-            .finally(() => {
-              setButtonDisabled(false);
-              setPreloaderEnabled(false);
-            })
+          // console.log('сработал Поиск чекбокс был Включен, поиск Шорт из Сервера');
+          handleGetAllMovies(shortFilms);
         }
       }
     }
@@ -218,7 +206,7 @@ export default function Movies({
         isValid={isValid}
         buttonDisabled={buttonDisabled}
         isChecked={isChecked}
-        setIsChecked={setIsChecked}
+        handleChecked={handleChecked}
       />
       {preloaderEnabled ? <Preloader /> :
         <MoviesCardList

@@ -26,9 +26,9 @@ export default function SavedMovies({
     handleNotFoundMovies();
   }, [foundSavedMovies])
 
-  function handleChange(event) {
-    setValue(event.target.value);
-    if (event.target.value === '') {
+  function handleChange(evt) {
+    setValue(evt.target.value);
+    if (evt.target.value === '') {
       setIsValid(false);
       setSearched(false);
       setButtonDisabled(true);
