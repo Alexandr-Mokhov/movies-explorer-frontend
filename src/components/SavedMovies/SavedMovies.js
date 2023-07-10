@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import filterMovies from '../../utils/filterMovies';
 import './SavedMovies.css';
 
 export default function SavedMovies({
@@ -25,7 +26,7 @@ export default function SavedMovies({
   useEffect(() => {
     handleNotFoundMovies();
   }, [foundSavedMovies, shortFilms, isChecked])
-console.log(foundSavedMovies);
+
   function handleChange(evt) {
     setValue(evt.target.value);
     if (evt.target.value === '') {
@@ -36,7 +37,6 @@ console.log(foundSavedMovies);
     } else {
       setIsValid(true);
       setButtonDisabled(false);
-      // setSearched(true);
     }
   };
 
@@ -44,31 +44,27 @@ console.log(foundSavedMovies);
     setIsChecked(!isChecked);
     if (!isChecked) {
       if (searched) {
-        setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())
-          && movie.duration < 40));
-          console.log('сработал Чекбокс, был Выключен');
+        setFoundSavedMovies(filterMovies(selectedFilms, value, value, true));
+          // console.log('сработал Чекбокс, был Выключен');
       } else {
-        setShortFilms(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())
-          && movie.duration < 40));
-        console.log('сработал Чекбокс, был Выключен');
+        setShortFilms(filterMovies(selectedFilms, value, true));
+        // console.log('сработал Чекбокс, был Выключен');
       }
     } else {
-      console.log('сработал Чекбокс, был Включен');
-      setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+      // console.log('сработал Чекбокс, был Включен');
+      setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     }
-
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setSearched(true);
     if (!isChecked) {
-      console.log('сработал Поиск, чекбокс был Выключен');
-      setFoundSavedMovies(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())));
+      // console.log('сработал Поиск, чекбокс был Выключен');
+      setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     } else {
-      console.log('сработал Поиск, чекбокс был Включен');
-      setShortFilms(selectedFilms.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase())
-        && movie.duration < 40));
+      // console.log('сработал Поиск, чекбокс был Включен');
+      setShortFilms(filterMovies(selectedFilms, value, true));
     }
   }
 

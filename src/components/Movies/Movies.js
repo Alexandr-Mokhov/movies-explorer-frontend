@@ -6,6 +6,7 @@ import MoreMovies from '../MoreMovies/MoreMovies';
 import { getAllMovies } from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
 import { useResize } from '../../utils/checkResize';
+import filterMovies from '../../utils/filterMovies';
 import './Movies.css';
 
 export default function Movies({
@@ -100,18 +101,13 @@ export default function Movies({
     localStorage.setItem('shortFilms', JSON.stringify(shortFilms));
   }
 
-  function filterMovies(moviesList, short) {
-    return moviesList.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()) &&
-      (short ? movie.duration < 40 : true));
-  }
-
   function handleGetAllMovies(moviesList) {
     getAllMovies()
     .then((res) => {
       setMovies(res);
       moviesList === foundMovies ? 
-      setFoundMovies(filterMovies(res, false)) : 
-      setShortFilms(filterMovies(res, true));
+      setFoundMovies(filterMovies(res, value, false)) : 
+      setShortFilms(filterMovies(res, value, true));
     })
     .then(() => {
       handleVisibilityButtonMore(moviesList);
@@ -142,11 +138,11 @@ export default function Movies({
         if (isChecked) {
           // console.log('сработал Чекбокс был Включен, поиск Фаунд из ЛокалСтораж');
           handleVisibilityButtonMore(foundMovies);
-          setFoundMovies(filterMovies(movies, false));
+          setFoundMovies(filterMovies(movies, value, false));
         } else {
           // console.log('сработал Чекбокс был Выключен, поиск Шорт из ЛокалСтораж');
           handleVisibilityButtonMore(shortFilms);
-          setShortFilms(filterMovies(movies, true));
+          setShortFilms(filterMovies(movies, value, true));
         }
       } else {
         if (isChecked) {
@@ -177,11 +173,11 @@ export default function Movies({
         if (!isChecked) {
           // console.log('сработал Поиск чекбокс был Выключен, поиск Фаунд из ЛокалСтораж');
           handleVisibilityButtonMore(foundMovies);
-          setFoundMovies(filterMovies(movies, false));
+          setFoundMovies(filterMovies(movies, value, false));
         } else {
           // console.log('сработал Поиск чекбокс был Включен, поиск Шорт из ЛокалСтораж');
           handleVisibilityButtonMore(shortFilms);
-          setShortFilms(filterMovies(movies, true));
+          setShortFilms(filterMovies(movies, value, true));
         }
       } else {
         if (!isChecked) {
