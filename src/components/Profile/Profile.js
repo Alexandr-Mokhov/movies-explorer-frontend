@@ -70,6 +70,7 @@ export default function Profile({ setLoggedIn, isLoading, setIsLoading, setCurre
     localStorage.removeItem('movieSearchText');
     localStorage.removeItem('shortFilms');
     localStorage.removeItem('foundMovies');
+    localStorage.removeItem('isCheckedShortFilms');
     navigate('/', { replace: true });
   }
 

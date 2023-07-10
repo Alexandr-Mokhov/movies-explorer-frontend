@@ -38,7 +38,7 @@ export default function Movies({
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
-      setIsChecked(JSON.parse(localStorage.getItem('shortFilmsIsChecked')));
+      setIsChecked(JSON.parse(localStorage.getItem('isCheckedShortFilms')));
       setShortFilms(JSON.parse(localStorage.getItem('shortFilms')));
       setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
@@ -88,12 +88,15 @@ export default function Movies({
     } else {
       foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
     }
+    if (foundMovies.length === 0) {
+      setNotFoundMovies(false);
+    }
   }
 
   function savingLocalData() {
     localStorage.setItem('movieSearchText', value);
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('shortFilmsIsChecked', JSON.stringify(isChecked));
+    localStorage.setItem('isCheckedShortFilms', JSON.stringify(isChecked));
     localStorage.setItem('shortFilms', JSON.stringify(shortFilms));
   }
 

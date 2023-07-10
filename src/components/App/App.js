@@ -28,17 +28,16 @@ export default function App() {
 
   useEffect(() => {
     tokenCheck();
+    if (loggedIn) {
+      getSavedMovies()
+        .then((res) => {
+          setSelectedFilms(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   }, [loggedIn]);
-
-  useEffect(() => {
-    getSavedMovies()
-      .then((res) => {
-        setSelectedFilms(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }, [])
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
