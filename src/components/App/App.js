@@ -20,7 +20,7 @@ export default function App() {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
+  const [currentUser, setCurrentUser] = useState({ name: '', email: '', ownerId: '' });
   const [selectedFilms, setSelectedFilms] = useState([]);
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
@@ -30,19 +30,19 @@ export default function App() {
 
   useEffect(() => {
     tokenCheck();
+  }, [loggedIn]);
+
+  useEffect(() => {
+    navigate(pathname, { replace: true });
     if (loggedIn) {
       getSavedMovies()
         .then((res) => {
-          setSelectedFilms(res);
+          setSelectedFilms(res.filter(movie => movie.owner === currentUser.ownerId));
         })
         .catch((err) => {
           console.log(err);
         })
     }
-  }, [loggedIn]);
-
-  useEffect(() => {
-      navigate(pathname, { replace: true });
   }, [isTokenChecked]);
 
   const tokenCheck = () => {
@@ -51,9 +51,10 @@ export default function App() {
       checkToken(jwt)
         .then((res) => {
           if (res) {
-            setCurrentUser({ name: res.name, email: res.email });
+            setCurrentUser({ name: res.name, email: res.email, ownerId: res._id });
             localStorage.setItem('name', res.name);
             localStorage.setItem('email', res.email);
+            localStorage.setItem('ownerId', res._id);
             setLoggedIn(true);
             setIsTokenChecked(true);
           } else {
@@ -74,8 +75,9 @@ export default function App() {
     localStorage.removeItem('shortFilms');
     localStorage.removeItem('foundMovies');
     localStorage.removeItem('isCheckedShortFilms');
+    localStorage.removeItem('ownerId');
     setLoggedIn(false);
-    setCurrentUser({ name: '', email: '' });
+    setCurrentUser({ name: '', email: '', ownerId: '' });
     setSelectedFilms([]);
     setMovies([]);
     setFoundMovies([]);

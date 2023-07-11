@@ -136,20 +136,16 @@ export default function Movies({
         setButtonDisabled(false);
         setPreloaderEnabled(false);
         if (isChecked) {
-          // console.log('сработал Чекбокс был Включен, поиск Фаунд из ЛокалСтораж');
           handleVisibilityButtonMore(foundMovies);
           setFoundMovies(filterMovies(movies, value, false));
         } else {
-          // console.log('сработал Чекбокс был Выключен, поиск Шорт из ЛокалСтораж');
           handleVisibilityButtonMore(shortFilms);
           setShortFilms(filterMovies(movies, value, true));
         }
       } else {
         if (isChecked) {
-          // console.log('сработал Чекбокс был Включен, поиск Фаунд из Сервера');
           handleGetAllMovies(foundMovies);
         } else {
-          // console.log('сработал Чекбокс был Выключен, поиск Шорт из Сервера');
           handleGetAllMovies(shortFilms);
         }
       }
@@ -171,20 +167,16 @@ export default function Movies({
         setPreloaderEnabled(false);
         setButtonDisabled(false);
         if (!isChecked) {
-          // console.log('сработал Поиск чекбокс был Выключен, поиск Фаунд из ЛокалСтораж');
           handleVisibilityButtonMore(foundMovies);
           setFoundMovies(filterMovies(movies, value, false));
         } else {
-          // console.log('сработал Поиск чекбокс был Включен, поиск Шорт из ЛокалСтораж');
           handleVisibilityButtonMore(shortFilms);
           setShortFilms(filterMovies(movies, value, true));
         }
       } else {
         if (!isChecked) {
-          // console.log('сработал Поиск чекбокс был Выключен, поиск Фаунд из Сервера');
           handleGetAllMovies(foundMovies);
         } else {
-          // console.log('сработал Поиск чекбокс был Включен, поиск Шорт из Сервера');
           handleGetAllMovies(shortFilms);
         }
       }

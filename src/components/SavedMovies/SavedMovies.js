@@ -44,14 +44,11 @@ export default function SavedMovies({
     setIsChecked(!isChecked);
     if (!isChecked) {
       if (searched) {
-        setFoundSavedMovies(filterMovies(selectedFilms, value, value, true));
-          // console.log('сработал Чекбокс, был Выключен');
+        setFoundSavedMovies(filterMovies(selectedFilms, value, true));
       } else {
         setShortFilms(filterMovies(selectedFilms, value, true));
-        // console.log('сработал Чекбокс, был Выключен');
       }
     } else {
-      // console.log('сработал Чекбокс, был Включен');
       setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     }
   }
@@ -60,10 +57,8 @@ export default function SavedMovies({
     evt.preventDefault();
     setSearched(true);
     if (!isChecked) {
-      // console.log('сработал Поиск, чекбокс был Выключен');
       setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     } else {
-      // console.log('сработал Поиск, чекбокс был Включен');
       setShortFilms(filterMovies(selectedFilms, value, true));
     }
   }
