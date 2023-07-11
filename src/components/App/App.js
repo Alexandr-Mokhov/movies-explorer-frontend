@@ -66,6 +66,24 @@ export default function App() {
     }
   }
 
+  function onSignOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    localStorage.removeItem('movieSearchText');
+    localStorage.removeItem('shortFilms');
+    localStorage.removeItem('foundMovies');
+    localStorage.removeItem('isCheckedShortFilms');
+    setLoggedIn(false);
+    setCurrentUser({ name: '', email: '' });
+    setSelectedFilms([]);
+    setMovies([]);
+    setFoundMovies([]);
+    setNotFoundMovies(false);
+    setIsTokenChecked(false);
+    navigate('/', { replace: true });
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -118,6 +136,7 @@ export default function App() {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setCurrentUser={setCurrentUser}
+              onSignOut={onSignOut}
             />
           } />
           <Route path="*" element={<NotFound />} />

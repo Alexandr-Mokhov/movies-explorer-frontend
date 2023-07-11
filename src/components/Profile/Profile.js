@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { updateUserInfo } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 
-export default function Profile({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
+export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSignOut }) {
   const [profileEdit, setProfileEdit] = useState(false);
   const [isMatches, setIsMatches] = useState(true);
-  const navigate = useNavigate();
   const { values, handleChange, errors, isValid } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
   const [errorText, setErrorText] = useState('');
@@ -60,18 +58,6 @@ export default function Profile({ setLoggedIn, isLoading, setIsLoading, setCurre
         setIsLoading(false);
         setIsMatches(true);
       })
-  }
-
-  function onSignOut() {
-    setLoggedIn(false);
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    localStorage.removeItem('movieSearchText');
-    localStorage.removeItem('shortFilms');
-    localStorage.removeItem('foundMovies');
-    localStorage.removeItem('isCheckedShortFilms');
-    navigate('/', { replace: true });
   }
 
   return (
