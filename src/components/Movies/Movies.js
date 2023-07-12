@@ -78,8 +78,12 @@ export default function Movies({
     }
   }
 
+  useEffect(() => {
+    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
+  }, [handleClickMore])
+
   function handleVisibilityButtonMore(listFilms) {
-    listFilms.length > startingItems + additionalItems ?
+    listFilms.length >= startingItems + 1 ?
       setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
   }
 
@@ -114,7 +118,7 @@ export default function Movies({
       setShortFilms(filterMovies(res, value, true));
     })
     .then(() => {
-      handleVisibilityButtonMore(moviesList);
+      isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
     })
     .catch((err) => {
       setErrorFoundMovies(true);
@@ -136,21 +140,24 @@ export default function Movies({
       setErrorFoundMovies(false);
       savingLocalData();
       setIsValid(true);
+      settingAmountFilms();
       if (movies[0]) {
         setButtonDisabled(false);
         setPreloaderEnabled(false);
         if (isChecked) {
-          handleVisibilityButtonMore(foundMovies);
           setFoundMovies(filterMovies(movies, value, false));
+          handleVisibilityButtonMore(foundMovies);
         } else {
-          handleVisibilityButtonMore(shortFilms);
           setShortFilms(filterMovies(movies, value, true));
+          handleVisibilityButtonMore(shortFilms);
         }
       } else {
         if (isChecked) {
           handleGetAllMovies(foundMovies);
+          handleVisibilityButtonMore(foundMovies);
         } else {
           handleGetAllMovies(shortFilms);
+          handleVisibilityButtonMore(shortFilms);
         }
       }
     }
@@ -167,21 +174,24 @@ export default function Movies({
     } else {
       savingLocalData();
       setIsValid(true);
+      settingAmountFilms();
       if (movies[0]) {
         setPreloaderEnabled(false);
         setButtonDisabled(false);
         if (!isChecked) {
-          handleVisibilityButtonMore(foundMovies);
           setFoundMovies(filterMovies(movies, value, false));
+          handleVisibilityButtonMore(foundMovies);
         } else {
-          handleVisibilityButtonMore(shortFilms);
           setShortFilms(filterMovies(movies, value, true));
+          handleVisibilityButtonMore(shortFilms);
         }
       } else {
         if (!isChecked) {
           handleGetAllMovies(foundMovies);
+          handleVisibilityButtonMore(foundMovies);
         } else {
           handleGetAllMovies(shortFilms);
+          handleVisibilityButtonMore(shortFilms);
         }
       }
     }
@@ -189,7 +199,6 @@ export default function Movies({
 
   function handleClickMore() {
     setStartingItems(startingItems + additionalItems);
-    handleVisibilityButtonMore(foundMovies);
   }
 
   return (

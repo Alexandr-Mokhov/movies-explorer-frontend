@@ -16,7 +16,7 @@ export default function MoviesCardList({
 
   const movieFoundItems = () => {
     if (isChecked) {
-      return shortFilms.map((movieItem) => {
+      return shortFilms.slice(0, startingItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
           selectedFilms={selectedFilms}
