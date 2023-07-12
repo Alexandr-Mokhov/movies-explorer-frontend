@@ -84,13 +84,17 @@ export default function Movies({
   }
 
   function handleNotFoundMovies() {
-    if (isChecked) {
-      shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+    if (movies[0]) {
+      if (isChecked) {
+        shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+      } else {
+        foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+      }
+      if (foundMovies.length === 0) {
+        setNotFoundMovies(true);
+      }
     } else {
-      foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
-    }
-    if (foundMovies.length === 0) {
-      setNotFoundMovies(true);
+      setNotFoundMovies(false);
     }
   }
 
