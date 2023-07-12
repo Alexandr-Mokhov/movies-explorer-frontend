@@ -33,7 +33,6 @@ export default function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    navigate(pathname, { replace: true });
     if (loggedIn) {
       getSavedMovies()
         .then((res) => {
@@ -57,6 +56,7 @@ export default function App() {
             localStorage.setItem('ownerId', res._id);
             setLoggedIn(true);
             setIsTokenChecked(true);
+            navigate(pathname, { replace: true });
           } else {
             return Promise.reject(res.status);
           }
@@ -121,7 +121,8 @@ export default function App() {
               setMovies={setMovies}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
-            />} />
+            />}
+          />
           <Route path="/saved-movies" element={
             <ProtectedRouteElement
               element={SavedMovies}
