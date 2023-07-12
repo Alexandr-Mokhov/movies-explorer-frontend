@@ -81,7 +81,7 @@
   flex-direction: column;
 }
 
-.profile__error {
+.profile__notification {
   color: #FF004C;
   text-align: center;
   font-size: 11px;
@@ -91,10 +91,18 @@
   min-height: 14px;
 }
 
+.profile__notification_type_error {
+  color: #FF004C;
+}
+
+.profile__notification_type_completed {
+  color: #2BE080;
+}
+
 .profile__buttons {
   display: flex;
   flex-direction: column;
-  margin: 5vh 0 0;
+  margin: 0.5vh 0 0;
 }
 
 .profile__button {
@@ -153,7 +161,7 @@
   }
 
   .profile__buttons {
-    margin: 3.5vh 0 0;
+    margin: 0.3vh 0 0;
   }
 }
 
@@ -182,7 +190,7 @@
   }
 
   .profile__buttons {
-    margin: 4.5vh 0 0;
+    margin: 0.5vh 0 0;
   }
 
   .profile__button {

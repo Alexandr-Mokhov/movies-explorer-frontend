@@ -10,10 +10,11 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
   const [isMatches, setIsMatches] = useState(true);
   const { values, handleChange, errors, isValid } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
-  const [errorText, setErrorText] = useState('');
+  const [notificationText, setNotificationText] = useState('');
 
   function changeProfileEdit() {
     setProfileEdit(!profileEdit);
+    setNotificationText('');
   }
 
   useEffect(() => {
@@ -22,13 +23,18 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
   }, [])
 
   useEffect(() => {
-    values['name'] === currentUser.name && values['email'] === currentUser.email ? setIsMatches(true) : setIsMatches(false);
+    if (values['name'] === currentUser.name && values['email'] === currentUser.email) {
+      setIsMatches(true);
+    } else {
+      setIsMatches(false);
+      setNotificationText('');
+    }
   }, [values])
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setIsLoading(true);
-    setErrorText('');
+    setNotificationText('');
 
     updateUserInfo({
       name: values['name'],
@@ -40,17 +46,18 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
           localStorage.setItem('name', res.name);
           localStorage.setItem('email', res.email);
           setProfileEdit(false);
+          setNotificationText('Данные успешно сохранены!');
         } else {
           return Promise.reject(res.status);
         }
       })
       .catch((err) => {
         if (err === 409) {
-          setErrorText('Пользователь с таким email уже существует.');
+          setNotificationText('Пользователь с таким email уже существует.');
         } else if (err === 500) {
-          setErrorText('500 На сервере произошла ошибка.');
+          setNotificationText('500 На сервере произошла ошибка.');
         } else {
-          setErrorText('При обновлении профиля произошла ошибка.');
+          setNotificationText('При обновлении профиля произошла ошибка.');
         }
         console.log(err);
       })
@@ -103,7 +110,7 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
             <span className="profile__input-error">{errors['email']}</span>
           </div>
           {profileEdit && <div className="profile__profile-edit">
-            <span className="profile__error">{errorText}</span>
+            <span className="profile__notification profile__notification_type_error">{notificationText}</span>
             <button
               className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`}
               type="submit"
@@ -113,6 +120,7 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
             </button>
           </div>}
           {!profileEdit && <div className="profile__buttons">
+            <span className="profile__notification profile__notification_type_completed">{notificationText}</span>
             <button className="profile__button profile__button_type_edit" onClick={changeProfileEdit}>Редактировать</button>
             <button className="profile__button profile__button_type_exit" onClick={onSignOut}>Выйти из аккаунта</button>
           </div>}
