@@ -18,6 +18,7 @@ export default function SavedMovies({
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [searched, setSearched] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [recheck, setRecheck] = useState(false);
 
   useEffect(() => {
     setFoundSavedMovies(selectedFilms);
@@ -25,7 +26,12 @@ export default function SavedMovies({
 
   useEffect(() => {
     handleNotFoundMovies();
+    setRecheck(true);
   }, [foundSavedMovies, shortFilms, isChecked])
+
+  useEffect(() => {
+    setNotFoundMovies(false);
+  }, [recheck])
 
   function handleChange(evt) {
     setValue(evt.target.value);
