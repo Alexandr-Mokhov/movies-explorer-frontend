@@ -44,6 +44,14 @@ export default function App() {
     }
   }, [isTokenChecked]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      if (pathname === "/sign-up" || pathname === "/sign-in") {
+        navigate('/movies', { replace: true });
+      }
+    }
+  }, [pathname, loggedIn])
+
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
     if (jwt) {
