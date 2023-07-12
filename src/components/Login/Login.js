@@ -3,6 +3,11 @@ import { useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
 import Form from '../Form/Form';
 import { authorizeUser } from '../../utils/MainApi';
+import {
+  AUTHORISATION_ERROR,
+  BAD_REQUEST_ERROR,
+  INTERNAL_SERVER_ERROR,
+} from '../../constans';
 import './Login.css';
 
 export default function Login({ setLoggedIn, isLoading, setIsLoading }) {
@@ -31,11 +36,11 @@ export default function Login({ setLoggedIn, isLoading, setIsLoading }) {
       })
       .catch((err) => {
         setLoggedIn(false);
-        if (err === 401) {
+        if (err === AUTHORISATION_ERROR) {
           setErrorText('Вы ввели неправильный логин или пароль.');
-        } else if (err === 400) {
+        } else if (err === BAD_REQUEST_ERROR) {
           setErrorText('При авторизации произошла ошибка. Токен не передан или передан не в том формат.');
-        } else if (err === 500) {
+        } else if (err === INTERNAL_SERVER_ERROR) {
           setErrorText('500 На сервере произошла ошибка.');
         } else {
           setErrorText('При авторизации на сервере произошла ошибка.');

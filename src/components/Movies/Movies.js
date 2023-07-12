@@ -7,6 +7,20 @@ import { getAllMovies } from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
 import { useResize } from '../../utils/checkResize';
 import filterMovies from '../../utils/filterMovies';
+import {
+  SCREEN_DESCTOP,
+  SCREEN_TABLET,
+  SCREEN_MOBILE,
+  STARTING_ITEMS_DESCTOP,
+  STARTING_ITEMS_TABLET,
+  STARTING_ITEMS_MOBILE,
+  STARTING_ITEMS_MINIMUM,
+  ADDITIONAL_ITEMS_DESCTOP,
+  ADDITIONAL_ITEMS_TABLET,
+  ADDITIONAL_ITEMS_MOBILE,
+  ADDITIONAL_ITEMS_MINIMUM,
+  ONE_ADDITIONAL_ELEMENT,
+} from '../../constans';
 import './Movies.css';
 
 export default function Movies({
@@ -63,18 +77,18 @@ export default function Movies({
   }
 
   function settingAmountFilms() {
-    if (windowWidth >= 1000) {
-      setStartingItems(16);
-      setAdditionalItems(4);
-    } else if (windowWidth >= 800) {
-      setStartingItems(12);
-      setAdditionalItems(3);
-    } else if (windowWidth >= 500) {
-      setStartingItems(8);
-      setAdditionalItems(2);
+    if (windowWidth >= SCREEN_DESCTOP) {
+      setStartingItems(STARTING_ITEMS_DESCTOP);
+      setAdditionalItems(ADDITIONAL_ITEMS_DESCTOP);
+    } else if (windowWidth >= SCREEN_TABLET) {
+      setStartingItems(STARTING_ITEMS_TABLET);
+      setAdditionalItems(ADDITIONAL_ITEMS_TABLET);
+    } else if (windowWidth >= SCREEN_MOBILE) {
+      setStartingItems(STARTING_ITEMS_MOBILE);
+      setAdditionalItems(ADDITIONAL_ITEMS_MOBILE);
     } else {
-      setStartingItems(5);
-      setAdditionalItems(2);
+      setStartingItems(STARTING_ITEMS_MINIMUM);
+      setAdditionalItems(ADDITIONAL_ITEMS_MINIMUM);
     }
   }
 
@@ -83,7 +97,7 @@ export default function Movies({
   }, [handleClickMore])
 
   function handleVisibilityButtonMore(listFilms) {
-    listFilms.length >= startingItems + 1 ?
+    listFilms.length >= startingItems + ONE_ADDITIONAL_ELEMENT ?
       setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
   }
 
@@ -111,23 +125,23 @@ export default function Movies({
 
   function handleGetAllMovies(moviesList) {
     getAllMovies()
-    .then((res) => {
-      setMovies(res);
-      moviesList === foundMovies ? 
-      setFoundMovies(filterMovies(res, value, false)) : 
-      setShortFilms(filterMovies(res, value, true));
-    })
-    .then(() => {
-      isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
-    })
-    .catch((err) => {
-      setErrorFoundMovies(true);
-      console.log(err);
-    })
-    .finally(() => {
-      setButtonDisabled(false);
-      setPreloaderEnabled(false);
-    })
+      .then((res) => {
+        setMovies(res);
+        moviesList === foundMovies ?
+          setFoundMovies(filterMovies(res, value, false)) :
+          setShortFilms(filterMovies(res, value, true));
+      })
+      .then(() => {
+        isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
+      })
+      .catch((err) => {
+        setErrorFoundMovies(true);
+        console.log(err);
+      })
+      .finally(() => {
+        setButtonDisabled(false);
+        setPreloaderEnabled(false);
+      })
   }
 
   function handleChecked() {

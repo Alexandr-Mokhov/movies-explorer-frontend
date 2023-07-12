@@ -2,6 +2,7 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
+import { MINUTES_PER_HOUR } from '../../constans';
 import './MoviesCard.css';
 
 export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
@@ -48,8 +49,8 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
   }
 
   function getTimeFromMins(mins) {
-    const hours = Math.trunc(mins / 60);
-    const minutes = mins % 60;
+    const hours = Math.trunc(mins / MINUTES_PER_HOUR);
+    const minutes = mins % MINUTES_PER_HOUR;
     return hours + 'ч ' + minutes + 'м';
   };
 

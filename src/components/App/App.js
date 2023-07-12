@@ -98,8 +98,8 @@ export default function App() {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setCurrentUser={setCurrentUser}
-            />
-          } />
+            />}
+          />
           <Route path="/sign-in" element={
             <Login
               loggedIn={loggedIn}
@@ -107,8 +107,8 @@ export default function App() {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setCurrentUser={setCurrentUser}
-            />
-          } />
+            />}
+          />
           <Route path="/movies" element={
             <ProtectedRouteElement
               element={Movies}
@@ -131,7 +131,8 @@ export default function App() {
               setSelectedFilms={setSelectedFilms}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
-            />} />
+            />}
+          />
           <Route path="/profile" element={
             <ProtectedRouteElement element={Profile}
               loggedIn={loggedIn}
@@ -140,8 +141,8 @@ export default function App() {
               setIsLoading={setIsLoading}
               setCurrentUser={setCurrentUser}
               onSignOut={onSignOut}
-            />
-          } />
+            />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

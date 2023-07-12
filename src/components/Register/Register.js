@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
+import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
 import './Register.css';
 
 export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
@@ -46,9 +47,9 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
           })
       })
       .catch((err) => {
-        if (err === 409) {
+        if (err === CONFLICTING_REQUEST_ERROR) {
           setErrorText('Пользователь с таким email уже существует.');
-        } else if (err === 500) {
+        } else if (err === INTERNAL_SERVER_ERROR) {
           setErrorText('500 На сервере произошла ошибка.');
         } else {
           setErrorText('При регистрации пользователя произошла ошибка.');
