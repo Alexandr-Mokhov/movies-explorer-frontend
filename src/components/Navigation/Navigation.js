@@ -1,10 +1,25 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Navigation.css';
 
 export default function Navigation() {
   const [navMenu, setNavMenu] = useState(false);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!navMenu) return;
+
+    function handleClickOverlay(evt) {
+      if (evt.target.className.indexOf('navigation__overlay') === 0) {
+        setNavMenu(!navMenu);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOverlay);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOverlay);
+    }
+  }, [navMenu]);
 
   return (
     <div className="navigation">
