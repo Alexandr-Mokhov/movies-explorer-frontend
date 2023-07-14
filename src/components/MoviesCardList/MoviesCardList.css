@@ -5,6 +5,19 @@
   padding: 70px 70px 10px;
 }
 
+.movies-list__not-found {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.movies-list__error-found {
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  color: #FF3055;
+}
+
 .movies-list__container {
   width: 1140px;
   display: grid;

@@ -1,14 +1,14 @@
-import { useFormWithValidation } from '../../utils/formValidator';
 import './SearchForm.css';
 
-export default function SearchForm() {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    resetForm();
-  }
-
+export default function SearchForm({
+  value,
+  handleSubmit,
+  handleChange,
+  isValid,
+  buttonDisabled,
+  isChecked,
+  handleChecked
+}) {
   return (
     <section className="search-form">
       <div className="search-form__container">
@@ -20,16 +20,18 @@ export default function SearchForm() {
               name="search"
               type="text"
               placeholder="Фильм"
-              value={values['search'] || ''}
+              value={value || ''}
               onChange={handleChange}
               autoComplete="off"
-              required
             />
-            <button className="search-form__button" type="submit">Поиск</button>
+            <button className="search-form__button" type="submit" disabled={buttonDisabled}>Поиск</button>
           </div>
+          <span className={`search-form__input-error ${!isValid ? 'search-form__input-error_active' : ''}`}>
+            Нужно ввести ключевое слово!
+          </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" defaultChecked/>
+              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={isChecked} />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>

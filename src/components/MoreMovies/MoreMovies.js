@@ -1,10 +1,10 @@
 import './MoreMovies.css';
 
-export default function MoreMovies() {
+export default function MoreMovies({ handleClickMore }) {
   return (
     <section className="more-movies">
       <div className="more-movies__container">
-        <button className="more-movies__button" type="button">Еще</button>
+        <button className="more-movies__button" type="button" onClick={handleClickMore}>Еще</button>
       </div>
     </section>
   )

@@ -1,34 +1,78 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
+import { updateUserInfo } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
 import './Profile.css';
 
-export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
+export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSignOut }) {
   const [profileEdit, setProfileEdit] = useState(false);
-  const [userName, setUserName] = useState('Александр');
-  const navigate = useNavigate();
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const [isMatches, setIsMatches] = useState(true);
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const currentUser = useContext(CurrentUserContext);
+  const [notificationText, setNotificationText] = useState('');
 
   function changeProfileEdit() {
     setProfileEdit(!profileEdit);
+    setNotificationText('');
   }
 
-  function onSignOut() {
-    setLoggedIn(!loggedIn);
-    navigate("/");
-  }
+  useEffect(() => {
+    values['name'] = currentUser.name;
+    values['email'] = currentUser.email;
+  }, [])
+
+  useEffect(() => {
+    if (values['name'] === currentUser.name && values['email'] === currentUser.email) {
+      setIsMatches(true);
+    } else {
+      setIsMatches(false);
+      setNotificationText('');
+    }
+  }, [values])
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setUserName(values['name']);
-    setProfileEdit(false);
+    setIsLoading(true);
+    setNotificationText('');
+
+    updateUserInfo({
+      name: values['name'],
+      email: values['email']
+    })
+      .then((res) => {
+        if (res.email) {
+          setCurrentUser({ name: res.name, email: res.email });
+          localStorage.setItem('name', res.name);
+          localStorage.setItem('email', res.email);
+          setProfileEdit(false);
+          setNotificationText('Данные успешно сохранены!');
+        } else {
+          return Promise.reject(res.status);
+        }
+      })
+      .catch((err) => {
+        if (err === CONFLICTING_REQUEST_ERROR) {
+          setNotificationText('Пользователь с таким email уже существует.');
+        } else if (err === INTERNAL_SERVER_ERROR) {
+          setNotificationText('500 На сервере произошла ошибка.');
+        } else {
+          setNotificationText('При обновлении профиля произошла ошибка.');
+        }
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setIsMatches(true);
+      })
   }
 
   return (
     <main className="profile">
       <section className="profile__section">
         <form className="profile__form" onSubmit={handleSubmit} noValidate>
-          <h1 className="profile__title">Привет, {userName}!</h1>
+          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
           <div className="profile__form-container">
             <div className="profile__inputs-container">
               <label className="profile__label" htmlFor="input-name">Имя</label>
@@ -40,10 +84,11 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
                 placeholder="Ваше имя"
                 required
                 maxLength="45"
-                value={values['name'] || ''}
+                value={profileEdit ? values['name'] : currentUser.name || ''}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
+                pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
               />
             </div>
             <span className="profile__input-error">{errors['name']}</span>
@@ -56,23 +101,27 @@ export default function Profile({ loggedIn, setLoggedIn, isLoading }) {
                 type="email"
                 placeholder="Ваша почта"
                 required
-                value={values['email'] || ''}
+                value={profileEdit ? values['email'] : currentUser.email || ''}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
+                pattern=".+@.+\.[a-z]{2,}"
               />
             </div>
             <span className="profile__input-error">{errors['email']}</span>
           </div>
-          {profileEdit &&
+          {profileEdit && <div className="profile__profile-edit">
+            <span className="profile__notification profile__notification_type_error">{notificationText}</span>
             <button
-              className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid ? 'inactive' : 'active'}`}
+              className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`}
               type="submit"
-              disabled={isLoading || !isValid}
+              disabled={isLoading || !isValid || isMatches}
             >
-              Сохранить
-            </button>}
+              {!isLoading ? 'Сохранить' : 'Сохранение...'}
+            </button>
+          </div>}
           {!profileEdit && <div className="profile__buttons">
+            <span className="profile__notification profile__notification_type_completed">{notificationText}</span>
             <button className="profile__button profile__button_type_edit" onClick={changeProfileEdit}>Редактировать</button>
             <button className="profile__button profile__button_type_exit" onClick={onSignOut}>Выйти из аккаунта</button>
           </div>}

@@ -1,0 +1,19 @@
+export const SCREEN_DESCTOP = 1000;
+export const SCREEN_TABLET = 800;
+export const SCREEN_MOBILE = 500;
+export const STARTING_ITEMS_DESCTOP = 16;
+export const STARTING_ITEMS_TABLET = 12;
+export const STARTING_ITEMS_MOBILE = 8;
+export const STARTING_ITEMS_MINIMUM = 5;
+export const ADDITIONAL_ITEMS_DESCTOP = 4;
+export const ADDITIONAL_ITEMS_TABLET = 3;
+export const ADDITIONAL_ITEMS_MOBILE = 2;
+export const ADDITIONAL_ITEMS_MINIMUM = 2;
+export const ONE_ADDITIONAL_ELEMENT = 1;
+export const MINUTES_PER_HOUR = 60;
+export const SHORT_FILMS_DURATION = 40;
+export const AUTHORISATION_ERROR = 401;
+export const BAD_REQUEST_ERROR = 400;
+export const INTERNAL_SERVER_ERROR = 500;
+export const CONFLICTING_REQUEST_ERROR = 409;
+

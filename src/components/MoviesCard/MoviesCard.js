@@ -1,32 +1,79 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
+import { MINUTES_PER_HOUR } from '../../constans';
 import './MoviesCard.css';
 
-export default function MoviesCard() {
+export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
+  const [likeDisabled, setLikeDisabled] = useState(false);
+
+  useEffect(() => {
+    if (selectedFilms[0]) {
+      selectedFilms.map((item) => checkValues(item));
+    }
+  }, [selectedFilms, movie])
+
+  function checkValues(item) {
+    if (item.movieId === movie.id) {
+      setIsLiked(true);
+      movie._id = item._id;
+    }
+  }
 
   function handleLikeClick() {
-    setIsLiked(!isLiked);
+    setLikeDisabled(true);
+    if (isLiked || pathname === "/saved-movies") {
+      deleteStatusFavorite(movie)
+        .then(() => {
+          setIsLiked(false);
+          setSelectedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+          setLikeDisabled(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      addStatusFavorite(movie)
+        .then((res) => {
+          setIsLiked(true);
+          setSelectedFilms([...selectedFilms, res]);
+          setLikeDisabled(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
+
+  function getTimeFromMins(mins) {
+    const hours = Math.trunc(mins / MINUTES_PER_HOUR);
+    const minutes = mins % MINUTES_PER_HOUR;
+    return hours + 'ч ' + minutes + 'м';
+  };
 
   return (
     <div className="movies-card">
-      <img
-        className="movies-card__image"
-        src="https://thecity.m24.ru/b/d/SYketSiveYs9JffObLLBFlFNGhtudTX-kYVfOS8Xp1Gj5pqKzWTJSFS-PsArI08gRZaK1yZktQXWesHOaOz7FWcJ5xZMng=xC4cpbRD2LUqTSWmL6Ve8w.jpg"
-        alt="33 слова о дизайне"
-      />
+      <a href={movie.trailerLink} target="_blank" rel="noreferrer">
+        <img
+          className="movies-card__image"
+          src={movie.image.url ? `https://api.nomoreparties.co/${movie.image.url}` : movie.image}
+          alt={movie.nameRU}
+        />
+      </a>
       <div className="movies-card__container">
-        <h2 className="movies-card__name">33 слова о дизайне</h2>
+        <h2 className="movies-card__name">{movie.nameRU}</h2>
         <button
           className={`movies-card__favorites ${pathname === "/saved-movies" && 'movies-card__favorites_delete'}
             ${isLiked && 'movies-card__favorites_active'}`}
           type="button"
           onClick={handleLikeClick}
+          disabled={likeDisabled}
         />
       </div>
-      <p className="movies-card__time">1ч 42м</p>
+      <p className="movies-card__time">{getTimeFromMins(movie.duration)}</p>
     </div>
   )
 }

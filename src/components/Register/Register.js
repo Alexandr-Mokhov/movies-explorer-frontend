@@ -1,17 +1,64 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
+import { registerUser, authorizeUser } from '../../utils/MainApi';
+import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
 import './Register.css';
 
-export default function Register({ setLoggedIn, isLoading }) {
+export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-
+  const [errorText, setErrorText] = useState('');
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    navigate("/movies");
-    setLoggedIn(true);
+    setIsLoading(true);
+    setErrorText('');
+
+    registerUser({
+      name: values['name'],
+      email: values['email'],
+      password: values['password'],
+    })
+      .then((res) => {
+        if (res.email) {
+          setCurrentUser({ name: res.name, email: res.email });
+          localStorage.setItem('name', res.name);
+          localStorage.setItem('email', res.email);
+        } else {
+          return Promise.reject(res.status);
+        }
+      })
+      .then(() => {
+        authorizeUser({
+          email: values['email'],
+          password: values['password'],
+        })
+          .then((res) => {
+            if (res.token) {
+              localStorage.setItem('token', res.token);
+              setLoggedIn(true);
+              navigate('/movies', { replace: true });
+              resetForm();
+            } else {
+              return Promise.reject(res.status);
+            }
+          })
+      })
+      .catch((err) => {
+        if (err === CONFLICTING_REQUEST_ERROR) {
+          setErrorText('Пользователь с таким email уже существует.');
+        } else if (err === INTERNAL_SERVER_ERROR) {
+          setErrorText('500 На сервере произошла ошибка.');
+        } else {
+          setErrorText('При регистрации пользователя произошла ошибка.');
+        }
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -25,6 +72,7 @@ export default function Register({ setLoggedIn, isLoading }) {
           onSubmit={handleSubmit}
           isLoading={isLoading}
           isDisabledButton={!isValid}
+          errorText={errorText}
         >
           <label className="form__label" htmlFor="input-name">Имя</label>
           <input
@@ -38,6 +86,7 @@ export default function Register({ setLoggedIn, isLoading }) {
             value={values['name'] || ''}
             onChange={handleChange}
             autoComplete="off"
+            pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
           />
           <span className="form__input-error">{errors['name']}</span>
           <label className="form__label" htmlFor="input-email">E-mail</label>
@@ -51,6 +100,7 @@ export default function Register({ setLoggedIn, isLoading }) {
             value={values['email'] || ''}
             onChange={handleChange}
             autoComplete="off"
+            pattern=".+@.+\.[a-z]{2,}"
           />
           <span className="form__input-error">{errors['email']}</span>
           <label className="form__label" htmlFor="input-password">Пароль</label>
