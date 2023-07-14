@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
 import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
-import './Register.css';
+import '../Login/Login.css';
 
 export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
   const navigate = useNavigate();
@@ -62,10 +62,10 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
   }
 
   return (
-    <main className="register">
-      <section className="register__container">
-        <Link className="register__link" to="/"><div className="register__logo" /></Link>
-        <h1 className="register__title">Добро пожаловать!</h1>
+    <main className="auth">
+      <section className="auth__container">
+        <Link className="auth__link" to="/"><div className="auth__logo" /></Link>
+        <h1 className="auth__title">Добро пожаловать!</h1>
         <Form
           name={"register"}
           buttonText={isLoading ? 'Регистрация...' : 'Зарегистрироваться'}

@@ -53,10 +53,10 @@ export default function Login({ setLoggedIn, isLoading, setIsLoading }) {
   }
 
   return (
-    <main className="login">
-      <section className="login__container">
-        <Link className="login__link" to="/"><div className="login__logo" /></Link>
-        <h1 className="login__title">Рады видеть!</h1>
+    <main className="auth">
+      <section className="auth__container">
+        <Link className="auth__link" to="/"><div className="auth__logo" /></Link>
+        <h1 className="auth__title">Рады видеть!</h1>
         <Form
           name={"login"}
           buttonText={isLoading ? 'Вход...' : 'Войти'}
