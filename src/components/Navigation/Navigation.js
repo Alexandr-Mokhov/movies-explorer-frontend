@@ -19,7 +19,11 @@ export default function Navigation() {
     return () => {
       document.removeEventListener('mousedown', handleClickOverlay);
     }
-  }, [navMenu]);
+  }, [navMenu])
+
+  useEffect(() => {
+    setNavMenu(false);
+  }, [pathname]);
 
   return (
     <div className="navigation">
