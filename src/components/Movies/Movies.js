@@ -40,14 +40,14 @@ export default function Movies({
   const [shortFilms, setShortFilms] = useState([]);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
   const [errorFoundMovies, setErrorFoundMovies] = useState(false);
-  const [buttonMoreDisplay, setButtonMoreDisplay] = useState(false);
-  const [startingItems, setStartingItems] = useState(5);
-  const [additionalItems, setAdditionalItems] = useState(2);
+  const [buttonMore, setButtonMore] = useState(false);
+  const [startItems, setStartItems] = useState(5);
+  const [addedItems, setAddedItems] = useState(2);
   const windowWidth = useResize();
 
   useEffect(() => {
     settingAmountFilms();
-    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
+    handleShowButtonMore(startItems);
   }, [windowWidth]);
 
   useEffect(() => {
@@ -60,9 +60,9 @@ export default function Movies({
   }, [])
 
   useEffect(() => {
-    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
     handleNotFoundMovies();
     savingLocalData();
+    handleShowButtonMore(startItems);
   }, [foundMovies, shortFilms])
 
   function handleChange(evt) {
@@ -78,38 +78,41 @@ export default function Movies({
 
   function settingAmountFilms() {
     if (windowWidth >= SCREEN_DESCTOP) {
-      setStartingItems(STARTING_ITEMS_DESCTOP);
-      setAdditionalItems(ADDITIONAL_ITEMS_DESCTOP);
+      setStartItems(STARTING_ITEMS_DESCTOP);
+      setAddedItems(ADDITIONAL_ITEMS_DESCTOP);
     } else if (windowWidth >= SCREEN_TABLET) {
-      setStartingItems(STARTING_ITEMS_TABLET);
-      setAdditionalItems(ADDITIONAL_ITEMS_TABLET);
+      setStartItems(STARTING_ITEMS_TABLET);
+      setAddedItems(ADDITIONAL_ITEMS_TABLET);
     } else if (windowWidth >= SCREEN_MOBILE) {
-      setStartingItems(STARTING_ITEMS_MOBILE);
-      setAdditionalItems(ADDITIONAL_ITEMS_MOBILE);
+      setStartItems(STARTING_ITEMS_MOBILE);
+      setAddedItems(ADDITIONAL_ITEMS_MOBILE);
     } else {
-      setStartingItems(STARTING_ITEMS_MINIMUM);
-      setAdditionalItems(ADDITIONAL_ITEMS_MINIMUM);
+      setStartItems(STARTING_ITEMS_MINIMUM);
+      setAddedItems(ADDITIONAL_ITEMS_MINIMUM);
     }
   }
 
-  useEffect(() => {
-    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
-  }, [handleClickMore])
+  function showButtonMore(listFilms, visibleFilms) {
+    listFilms.length >= visibleFilms + ONE_ADDITIONAL_ELEMENT ?
+      setButtonMore(true) : setButtonMore(false);
+  }
 
-  function handleVisibilityButtonMore(listFilms) {
-    listFilms.length >= startingItems + ONE_ADDITIONAL_ELEMENT ?
-      setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
+  function handleShowButtonMore(visibleFilms) {
+    isChecked ?
+      showButtonMore(shortFilms, visibleFilms) :
+      showButtonMore(foundMovies, visibleFilms);
   }
 
   function handleNotFoundMovies() {
     if (movies[0]) {
       if (isChecked) {
-        shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+        shortFilms.length === 0 ?
+          setNotFoundMovies(true) :
+          setNotFoundMovies(false);
       } else {
-        foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
-      }
-      if (foundMovies.length === 0) {
-        setNotFoundMovies(true);
+        foundMovies.length === 0 ?
+          setNotFoundMovies(true) :
+          setNotFoundMovies(false);
       }
     } else {
       setNotFoundMovies(false);
@@ -124,15 +127,13 @@ export default function Movies({
   }
 
   function handleGetAllMovies(moviesList) {
+    setButtonMore(false);
     getAllMovies()
       .then((res) => {
         setMovies(res);
         moviesList === foundMovies ?
           setFoundMovies(filterMovies(res, value, false)) :
           setShortFilms(filterMovies(res, value, true));
-      })
-      .then(() => {
-        isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
       })
       .catch((err) => {
         setErrorFoundMovies(true);
@@ -145,34 +146,24 @@ export default function Movies({
   }
 
   function handleChecked() {
-    !isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
     setButtonDisabled(true);
     if (value === '') {
       setIsValid(false);
     } else {
       setPreloaderEnabled(true);
       setErrorFoundMovies(false);
-      savingLocalData();
       setIsValid(true);
       settingAmountFilms();
       if (movies[0]) {
         setButtonDisabled(false);
         setPreloaderEnabled(false);
-        if (isChecked) {
-          setFoundMovies(filterMovies(movies, value, false));
-          handleVisibilityButtonMore(foundMovies);
-        } else {
+        isChecked ?
+          setFoundMovies(filterMovies(movies, value, false)) :
           setShortFilms(filterMovies(movies, value, true));
-          handleVisibilityButtonMore(shortFilms);
-        }
       } else {
-        if (isChecked) {
-          handleGetAllMovies(foundMovies);
-          handleVisibilityButtonMore(foundMovies);
-        } else {
+        isChecked ?
+          handleGetAllMovies(foundMovies) :
           handleGetAllMovies(shortFilms);
-          handleVisibilityButtonMore(shortFilms);
-        }
       }
     }
     setIsChecked(!isChecked);
@@ -186,33 +177,26 @@ export default function Movies({
     if (value === '') {
       setIsValid(false);
     } else {
-      savingLocalData();
-      setIsValid(true);
       settingAmountFilms();
+      setIsValid(true);
       if (movies[0]) {
         setPreloaderEnabled(false);
         setButtonDisabled(false);
-        if (!isChecked) {
-          setFoundMovies(filterMovies(movies, value, false));
-          handleVisibilityButtonMore(foundMovies);
-        } else {
+        !isChecked ?
+          setFoundMovies(filterMovies(movies, value, false)) :
           setShortFilms(filterMovies(movies, value, true));
-          handleVisibilityButtonMore(shortFilms);
-        }
       } else {
-        if (!isChecked) {
-          handleGetAllMovies(foundMovies);
-          handleVisibilityButtonMore(foundMovies);
-        } else {
+        !isChecked ?
+          handleGetAllMovies(foundMovies) :
           handleGetAllMovies(shortFilms);
-          handleVisibilityButtonMore(shortFilms);
-        }
       }
     }
   }
 
   function handleClickMore() {
-    setStartingItems(startingItems + additionalItems);
+    const sum = startItems + addedItems;
+    setStartItems(sum);
+    handleShowButtonMore(sum);
   }
 
   return (
@@ -231,13 +215,13 @@ export default function Movies({
           foundMovies={foundMovies}
           notFoundMovies={notFoundMovies}
           errorFoundMovies={errorFoundMovies}
-          startingItems={startingItems}
+          startItems={startItems}
           selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
           shortFilms={shortFilms}
           isChecked={isChecked}
         />}
-      {buttonMoreDisplay && <MoreMovies handleClickMore={handleClickMore} />}
+      {buttonMore && <MoreMovies handleClickMore={handleClickMore} />}
     </main>
   )
 }

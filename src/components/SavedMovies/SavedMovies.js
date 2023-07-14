@@ -16,7 +16,7 @@ export default function SavedMovies({
   const [isChecked, setIsChecked] = useState(false);
   const [shortFilms, setShortFilms] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
-  const [searched, setSearched] = useState(false);
+  const [search, setSearch] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [recheck, setRecheck] = useState(false);
 
@@ -37,7 +37,7 @@ export default function SavedMovies({
     setValue(evt.target.value);
     if (evt.target.value === '') {
       setIsValid(false);
-      setSearched(false);
+      setSearch(false);
       setButtonDisabled(true);
       setNotFoundMovies(false);
     } else {
@@ -49,7 +49,7 @@ export default function SavedMovies({
   function handleChecked() {
     setIsChecked(!isChecked);
     if (!isChecked) {
-      if (searched) {
+      if (search) {
         setFoundSavedMovies(filterMovies(selectedFilms, value, true));
       } else {
         setShortFilms(filterMovies(selectedFilms, value, true));
@@ -61,7 +61,7 @@ export default function SavedMovies({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setSearched(true);
+    setSearch(true);
     if (!isChecked) {
       setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     } else {
@@ -89,7 +89,7 @@ export default function SavedMovies({
         handleChecked={handleChecked}
       />
       <MoviesCardList
-        selectedFilms={isChecked ? (searched ? foundSavedMovies : shortFilms) : (searched ? foundSavedMovies : selectedFilms)}
+        selectedFilms={isChecked ? (search ? foundSavedMovies : shortFilms) : (search ? foundSavedMovies : selectedFilms)}
         setSelectedFilms={setSelectedFilms}
         notFoundMovies={notFoundMovies}
       />

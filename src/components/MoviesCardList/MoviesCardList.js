@@ -6,7 +6,7 @@ export default function MoviesCardList({
   foundMovies,
   notFoundMovies,
   errorFoundMovies,
-  startingItems,
+  startItems,
   selectedFilms,
   setSelectedFilms,
   shortFilms,
@@ -16,7 +16,7 @@ export default function MoviesCardList({
 
   const movieFoundItems = () => {
     if (isChecked) {
-      return shortFilms.slice(0, startingItems).map((movieItem) => {
+      return shortFilms.slice(0, startItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
           selectedFilms={selectedFilms}
@@ -24,7 +24,7 @@ export default function MoviesCardList({
           key={movieItem.id} />
       });
     } else {
-      return foundMovies.slice(0, startingItems).map((movieItem) => {
+      return foundMovies.slice(0, startItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
           selectedFilms={selectedFilms}
