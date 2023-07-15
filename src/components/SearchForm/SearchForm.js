@@ -26,12 +26,17 @@ export default function SearchForm({
             />
             <button className="search-form__button" type="submit" disabled={buttonDisabled}>Поиск</button>
           </div>
-          <span className={`search-form__input-error ${!isValid ? 'search-form__input-error_active' : ''}`}>
+          <span className={`search-form__input-error ${!isValid && 'search-form__input-error_active'}`}>
             Нужно ввести ключевое слово!
           </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={isChecked} />
+              <input className="search-form__checkbox-input"
+                id="checkbox"
+                type="checkbox"
+                onChange={handleChecked}
+                checked={isChecked}
+              />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>

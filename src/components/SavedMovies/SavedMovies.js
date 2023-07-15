@@ -71,9 +71,21 @@ export default function SavedMovies({
 
   function handleNotFoundMovies() {
     if (isChecked) {
-      shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+      shortFilms.length === 0 ?
+        setNotFoundMovies(true) :
+        setNotFoundMovies(false);
     } else {
-      foundSavedMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
+      foundSavedMovies.length === 0 ?
+        setNotFoundMovies(true) :
+        setNotFoundMovies(false);
+    }
+  }
+
+  function displayMovieList() {
+    if (isChecked) {
+      return search ? foundSavedMovies : shortFilms;
+    } else {
+      return search ? foundSavedMovies : selectedFilms;
     }
   }
 
@@ -89,7 +101,7 @@ export default function SavedMovies({
         handleChecked={handleChecked}
       />
       <MoviesCardList
-        selectedFilms={isChecked ? (search ? foundSavedMovies : shortFilms) : (search ? foundSavedMovies : selectedFilms)}
+        selectedFilms={displayMovieList()}
         setSelectedFilms={setSelectedFilms}
         notFoundMovies={notFoundMovies}
       />

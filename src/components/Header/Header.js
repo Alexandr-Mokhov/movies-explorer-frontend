@@ -13,7 +13,7 @@ export default function Header({ loggedIn }) {
           {
             loggedIn ? <Navigation /> :
               <div className="header__links-authorization">
-                <Link to="/sign-up" className={`header__link ${pathname === "/" ? "header__link_type_light" : ''}`}>
+                <Link to="/sign-up" className={`header__link ${pathname === "/" && "header__link_type_light"}`}>
                   Регистрация
                 </Link>
                 <Link className="header__link header__link_type_login" to="/sign-in">Войти</Link>
