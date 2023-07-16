@@ -32,6 +32,8 @@ export default function Movies({
   setFoundMovies,
   notFoundMovies,
   setNotFoundMovies,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -220,6 +222,8 @@ export default function Movies({
           setSelectedFilms={setSelectedFilms}
           shortFilms={shortFilms}
           isChecked={isChecked}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
         />}
       {buttonMore && <MoreMovies handleClickMore={handleClickMore} />}
     </main>

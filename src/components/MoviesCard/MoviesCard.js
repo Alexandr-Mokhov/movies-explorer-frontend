@@ -5,7 +5,13 @@ import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
 import { MINUTES_PER_HOUR } from '../../constans';
 import './MoviesCard.css';
 
-export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
+export default function MoviesCard({ 
+  movie,
+  selectedFilms,
+  setSelectedFilms,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
+}) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
   const [likeDisabled, setLikeDisabled] = useState(false);
@@ -34,6 +40,8 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage('Сбой удаления из избранных! Попробуйте позже.');
         });
     } else {
       addStatusFavorite(movie)
@@ -44,6 +52,8 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage('Сбой добавления в избранные! Попробуйте позже.');
         });
     }
   }

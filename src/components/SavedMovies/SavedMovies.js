@@ -10,6 +10,8 @@ export default function SavedMovies({
   setSelectedFilms,
   notFoundMovies,
   setNotFoundMovies,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -104,6 +106,8 @@ export default function SavedMovies({
         selectedFilms={displayMovieList()}
         setSelectedFilms={setSelectedFilms}
         notFoundMovies={notFoundMovies}
+        setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+        setInfoTooltipMessage={setInfoTooltipMessage}
       />
     </main>
   )

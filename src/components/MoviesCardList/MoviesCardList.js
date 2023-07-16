@@ -11,6 +11,8 @@ export default function MoviesCardList({
   setSelectedFilms,
   shortFilms,
   isChecked,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
 }) {
   const { pathname } = useLocation();
 
@@ -21,6 +23,8 @@ export default function MoviesCardList({
           movie={movieItem}
           selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
           key={movieItem.id} />
       });
     } else {
@@ -29,6 +33,8 @@ export default function MoviesCardList({
           movie={movieItem}
           selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
           key={movieItem.id} />
       });
     }
@@ -41,6 +47,8 @@ export default function MoviesCardList({
           movie={movieItem}
           selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
           key={movieItem.movieId} />
       })
     }

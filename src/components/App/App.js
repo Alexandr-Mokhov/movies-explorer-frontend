@@ -14,6 +14,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 import { checkToken } from '../../utils/MainApi';
 import { getSavedMovies } from '../../utils/MainApi';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import './App.css';
 
 export default function App() {
@@ -26,6 +27,8 @@ export default function App() {
   const [foundMovies, setFoundMovies] = useState([]);
   const [notFoundMovies, setNotFoundMovies] = useState(false);
   const [isTokenChecked, setIsTokenChecked] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -40,6 +43,8 @@ export default function App() {
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage('Сбой! Фильмы не загружены с сервера. Попробуйте позже.');
         })
     }
   }, [isTokenChecked]);
@@ -51,6 +56,11 @@ export default function App() {
       }
     }
   }, [pathname, loggedIn])
+
+  function closeInfoTooltip() {
+    setIsInfoTooltipOpen(false);
+    setInfoTooltipMessage('');
+  }
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
@@ -71,6 +81,8 @@ export default function App() {
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage('Сбой авторизации! Попробуйте позже.');
         });
     }
   }
@@ -129,6 +141,8 @@ export default function App() {
               setMovies={setMovies}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
+              setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+              setInfoTooltipMessage={setInfoTooltipMessage}
             />}
           />
           <Route path="/saved-movies" element={
@@ -139,6 +153,8 @@ export default function App() {
               setSelectedFilms={setSelectedFilms}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
+              setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+              setInfoTooltipMessage={setInfoTooltipMessage}
             />}
           />
           <Route path="/profile" element={
@@ -154,6 +170,11 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeInfoTooltip}
+          notificationText={infoTooltipMessage}
+        />
       </CurrentUserContext.Provider>
     </div>
   );
