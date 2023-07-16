@@ -105,6 +105,12 @@ export default function Movies({
       showButtonMore(foundMovies, visibleFilms);
   }
 
+  function handleClickMore() {
+    const sum = startItems + addedItems;
+    setStartItems(sum);
+    handleShowButtonMore(sum);
+  }
+
   function handleNotFoundMovies() {
     if (movies[0]) {
       if (isChecked) {
@@ -147,7 +153,7 @@ export default function Movies({
       })
   }
 
-  function handleChecked() {
+  function findMovies(checked) {
     setButtonDisabled(true);
     if (value === '') {
       setIsValid(false);
@@ -159,46 +165,25 @@ export default function Movies({
       if (movies[0]) {
         setButtonDisabled(false);
         setPreloaderEnabled(false);
-        isChecked ?
+        checked ?
           setFoundMovies(filterMovies(movies, value, false)) :
           setShortFilms(filterMovies(movies, value, true));
       } else {
-        isChecked ?
+        checked ?
           handleGetAllMovies(foundMovies) :
           handleGetAllMovies(shortFilms);
       }
     }
+  }
+
+  function handleChecked() {
+    findMovies(isChecked);
     setIsChecked(!isChecked);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setPreloaderEnabled(true);
-    setErrorFoundMovies(false);
-    setButtonDisabled(true);
-    if (value === '') {
-      setIsValid(false);
-    } else {
-      settingAmountFilms();
-      setIsValid(true);
-      if (movies[0]) {
-        setPreloaderEnabled(false);
-        setButtonDisabled(false);
-        !isChecked ?
-          setFoundMovies(filterMovies(movies, value, false)) :
-          setShortFilms(filterMovies(movies, value, true));
-      } else {
-        !isChecked ?
-          handleGetAllMovies(foundMovies) :
-          handleGetAllMovies(shortFilms);
-      }
-    }
-  }
-
-  function handleClickMore() {
-    const sum = startItems + addedItems;
-    setStartItems(sum);
-    handleShowButtonMore(sum);
+    findMovies(!isChecked);
   }
 
   return (
