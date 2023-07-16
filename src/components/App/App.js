@@ -57,11 +57,6 @@ export default function App() {
     }
   }, [pathname, loggedIn])
 
-  function closeInfoTooltip() {
-    setIsInfoTooltipOpen(false);
-    setInfoTooltipMessage('');
-  }
-
   const tokenCheck = () => {
     const jwt = localStorage.getItem('token');
     if (jwt) {
@@ -172,8 +167,9 @@ export default function App() {
         <Footer />
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
-          onClose={closeInfoTooltip}
-          notificationText={infoTooltipMessage}
+          infoTooltipMessage={infoTooltipMessage}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
         />
       </CurrentUserContext.Provider>
     </div>
