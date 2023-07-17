@@ -3,10 +3,21 @@ import { useState } from 'react';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
-import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
+import {
+  CONFLICTING_REQUEST_ERROR,
+  INTERNAL_SERVER_ERROR,
+  DEFAULT_ERROR,
+  NAME_RULE,
+  EMAIL_RULE,
+} from '../../constans';
 import '../Login/Login.css';
 
-export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
+export default function Register({
+  setLoggedIn,
+  isLoading,
+  setIsLoading,
+  setCurrentUser
+}) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
   const [errorText, setErrorText] = useState('');
@@ -82,13 +93,16 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
             type="text"
             placeholder="Ваше имя"
             required
+            minLength="2"
             maxLength="45"
             value={values['name'] || ''}
             onChange={handleChange}
             autoComplete="off"
-            pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
+            pattern="[a-zA-Zа-яёА-ЯЁ\-\s]+"
           />
-          <span className="form__input-error">{errors['name']}</span>
+          <span className="form__input-error">
+            {errors['name'] === DEFAULT_ERROR ? NAME_RULE : errors['name']}
+          </span>
           <label className="form__label" htmlFor="input-email">E-mail</label>
           <input
             id="input-email"
@@ -102,7 +116,9 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
             autoComplete="off"
             pattern=".+@.+\.[a-z]{2,}"
           />
-          <span className="form__input-error">{errors['email']}</span>
+          <span className="form__input-error">
+            {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}
+          </span>
           <label className="form__label" htmlFor="input-password">Пароль</label>
           <input
             id="input-password"

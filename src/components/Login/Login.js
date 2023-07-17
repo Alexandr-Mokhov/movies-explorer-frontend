@@ -7,10 +7,16 @@ import {
   AUTHORISATION_ERROR,
   BAD_REQUEST_ERROR,
   INTERNAL_SERVER_ERROR,
+  DEFAULT_ERROR,
+  EMAIL_RULE,
 } from '../../constans';
 import './Login.css';
 
-export default function Login({ setLoggedIn, isLoading, setIsLoading }) {
+export default function Login({
+  setLoggedIn,
+  isLoading,
+  setIsLoading
+}) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
   const [errorText, setErrorText] = useState('');
@@ -78,7 +84,9 @@ export default function Login({ setLoggedIn, isLoading, setIsLoading }) {
             autoComplete="off"
             pattern=".+@.+\.[a-z]{2,}"
           />
-          <span className="form__input-error">{errors['email']}</span>
+          <span className="form__input-error">
+            {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}
+          </span>
           <label className="form__label" htmlFor="input-password">Пароль</label>
           <input
             id="input-password"

@@ -3,7 +3,13 @@ import { useContext, useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { updateUserInfo } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
+import {
+  CONFLICTING_REQUEST_ERROR,
+  INTERNAL_SERVER_ERROR,
+  DEFAULT_ERROR,
+  NAME_RULE,
+  EMAIL_RULE,
+} from '../../constans';
 import './Profile.css';
 
 export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSignOut }) {
@@ -83,15 +89,18 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
                 type="text"
                 placeholder="Ваше имя"
                 required
+                minLength="2"
                 maxLength="45"
                 value={profileEdit ? values['name'] : currentUser.name || ''}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
-                pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
+                pattern="[a-zA-Zа-яёА-ЯЁ\-\s]+"
               />
             </div>
-            <span className="profile__input-error">{errors['name']}</span>
+            <span className="profile__input-error">
+              {errors['name'] === DEFAULT_ERROR ? NAME_RULE : errors['name']}
+            </span>
             <div className="profile__inputs-container">
               <label className="profile__label" htmlFor="input-email">E-mail</label>
               <input
@@ -108,7 +117,9 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
                 pattern=".+@.+\.[a-z]{2,}"
               />
             </div>
-            <span className="profile__input-error">{errors['email']}</span>
+            <span className="profile__input-error">
+              {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}  
+            </span>
           </div>
           {profileEdit && <div className="profile__profile-edit">
             <span className="profile__notification profile__notification_type_error">

@@ -16,4 +16,7 @@ export const AUTHORISATION_ERROR = 401;
 export const BAD_REQUEST_ERROR = 400;
 export const INTERNAL_SERVER_ERROR = 500;
 export const CONFLICTING_REQUEST_ERROR = 409;
+export const DEFAULT_ERROR = 'Введите данные в указанном формате.';
+export const NAME_RULE = 'Имя может содержать только латиницу, кириллицу, пробел и дефис.';
+export const EMAIL_RULE = 'E-mail должен быть в формате "mail@domain.ru"';
 
