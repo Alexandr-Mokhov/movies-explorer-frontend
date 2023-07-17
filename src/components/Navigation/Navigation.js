@@ -5,6 +5,7 @@ import './Navigation.css';
 export default function Navigation() {
   const [navMenu, setNavMenu] = useState(false);
   const { pathname } = useLocation();
+  const isMain = pathname === '/';
 
   useEffect(() => {
     if (!navMenu) return;
@@ -28,7 +29,7 @@ export default function Navigation() {
       <button className={
         `navigation__button-menu 
           ${navMenu ? "navigation__button-menu_type_close" : "navigation__button-menu_type_open"}
-          ${pathname === "/" && "navigation__button-menu_type_light"}`
+          ${isMain && "navigation__button-menu_type_light"}`
       }
         onClick={() => setNavMenu(!navMenu)}
       />
@@ -44,7 +45,7 @@ export default function Navigation() {
           <li>
             <NavLink to="/movies" className={
               ({ isActive }) => `navigation__link ${isActive && "navigation__link_type_active"}
-              ${pathname === "/" && "navigation__link_type_light"}`
+              ${isMain && "navigation__link_type_light"}`
             }>
               Фильмы
             </NavLink>
@@ -52,13 +53,13 @@ export default function Navigation() {
           <li>
             <NavLink to="/saved-movies" className={
               ({ isActive }) => `navigation__link ${isActive && "navigation__link_type_active"}
-              ${pathname === "/" && "navigation__link_type_light"}`
+              ${isMain && "navigation__link_type_light"}`
             }>
               Сохранённые фильмы
             </NavLink>
           </li>
         </ul>
-        <Link to="/profile" className={`navigation__account ${pathname === "/" && (!navMenu && "navigation__account__light")}`}>
+        <Link to="/profile" className={`navigation__account ${isMain && (!navMenu && "navigation__account__light")}`}>
           Аккаунт
           <div className="navigation__icon-account" />
         </Link>

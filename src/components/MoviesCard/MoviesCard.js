@@ -15,6 +15,7 @@ export default function MoviesCard({
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
   const [likeDisabled, setLikeDisabled] = useState(false);
+  const isSavedMovies = pathname === '/saved-movies';
 
   useEffect(() => {
     if (selectedFilms[0]) {
@@ -31,7 +32,7 @@ export default function MoviesCard({
 
   function handleLikeClick() {
     setLikeDisabled(true);
-    if (isLiked || pathname === "/saved-movies") {
+    if (isLiked || isSavedMovies) {
       deleteStatusFavorite(movie)
         .then(() => {
           setIsLiked(false);
@@ -76,7 +77,7 @@ export default function MoviesCard({
       <div className="movies-card__container">
         <h2 className="movies-card__name">{movie.nameRU}</h2>
         <button
-          className={`movies-card__favorites ${pathname === "/saved-movies" && 'movies-card__favorites_delete'}
+          className={`movies-card__favorites ${isSavedMovies && 'movies-card__favorites_delete'}
             ${isLiked && 'movies-card__favorites_active'}`}
           type="button"
           onClick={handleLikeClick}

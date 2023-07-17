@@ -111,9 +111,15 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
             <span className="profile__input-error">{errors['email']}</span>
           </div>
           {profileEdit && <div className="profile__profile-edit">
-            <span className="profile__notification profile__notification_type_error">{notificationText}</span>
+            <span className="profile__notification profile__notification_type_error">
+              {notificationText}
+            </span>
             <button
-              className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`}
+              className={
+                `profile__button 
+                profile__button_type_save 
+                profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`
+              }
               type="submit"
               disabled={isLoading || !isValid || isMatches}
             >
