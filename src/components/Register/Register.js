@@ -3,9 +3,8 @@ import { useState } from 'react';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
+import handleError from '../../utils/handleError';
 import {
-  CONFLICTING_REQUEST_ERROR,
-  INTERNAL_SERVER_ERROR,
   DEFAULT_ERROR,
   NAME_RULE,
   EMAIL_RULE,
@@ -58,14 +57,8 @@ export default function Register({
           })
       })
       .catch((err) => {
-        if (err === CONFLICTING_REQUEST_ERROR) {
-          setErrorText('Пользователь с таким email уже существует.');
-        } else if (err === INTERNAL_SERVER_ERROR) {
-          setErrorText('500 На сервере произошла ошибка.');
-        } else {
-          setErrorText('При регистрации пользователя произошла ошибка.');
-        }
-        console.log(err);
+        const page = 'register';
+        setErrorText(handleError(err, page));
       })
       .finally(() => {
         setIsLoading(false);

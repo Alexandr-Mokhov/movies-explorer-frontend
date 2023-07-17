@@ -15,6 +15,7 @@ import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 import { checkToken } from '../../utils/MainApi';
 import { getSavedMovies } from '../../utils/MainApi';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import { MOVIE_DOWNLOAD_ERROR, TOKEN_VERIFICATION_ERROR } from '../../constans';
 import './App.css';
 
 export default function App() {
@@ -44,7 +45,7 @@ export default function App() {
         .catch((err) => {
           console.log(err);
           setIsInfoTooltipOpen(true);
-          setInfoTooltipMessage('Сбой! Фильмы не загружены с сервера. Попробуйте позже.');
+          setInfoTooltipMessage(MOVIE_DOWNLOAD_ERROR);
         })
     }
   }, [isTokenChecked]);
@@ -77,7 +78,7 @@ export default function App() {
         .catch((err) => {
           console.log(err);
           setIsInfoTooltipOpen(true);
-          setInfoTooltipMessage('Сбой авторизации! Попробуйте позже.');
+          setInfoTooltipMessage(TOKEN_VERIFICATION_ERROR);
         });
     }
   }

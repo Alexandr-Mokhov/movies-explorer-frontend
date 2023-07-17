@@ -2,7 +2,11 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
-import { MINUTES_PER_HOUR } from '../../constans';
+import { 
+  MINUTES_PER_HOUR,
+  FAVORITE_DELETE_ERROR,
+  ERROR_ADDING_FAVORITES,
+} from '../../constans';
 import './MoviesCard.css';
 
 export default function MoviesCard({ 
@@ -42,7 +46,7 @@ export default function MoviesCard({
         .catch((err) => {
           console.log(err);
           setIsInfoTooltipOpen(true);
-          setInfoTooltipMessage('Сбой удаления из избранных! Попробуйте позже.');
+          setInfoTooltipMessage(FAVORITE_DELETE_ERROR);
         });
     } else {
       addStatusFavorite(movie)
@@ -54,7 +58,7 @@ export default function MoviesCard({
         .catch((err) => {
           console.log(err);
           setIsInfoTooltipOpen(true);
-          setInfoTooltipMessage('Сбой добавления в избранные! Попробуйте позже.');
+          setInfoTooltipMessage(ERROR_ADDING_FAVORITES);
         });
     }
   }

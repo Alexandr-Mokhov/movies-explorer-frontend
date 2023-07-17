@@ -19,4 +19,8 @@ export const CONFLICTING_REQUEST_ERROR = 409;
 export const DEFAULT_ERROR = 'Введите данные в указанном формате.';
 export const NAME_RULE = 'Имя может содержать только латиницу, кириллицу, пробел и дефис.';
 export const EMAIL_RULE = 'E-mail должен быть в формате "mail@domain.ru"';
+export const MOVIE_DOWNLOAD_ERROR = 'Сбой! Фильмы не загружены с сервера. Попробуйте позже.';
+export const TOKEN_VERIFICATION_ERROR = 'Сбой авторизации! Попробуйте позже.';
+export const FAVORITE_DELETE_ERROR = 'Сбой удаления из избранных! Попробуйте позже.';
+export const ERROR_ADDING_FAVORITES = 'Сбой добавления в избранные! Попробуйте позже.';
 
