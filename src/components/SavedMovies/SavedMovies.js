@@ -13,8 +13,8 @@ export default function SavedMovies({
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
   handleNotFoundMovies,
-  selectedShortFilms,
-  setSelectedShortFilms,
+  // checkedShort,
+  // setCheckedShortSaved,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -23,6 +23,7 @@ export default function SavedMovies({
   const [foundSavedShortFilms, setFoundSavedShortFilms] = useState([]);
   const [search, setSearch] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [checkedShortSaved, setCheckedShortSaved] = useState(false);
   const [recheck, setRecheck] = useState(false);
   // const [foundsavedFilms, setFoundsavedFilms] = useState([]);
 
@@ -33,7 +34,7 @@ export default function SavedMovies({
   useEffect(() => {
     handleNotFoundMovies(savedShortFilms, foundSavedMovies);
     setRecheck(true);
-  }, [foundSavedMovies, savedShortFilms, selectedShortFilms])
+  }, [foundSavedMovies, savedShortFilms, checkedShortSaved])
 
   useEffect(() => {
     setNotFoundMovies(false);
@@ -53,8 +54,8 @@ export default function SavedMovies({
   };
 
   // function handleChecked() {
-  //   setSelectedShortFilms(!selectedShortFilms);
-  //   if (!selectedShortFilms) {
+  //   setCheckedShortSaved(!checkedShort);
+  //   if (!checkedShort) {
   //     if (search) {
   //       setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
   //     } else {
@@ -65,8 +66,8 @@ export default function SavedMovies({
   //   }
   // }
   function handleChecked() {
-    setSelectedShortFilms(!selectedShortFilms);
-    if (!selectedShortFilms) {
+    setCheckedShortSaved(!checkedShortSaved);
+    if (!checkedShortSaved) {
       if (search) {
         setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
       } else {
@@ -80,7 +81,7 @@ export default function SavedMovies({
   function handleSubmit(evt) {
     evt.preventDefault();
     setSearch(true);
-    if (!selectedShortFilms) {
+    if (!checkedShortSaved) {
       setFoundSavedMovies(filterMovies(savedFilms, value, false));
     } else {
       setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
@@ -88,7 +89,7 @@ export default function SavedMovies({
   }
 
   function displayMovieList() {
-    if (selectedShortFilms) {
+    if (checkedShortSaved) {
       return search ? foundSavedShortFilms : savedShortFilms;
     } else {
       return search ? foundSavedMovies : savedFilms;
@@ -103,7 +104,7 @@ export default function SavedMovies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        selectedShortFilms={selectedShortFilms}
+        checkedShortSaved={checkedShortSaved}
         handleChecked={handleChecked}
       />
       <MoviesCardList
@@ -116,7 +117,7 @@ export default function SavedMovies({
         setSavedShortFilms={setSavedShortFilms}
         setFoundSavedMovies={setFoundSavedMovies}
         setFoundSavedShortFilms={setFoundSavedShortFilms}
-        selectedShortFilms={selectedShortFilms}
+        checkedShortSaved={checkedShortSaved}
         search={search}
       />
     </main>

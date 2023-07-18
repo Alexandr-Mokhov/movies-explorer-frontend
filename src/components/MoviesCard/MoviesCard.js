@@ -18,7 +18,7 @@ export default function MoviesCard({
   setSavedShortFilms,
   setFoundSavedMovies,
   setFoundSavedShortFilms,
-  selectedShortFilms,
+  checkedShortSaved,
   search,
 }) {
   const { pathname } = useLocation();
@@ -40,7 +40,7 @@ export default function MoviesCard({
   }
 
   function handleFilterList() {
-    if (selectedShortFilms) {
+    if (checkedShortSaved) {
       if (search) {
         setFoundSavedShortFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
       } else {

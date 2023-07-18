@@ -30,7 +30,7 @@ export default function App() {
   const [isTokenChecked, setIsTokenChecked] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
-  const [selectedShortFilms, setSelectedShortFilms] = useState(false);
+  const [checkedShort, setCheckedShort] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function App() {
     localStorage.removeItem('movieSearchText');
     localStorage.removeItem('shortFilms');
     localStorage.removeItem('foundMovies');
-    localStorage.removeItem('selectedShortFilms');
+    localStorage.removeItem('checkedShort');
     localStorage.removeItem('ownerId');
     setLoggedIn(false);
     setCurrentUser({ name: '', email: '', ownerId: '' });
@@ -105,7 +105,7 @@ export default function App() {
 
   function handleNotFoundMovies(shortList, foundList) {
     if (movies[0]) {
-      if (selectedShortFilms) {
+      if (checkedShort) {
         shortList.length === 0 ?
           setNotFoundMovies(true) :
           setNotFoundMovies(false);
@@ -155,8 +155,8 @@ export default function App() {
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
               handleNotFoundMovies={handleNotFoundMovies}
-              selectedShortFilms={selectedShortFilms}
-              setSelectedShortFilms={setSelectedShortFilms}
+              checkedShort={checkedShort}
+              setCheckedShort={setCheckedShort}
             />}
           />
           <Route path="/saved-movies" element={
@@ -170,8 +170,8 @@ export default function App() {
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
               handleNotFoundMovies={handleNotFoundMovies}
-              selectedShortFilms={selectedShortFilms}
-              setSelectedShortFilms={setSelectedShortFilms}
+              // checkedShort={checkedShort}
+              // setCheckedShort={setCheckedShort}
             />}
           />
           <Route path="/profile" element={

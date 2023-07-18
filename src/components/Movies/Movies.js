@@ -35,8 +35,8 @@ export default function Movies({
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
   handleNotFoundMovies,
-  selectedShortFilms,
-  setSelectedShortFilms,
+  checkedShort,
+  setCheckedShort,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -57,7 +57,7 @@ export default function Movies({
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
-      setSelectedShortFilms(JSON.parse(localStorage.getItem('selectedShortFilms')));
+      setCheckedShort(JSON.parse(localStorage.getItem('checkedShort')));
       setShortFilms(JSON.parse(localStorage.getItem('shortFilms')));
       setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
@@ -105,7 +105,7 @@ export default function Movies({
   }
 
   function handleShowButtonMore(visibleFilms) {
-    selectedShortFilms ?
+    checkedShort ?
       showButtonMore(shortFilms, visibleFilms) :
       showButtonMore(foundMovies, visibleFilms);
   }
@@ -119,7 +119,7 @@ export default function Movies({
   function savingLocalData() {
     localStorage.setItem('movieSearchText', value);
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('selectedShortFilms', JSON.stringify(selectedShortFilms));
+    localStorage.setItem('checkedShort', JSON.stringify(checkedShort));
     localStorage.setItem('shortFilms', JSON.stringify(shortFilms));
   }
 
@@ -166,13 +166,13 @@ export default function Movies({
   }
 
   function handleChecked() {
-    findMovies(selectedShortFilms);
-    setSelectedShortFilms(!selectedShortFilms);
+    findMovies(checkedShort);
+    setCheckedShort(!checkedShort);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    findMovies(!selectedShortFilms);
+    findMovies(!checkedShort);
   }
 
   return (
@@ -183,7 +183,7 @@ export default function Movies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        selectedShortFilms={selectedShortFilms}
+        checkedShort={checkedShort}
         handleChecked={handleChecked}
       />
       {preloaderEnabled ? <Preloader /> :
@@ -195,7 +195,7 @@ export default function Movies({
           savedFilms={savedFilms}
           setSavedFilms={setSavedFilms}
           shortFilms={shortFilms}
-          selectedShortFilms={selectedShortFilms}
+          checkedShort={checkedShort}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
         />}

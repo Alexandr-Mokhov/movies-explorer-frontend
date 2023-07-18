@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 export default function SearchForm({
@@ -6,9 +7,12 @@ export default function SearchForm({
   handleChange,
   isValid,
   buttonDisabled,
-  selectedShortFilms,
-  handleChecked
+  checkedShort,
+  handleChecked,
+  checkedShortSaved,
 }) {
+  const { pathname } = useLocation();
+
   return (
     <section className="search-form">
       <div className="search-form__container">
@@ -35,7 +39,7 @@ export default function SearchForm({
                 id="checkbox"
                 type="checkbox"
                 onChange={handleChecked}
-                checked={selectedShortFilms}
+                checked={pathname === '/movies' ? checkedShort : checkedShortSaved}
               />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
