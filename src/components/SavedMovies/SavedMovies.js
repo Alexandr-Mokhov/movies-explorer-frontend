@@ -6,15 +6,15 @@ import filterMovies from '../../utils/filterMovies';
 import './SavedMovies.css';
 
 export default function SavedMovies({
-  selectedFilms,
-  setSelectedFilms,
+  savedFilms,
+  setSavedFilms,
   notFoundMovies,
   setNotFoundMovies,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
   handleNotFoundMovies,
-  isChecked,
-  setIsChecked,
+  selectedShortFilms,
+  setSelectedShortFilms,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -24,15 +24,16 @@ export default function SavedMovies({
   const [search, setSearch] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [recheck, setRecheck] = useState(false);
-  
+  // const [foundsavedFilms, setFoundsavedFilms] = useState([]);
+
   useEffect(() => {
-    setFoundSavedMovies(selectedFilms);
+    setFoundSavedMovies(savedFilms);
   }, [])
 
   useEffect(() => {
     handleNotFoundMovies(savedShortFilms, foundSavedMovies);
     setRecheck(true);
-  }, [foundSavedMovies, savedShortFilms, isChecked])
+  }, [foundSavedMovies, savedShortFilms, selectedShortFilms])
 
   useEffect(() => {
     setNotFoundMovies(false);
@@ -51,34 +52,46 @@ export default function SavedMovies({
     }
   };
 
+  // function handleChecked() {
+  //   setSelectedShortFilms(!selectedShortFilms);
+  //   if (!selectedShortFilms) {
+  //     if (search) {
+  //       setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
+  //     } else {
+  //       setSavedShortFilms(filterMovies(savedFilms, value, true));
+  //     }
+  //   } else {
+  //     setFoundSavedMovies(filterMovies(savedFilms, value, false));
+  //   }
+  // }
   function handleChecked() {
-    setIsChecked(!isChecked);
-    if (!isChecked) {
+    setSelectedShortFilms(!selectedShortFilms);
+    if (!selectedShortFilms) {
       if (search) {
-        setFoundSavedShortFilms(filterMovies(selectedFilms, value, true));
+        setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
       } else {
-        setSavedShortFilms(filterMovies(selectedFilms, value, true));
+        setSavedShortFilms(filterMovies(savedFilms, value, true));
       }
     } else {
-      setFoundSavedMovies(filterMovies(selectedFilms, value, false));
+      setFoundSavedMovies(filterMovies(savedFilms, value, false));
     }
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setSearch(true);
-    if (!isChecked) {
-      setFoundSavedMovies(filterMovies(selectedFilms, value, false));
+    if (!selectedShortFilms) {
+      setFoundSavedMovies(filterMovies(savedFilms, value, false));
     } else {
-      setFoundSavedShortFilms(filterMovies(selectedFilms, value, true));
+      setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
     }
   }
 
   function displayMovieList() {
-    if (isChecked) {
+    if (selectedShortFilms) {
       return search ? foundSavedShortFilms : savedShortFilms;
     } else {
-      return search ? foundSavedMovies : selectedFilms;
+      return search ? foundSavedMovies : savedFilms;
     }
   }
 
@@ -90,20 +103,20 @@ export default function SavedMovies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        isChecked={isChecked}
+        selectedShortFilms={selectedShortFilms}
         handleChecked={handleChecked}
       />
       <MoviesCardList
         displayedFilms={displayMovieList()}
-        selectedFilms={selectedFilms}
-        setSelectedFilms={setSelectedFilms}
+        savedFilms={savedFilms}
+        setSavedFilms={setSavedFilms}
         notFoundMovies={notFoundMovies}
         setIsInfoTooltipOpen={setIsInfoTooltipOpen}
         setInfoTooltipMessage={setInfoTooltipMessage}
         setSavedShortFilms={setSavedShortFilms}
         setFoundSavedMovies={setFoundSavedMovies}
         setFoundSavedShortFilms={setFoundSavedShortFilms}
-        isChecked={isChecked}
+        selectedShortFilms={selectedShortFilms}
         search={search}
       />
     </main>

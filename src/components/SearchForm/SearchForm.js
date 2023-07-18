@@ -6,7 +6,7 @@ export default function SearchForm({
   handleChange,
   isValid,
   buttonDisabled,
-  isChecked,
+  selectedShortFilms,
   handleChecked
 }) {
   return (
@@ -35,7 +35,7 @@ export default function SearchForm({
                 id="checkbox"
                 type="checkbox"
                 onChange={handleChecked}
-                checked={isChecked}
+                checked={selectedShortFilms}
               />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>

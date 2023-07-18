@@ -7,10 +7,10 @@ export default function MoviesCardList({
   notFoundMovies,
   errorFoundMovies,
   startItems,
-  selectedFilms,
-  setSelectedFilms,
+  savedFilms,
+  setSavedFilms,
   shortFilms,
-  isChecked,
+  selectedShortFilms,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
   setSavedShortFilms,
@@ -22,44 +22,44 @@ export default function MoviesCardList({
   const { pathname } = useLocation();
 
   const movieFoundItems = () => {
-    if (isChecked) {
+    if (selectedShortFilms) {
       return shortFilms.slice(0, startItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
-          isChecked={isChecked}
+          selectedShortFilms={selectedShortFilms}
           key={movieItem.id} />
       });
     } else {
       return foundMovies.slice(0, startItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
-          isChecked={isChecked}
+          selectedShortFilms={selectedShortFilms}
           key={movieItem.id} />
       });
     }
   }
 
   const movieSavedItems = () => {
-    if (selectedFilms[0]) {
+    if (savedFilms[0]) {
       return displayedFilms.map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
           setSavedShortFilms={setSavedShortFilms}
           setFoundSavedMovies={setFoundSavedMovies}
           setFoundSavedShortFilms={setFoundSavedShortFilms}
-          isChecked={isChecked}
+          selectedShortFilms={selectedShortFilms}
           search={search}
           key={movieItem.movieId} />
       })

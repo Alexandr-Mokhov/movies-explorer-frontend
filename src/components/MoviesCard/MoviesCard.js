@@ -11,14 +11,14 @@ import './MoviesCard.css';
 
 export default function MoviesCard({
   movie,
-  selectedFilms,
-  setSelectedFilms,
+  savedFilms,
+  setSavedFilms,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
   setSavedShortFilms,
   setFoundSavedMovies,
   setFoundSavedShortFilms,
-  isChecked,
+  selectedShortFilms,
   search,
 }) {
   const { pathname } = useLocation();
@@ -27,10 +27,10 @@ export default function MoviesCard({
   const isSavedMovies = pathname === '/saved-movies';
 
   useEffect(() => {
-    if (selectedFilms[0]) {
-      selectedFilms.map((item) => checkValues(item));
+    if (savedFilms[0]) {
+      savedFilms.map((item) => checkValues(item));
     }
-  }, [selectedFilms, movie])
+  }, [savedFilms, movie])
 
   function checkValues(item) {
     if (item.movieId === movie.id) {
@@ -40,7 +40,7 @@ export default function MoviesCard({
   }
 
   function handleFilterList() {
-    if (isChecked) {
+    if (selectedShortFilms) {
       if (search) {
         setFoundSavedShortFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
       } else {
@@ -59,7 +59,7 @@ export default function MoviesCard({
       deleteStatusFavorite(movie)
         .then(() => {
           setIsLiked(false);
-          setSelectedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+          setSavedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
           if (isSavedMovies) {
             handleFilterList();
           }
@@ -74,7 +74,7 @@ export default function MoviesCard({
       addStatusFavorite(movie)
         .then((res) => {
           setIsLiked(true);
-          setSelectedFilms([...selectedFilms, res]);
+          setSavedFilms([...savedFilms, res]);
           setLikeDisabled(false);
         })
         .catch((err) => {

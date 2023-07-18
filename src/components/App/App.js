@@ -23,14 +23,14 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', ownerId: '' });
-  const [selectedFilms, setSelectedFilms] = useState([]);
+  const [savedFilms, setSavedFilms] = useState([]);
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [notFoundMovies, setNotFoundMovies] = useState(false);
   const [isTokenChecked, setIsTokenChecked] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
+  const [selectedShortFilms, setSelectedShortFilms] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function App() {
     if (loggedIn) {
       getSavedMovies()
         .then((res) => {
-          setSelectedFilms(res.filter(movie => movie.owner === currentUser.ownerId));
+          setSavedFilms(res.filter(movie => movie.owner === currentUser.ownerId));
         })
         .catch((err) => {
           console.log(err);
@@ -91,11 +91,11 @@ export default function App() {
     localStorage.removeItem('movieSearchText');
     localStorage.removeItem('shortFilms');
     localStorage.removeItem('foundMovies');
-    localStorage.removeItem('isCheckedShortFilms');
+    localStorage.removeItem('selectedShortFilms');
     localStorage.removeItem('ownerId');
     setLoggedIn(false);
     setCurrentUser({ name: '', email: '', ownerId: '' });
-    setSelectedFilms([]);
+    setSavedFilms([]);
     setMovies([]);
     setFoundMovies([]);
     setNotFoundMovies(false);
@@ -105,7 +105,7 @@ export default function App() {
 
   function handleNotFoundMovies(shortList, foundList) {
     if (movies[0]) {
-      if (isChecked) {
+      if (selectedShortFilms) {
         shortList.length === 0 ?
           setNotFoundMovies(true) :
           setNotFoundMovies(false);
@@ -144,8 +144,8 @@ export default function App() {
             <ProtectedRouteElement
               element={Movies}
               loggedIn={loggedIn}
-              selectedFilms={selectedFilms}
-              setSelectedFilms={setSelectedFilms}
+              savedFilms={savedFilms}
+              setSavedFilms={setSavedFilms}
               foundMovies={foundMovies}
               setFoundMovies={setFoundMovies}
               movies={movies}
@@ -155,23 +155,23 @@ export default function App() {
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
               handleNotFoundMovies={handleNotFoundMovies}
-              isChecked={isChecked}
-              setIsChecked={setIsChecked}
+              selectedShortFilms={selectedShortFilms}
+              setSelectedShortFilms={setSelectedShortFilms}
             />}
           />
           <Route path="/saved-movies" element={
             <ProtectedRouteElement
               element={SavedMovies}
               loggedIn={loggedIn}
-              selectedFilms={selectedFilms}
-              setSelectedFilms={setSelectedFilms}
+              savedFilms={savedFilms}
+              setSavedFilms={setSavedFilms}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
               handleNotFoundMovies={handleNotFoundMovies}
-              isChecked={isChecked}
-              setIsChecked={setIsChecked}
+              selectedShortFilms={selectedShortFilms}
+              setSelectedShortFilms={setSelectedShortFilms}
             />}
           />
           <Route path="/profile" element={
