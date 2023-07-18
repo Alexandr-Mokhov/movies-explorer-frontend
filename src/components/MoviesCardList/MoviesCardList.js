@@ -13,6 +13,11 @@ export default function MoviesCardList({
   isChecked,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
+  setSavedShortFilms,
+  displayedFilms,
+  setFoundSavedMovies,
+  setFoundSavedShortFilms,
+  search,
 }) {
   const { pathname } = useLocation();
 
@@ -25,6 +30,7 @@ export default function MoviesCardList({
           setSelectedFilms={setSelectedFilms}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
+          isChecked={isChecked}
           key={movieItem.id} />
       });
     } else {
@@ -35,6 +41,7 @@ export default function MoviesCardList({
           setSelectedFilms={setSelectedFilms}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
+          isChecked={isChecked}
           key={movieItem.id} />
       });
     }
@@ -42,13 +49,18 @@ export default function MoviesCardList({
 
   const movieSavedItems = () => {
     if (selectedFilms[0]) {
-      return selectedFilms.map((movieItem) => {
+      return displayedFilms.map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
           selectedFilms={selectedFilms}
           setSelectedFilms={setSelectedFilms}
           setIsInfoTooltipOpen={setIsInfoTooltipOpen}
           setInfoTooltipMessage={setInfoTooltipMessage}
+          setSavedShortFilms={setSavedShortFilms}
+          setFoundSavedMovies={setFoundSavedMovies}
+          setFoundSavedShortFilms={setFoundSavedShortFilms}
+          isChecked={isChecked}
+          search={search}
           key={movieItem.movieId} />
       })
     }

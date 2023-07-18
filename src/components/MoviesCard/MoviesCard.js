@@ -2,19 +2,24 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
-import { 
+import {
   MINUTES_PER_HOUR,
   FAVORITE_DELETE_ERROR,
   ERROR_ADDING_FAVORITES,
 } from '../../constans';
 import './MoviesCard.css';
 
-export default function MoviesCard({ 
+export default function MoviesCard({
   movie,
   selectedFilms,
   setSelectedFilms,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
+  setSavedShortFilms,
+  setFoundSavedMovies,
+  setFoundSavedShortFilms,
+  isChecked,
+  search,
 }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
@@ -34,6 +39,20 @@ export default function MoviesCard({
     }
   }
 
+  function handleFilterList() {
+    if (isChecked) {
+      if (search) {
+        setFoundSavedShortFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+      } else {
+        setSavedShortFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+      }
+    } else {
+      if (search) {
+        setFoundSavedMovies((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+      }
+    }
+  }
+
   function handleLikeClick() {
     setLikeDisabled(true);
     if (isLiked || isSavedMovies) {
@@ -41,6 +60,9 @@ export default function MoviesCard({
         .then(() => {
           setIsLiked(false);
           setSelectedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+          if (isSavedMovies) {
+            handleFilterList();
+          }
           setLikeDisabled(false);
         })
         .catch((err) => {

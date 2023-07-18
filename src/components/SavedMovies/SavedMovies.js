@@ -18,20 +18,21 @@ export default function SavedMovies({
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  const [shortFilms, setShortFilms] = useState([]);
+  const [savedShortFilms, setSavedShortFilms] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
+  const [foundSavedShortFilms, setFoundSavedShortFilms] = useState([]);
   const [search, setSearch] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [recheck, setRecheck] = useState(false);
-
+  
   useEffect(() => {
     setFoundSavedMovies(selectedFilms);
   }, [])
 
   useEffect(() => {
-    handleNotFoundMovies(shortFilms, foundSavedMovies);
+    handleNotFoundMovies(savedShortFilms, foundSavedMovies);
     setRecheck(true);
-  }, [foundSavedMovies, shortFilms, isChecked])
+  }, [foundSavedMovies, savedShortFilms, isChecked])
 
   useEffect(() => {
     setNotFoundMovies(false);
@@ -54,9 +55,9 @@ export default function SavedMovies({
     setIsChecked(!isChecked);
     if (!isChecked) {
       if (search) {
-        setFoundSavedMovies(filterMovies(selectedFilms, value, true));
+        setFoundSavedShortFilms(filterMovies(selectedFilms, value, true));
       } else {
-        setShortFilms(filterMovies(selectedFilms, value, true));
+        setSavedShortFilms(filterMovies(selectedFilms, value, true));
       }
     } else {
       setFoundSavedMovies(filterMovies(selectedFilms, value, false));
@@ -69,13 +70,13 @@ export default function SavedMovies({
     if (!isChecked) {
       setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     } else {
-      setShortFilms(filterMovies(selectedFilms, value, true));
+      setFoundSavedShortFilms(filterMovies(selectedFilms, value, true));
     }
   }
 
   function displayMovieList() {
     if (isChecked) {
-      return search ? foundSavedMovies : shortFilms;
+      return search ? foundSavedShortFilms : savedShortFilms;
     } else {
       return search ? foundSavedMovies : selectedFilms;
     }
@@ -93,11 +94,17 @@ export default function SavedMovies({
         handleChecked={handleChecked}
       />
       <MoviesCardList
-        selectedFilms={displayMovieList()}
+        displayedFilms={displayMovieList()}
+        selectedFilms={selectedFilms}
         setSelectedFilms={setSelectedFilms}
         notFoundMovies={notFoundMovies}
         setIsInfoTooltipOpen={setIsInfoTooltipOpen}
         setInfoTooltipMessage={setInfoTooltipMessage}
+        setSavedShortFilms={setSavedShortFilms}
+        setFoundSavedMovies={setFoundSavedMovies}
+        setFoundSavedShortFilms={setFoundSavedShortFilms}
+        isChecked={isChecked}
+        search={search}
       />
     </main>
   )
