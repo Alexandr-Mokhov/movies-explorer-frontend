@@ -12,10 +12,12 @@ export default function SavedMovies({
   setNotFoundMovies,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
+  handleNotFoundMovies,
+  isChecked,
+  setIsChecked,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  const [isChecked, setIsChecked] = useState(false);
   const [shortFilms, setShortFilms] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
   const [search, setSearch] = useState(false);
@@ -27,7 +29,7 @@ export default function SavedMovies({
   }, [])
 
   useEffect(() => {
-    handleNotFoundMovies();
+    handleNotFoundMovies(shortFilms, foundSavedMovies);
     setRecheck(true);
   }, [foundSavedMovies, shortFilms, isChecked])
 
@@ -68,18 +70,6 @@ export default function SavedMovies({
       setFoundSavedMovies(filterMovies(selectedFilms, value, false));
     } else {
       setShortFilms(filterMovies(selectedFilms, value, true));
-    }
-  }
-
-  function handleNotFoundMovies() {
-    if (isChecked) {
-      shortFilms.length === 0 ?
-        setNotFoundMovies(true) :
-        setNotFoundMovies(false);
-    } else {
-      foundSavedMovies.length === 0 ?
-        setNotFoundMovies(true) :
-        setNotFoundMovies(false);
     }
   }
 

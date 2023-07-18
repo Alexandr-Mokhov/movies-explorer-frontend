@@ -34,11 +34,13 @@ export default function Movies({
   setNotFoundMovies,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
+  handleNotFoundMovies,
+  isChecked,
+  setIsChecked,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [shortFilms, setShortFilms] = useState([]);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
   const [errorFoundMovies, setErrorFoundMovies] = useState(false);
@@ -62,7 +64,10 @@ export default function Movies({
   }, [])
 
   useEffect(() => {
-    handleNotFoundMovies();
+    if (movies[0]) {
+      setNotFoundMovies(false);
+    }
+    handleNotFoundMovies(shortFilms, foundMovies);
     savingLocalData();
     handleShowButtonMore(startItems);
   }, [foundMovies, shortFilms])
@@ -109,22 +114,6 @@ export default function Movies({
     const sum = startItems + addedItems;
     setStartItems(sum);
     handleShowButtonMore(sum);
-  }
-
-  function handleNotFoundMovies() {
-    if (movies[0]) {
-      if (isChecked) {
-        shortFilms.length === 0 ?
-          setNotFoundMovies(true) :
-          setNotFoundMovies(false);
-      } else {
-        foundMovies.length === 0 ?
-          setNotFoundMovies(true) :
-          setNotFoundMovies(false);
-      }
-    } else {
-      setNotFoundMovies(false);
-    }
   }
 
   function savingLocalData() {

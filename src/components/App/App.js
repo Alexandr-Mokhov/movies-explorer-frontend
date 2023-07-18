@@ -30,6 +30,7 @@ export default function App() {
   const [isTokenChecked, setIsTokenChecked] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -102,6 +103,20 @@ export default function App() {
     navigate('/', { replace: true });
   }
 
+  function handleNotFoundMovies(shortList, foundList) {
+    if (movies[0]) {
+      if (isChecked) {
+        shortList.length === 0 ?
+          setNotFoundMovies(true) :
+          setNotFoundMovies(false);
+      } else {
+        foundList.length === 0 ?
+          setNotFoundMovies(true) :
+          setNotFoundMovies(false);
+      }
+    }
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -139,6 +154,9 @@ export default function App() {
               setNotFoundMovies={setNotFoundMovies}
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
+              handleNotFoundMovies={handleNotFoundMovies}
+              isChecked={isChecked}
+              setIsChecked={setIsChecked}
             />}
           />
           <Route path="/saved-movies" element={
@@ -151,6 +169,9 @@ export default function App() {
               setNotFoundMovies={setNotFoundMovies}
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
+              handleNotFoundMovies={handleNotFoundMovies}
+              isChecked={isChecked}
+              setIsChecked={setIsChecked}
             />}
           />
           <Route path="/profile" element={
