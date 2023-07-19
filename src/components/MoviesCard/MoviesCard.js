@@ -15,11 +15,6 @@ export default function MoviesCard({
   setSavedFilms,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
-  setSavedShortFilms,
-  setFoundSavedMovies,
-  setFoundSavedShortFilms,
-  checkedShortSaved,
-  search,
 }) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
@@ -39,20 +34,6 @@ export default function MoviesCard({
     }
   }
 
-  function handleFilterList() {
-    if (checkedShortSaved) {
-      if (search) {
-        setFoundSavedShortFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
-      } else {
-        setSavedShortFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
-      }
-    } else {
-      if (search) {
-        setFoundSavedMovies((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
-      }
-    }
-  }
-
   function handleLikeClick() {
     setLikeDisabled(true);
     if (isLiked || isSavedMovies) {
@@ -60,9 +41,6 @@ export default function MoviesCard({
         .then(() => {
           setIsLiked(false);
           setSavedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
-          if (isSavedMovies) {
-            handleFilterList();
-          }
           setLikeDisabled(false);
         })
         .catch((err) => {

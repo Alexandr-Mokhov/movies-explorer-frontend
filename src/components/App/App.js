@@ -169,9 +169,6 @@ export default function App() {
               setNotFoundMovies={setNotFoundMovies}
               setIsInfoTooltipOpen={setIsInfoTooltipOpen}
               setInfoTooltipMessage={setInfoTooltipMessage}
-              handleNotFoundMovies={handleNotFoundMovies}
-              // checkedShort={checkedShort}
-              // setCheckedShort={setCheckedShort}
             />}
           />
           <Route path="/profile" element={

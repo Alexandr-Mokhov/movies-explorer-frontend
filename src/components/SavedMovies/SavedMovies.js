@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import filterMovies from '../../utils/filterMovies';
+import { SHORT_FILMS_DURATION } from '../../constans';
 import './SavedMovies.css';
 
 export default function SavedMovies({
@@ -12,88 +13,59 @@ export default function SavedMovies({
   setNotFoundMovies,
   setIsInfoTooltipOpen,
   setInfoTooltipMessage,
-  handleNotFoundMovies,
-  // checkedShort,
-  // setCheckedShortSaved,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  const [savedShortFilms, setSavedShortFilms] = useState([]);
   const [foundSavedMovies, setFoundSavedMovies] = useState([]);
-  const [foundSavedShortFilms, setFoundSavedShortFilms] = useState([]);
-  const [search, setSearch] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [checkedShortSaved, setCheckedShortSaved] = useState(false);
-  const [recheck, setRecheck] = useState(false);
-  // const [foundsavedFilms, setFoundsavedFilms] = useState([]);
 
   useEffect(() => {
-    setFoundSavedMovies(savedFilms);
-  }, [])
+    if (foundSavedMovies[0]) {
+      handleVisibledFilms(checkedShortSaved);
+    } else {
+      setFoundSavedMovies(savedFilms);
+    }
+  }, [savedFilms])
 
   useEffect(() => {
-    handleNotFoundMovies(savedShortFilms, foundSavedMovies);
-    setRecheck(true);
-  }, [foundSavedMovies, savedShortFilms, checkedShortSaved])
-
-  useEffect(() => {
+    foundSavedMovies.length === 0 ?
+    setNotFoundMovies(true) :
     setNotFoundMovies(false);
-  }, [recheck])
+  }, [foundSavedMovies, checkedShortSaved])
 
   function handleChange(evt) {
     setValue(evt.target.value);
     if (evt.target.value === '') {
       setIsValid(false);
-      setSearch(false);
       setButtonDisabled(true);
-      setNotFoundMovies(false);
+      if (checkedShortSaved) {
+        setFoundSavedMovies(savedFilms.filter(movie => movie.duration < SHORT_FILMS_DURATION));
+      } else {
+        setFoundSavedMovies(savedFilms);
+      }
     } else {
       setIsValid(true);
       setButtonDisabled(false);
     }
-  };
+  }
 
-  // function handleChecked() {
-  //   setCheckedShortSaved(!checkedShort);
-  //   if (!checkedShort) {
-  //     if (search) {
-  //       setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
-  //     } else {
-  //       setSavedShortFilms(filterMovies(savedFilms, value, true));
-  //     }
-  //   } else {
-  //     setFoundSavedMovies(filterMovies(savedFilms, value, false));
-  //   }
-  // }
-  function handleChecked() {
-    setCheckedShortSaved(!checkedShortSaved);
-    if (!checkedShortSaved) {
-      if (search) {
-        setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
-      } else {
-        setSavedShortFilms(filterMovies(savedFilms, value, true));
-      }
+  function handleVisibledFilms(checked) {
+    if (checked) {
+      setFoundSavedMovies(filterMovies(savedFilms, value, true));
     } else {
       setFoundSavedMovies(filterMovies(savedFilms, value, false));
     }
+  }
+
+  function handleChecked() {
+    setCheckedShortSaved(!checkedShortSaved);
+    handleVisibledFilms(!checkedShortSaved);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setSearch(true);
-    if (!checkedShortSaved) {
-      setFoundSavedMovies(filterMovies(savedFilms, value, false));
-    } else {
-      setFoundSavedShortFilms(filterMovies(savedFilms, value, true));
-    }
-  }
-
-  function displayMovieList() {
-    if (checkedShortSaved) {
-      return search ? foundSavedShortFilms : savedShortFilms;
-    } else {
-      return search ? foundSavedMovies : savedFilms;
-    }
+    handleVisibledFilms(checkedShortSaved);
   }
 
   return (
@@ -108,17 +80,12 @@ export default function SavedMovies({
         handleChecked={handleChecked}
       />
       <MoviesCardList
-        displayedFilms={displayMovieList()}
         savedFilms={savedFilms}
         setSavedFilms={setSavedFilms}
         notFoundMovies={notFoundMovies}
         setIsInfoTooltipOpen={setIsInfoTooltipOpen}
         setInfoTooltipMessage={setInfoTooltipMessage}
-        setSavedShortFilms={setSavedShortFilms}
-        setFoundSavedMovies={setFoundSavedMovies}
-        setFoundSavedShortFilms={setFoundSavedShortFilms}
-        checkedShortSaved={checkedShortSaved}
-        search={search}
+        foundSavedMovies={foundSavedMovies}
       />
     </main>
   )
