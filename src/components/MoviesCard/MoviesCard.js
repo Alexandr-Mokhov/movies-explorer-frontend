@@ -2,19 +2,30 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addStatusFavorite, deleteStatusFavorite } from '../../utils/MainApi';
-import { MINUTES_PER_HOUR } from '../../constans';
+import {
+  MINUTES_PER_HOUR,
+  FAVORITE_DELETE_ERROR,
+  ERROR_ADDING_FAVORITES,
+} from '../../constans';
 import './MoviesCard.css';
 
-export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
+export default function MoviesCard({
+  movie,
+  savedFilms,
+  setSavedFilms,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
+}) {
   const { pathname } = useLocation();
   const [isLiked, setIsLiked] = useState(false);
   const [likeDisabled, setLikeDisabled] = useState(false);
+  const isSavedMovies = pathname === '/saved-movies';
 
   useEffect(() => {
-    if (selectedFilms[0]) {
-      selectedFilms.map((item) => checkValues(item));
+    if (savedFilms[0]) {
+      savedFilms.map((item) => checkValues(item));
     }
-  }, [selectedFilms, movie])
+  }, [savedFilms, movie])
 
   function checkValues(item) {
     if (item.movieId === movie.id) {
@@ -25,25 +36,29 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
 
   function handleLikeClick() {
     setLikeDisabled(true);
-    if (isLiked || pathname === "/saved-movies") {
+    if (isLiked || isSavedMovies) {
       deleteStatusFavorite(movie)
         .then(() => {
           setIsLiked(false);
-          setSelectedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
+          setSavedFilms((state) => state.filter(arrayItem => arrayItem._id !== movie._id));
           setLikeDisabled(false);
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage(FAVORITE_DELETE_ERROR);
         });
     } else {
       addStatusFavorite(movie)
         .then((res) => {
           setIsLiked(true);
-          setSelectedFilms([...selectedFilms, res]);
+          setSavedFilms([...savedFilms, res]);
           setLikeDisabled(false);
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage(ERROR_ADDING_FAVORITES);
         });
     }
   }
@@ -66,7 +81,7 @@ export default function MoviesCard({ movie, selectedFilms, setSelectedFilms }) {
       <div className="movies-card__container">
         <h2 className="movies-card__name">{movie.nameRU}</h2>
         <button
-          className={`movies-card__favorites ${pathname === "/saved-movies" && 'movies-card__favorites_delete'}
+          className={`movies-card__favorites ${isSavedMovies && 'movies-card__favorites_delete'}
             ${isLiked && 'movies-card__favorites_active'}`}
           type="button"
           onClick={handleLikeClick}

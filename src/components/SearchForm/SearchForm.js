@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 export default function SearchForm({
@@ -6,9 +7,12 @@ export default function SearchForm({
   handleChange,
   isValid,
   buttonDisabled,
-  isChecked,
-  handleChecked
+  checkedShort,
+  handleChecked,
+  checkedShortSaved,
 }) {
+  const { pathname } = useLocation();
+
   return (
     <section className="search-form">
       <div className="search-form__container">
@@ -26,12 +30,17 @@ export default function SearchForm({
             />
             <button className="search-form__button" type="submit" disabled={buttonDisabled}>Поиск</button>
           </div>
-          <span className={`search-form__input-error ${!isValid ? 'search-form__input-error_active' : ''}`}>
+          <span className={`search-form__input-error ${!isValid && 'search-form__input-error_active'}`}>
             Нужно ввести ключевое слово!
           </span>
           <div className="search-form__checkbox-container">
             <label className="search-form__checkbox-label" htmlFor="checkbox">
-              <input className="search-form__checkbox-input" id="checkbox" type="checkbox" onChange={handleChecked} checked={isChecked} />
+              <input className="search-form__checkbox-input"
+                id="checkbox"
+                type="checkbox"
+                onChange={handleChecked}
+                checked={pathname === '/movies' ? checkedShort : checkedShortSaved}
+              />
               <span className="search-form__new-checkbox">Короткометражки</span>
             </label>
           </div>

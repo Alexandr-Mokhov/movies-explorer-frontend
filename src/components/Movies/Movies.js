@@ -24,45 +24,52 @@ import {
 import './Movies.css';
 
 export default function Movies({
-  selectedFilms,
-  setSelectedFilms,
+  savedFilms,
+  setSavedFilms,
   movies,
   setMovies,
   foundMovies,
   setFoundMovies,
   notFoundMovies,
   setNotFoundMovies,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
+  handleNotFoundMovies,
+  checkedShort,
+  setCheckedShort,
 }) {
   const [value, setValue] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [shortFilms, setShortFilms] = useState([]);
   const [preloaderEnabled, setPreloaderEnabled] = useState(false);
   const [errorFoundMovies, setErrorFoundMovies] = useState(false);
-  const [buttonMoreDisplay, setButtonMoreDisplay] = useState(false);
-  const [startingItems, setStartingItems] = useState(5);
-  const [additionalItems, setAdditionalItems] = useState(2);
+  const [buttonMore, setButtonMore] = useState(false);
+  const [startItems, setStartItems] = useState(5);
+  const [addedItems, setAddedItems] = useState(2);
   const windowWidth = useResize();
 
   useEffect(() => {
     settingAmountFilms();
-    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
+    handleShowButtonMore(startItems);
   }, [windowWidth]);
 
   useEffect(() => {
     if (localStorage.movieSearchText) {
       setValue(localStorage.getItem('movieSearchText'));
-      setIsChecked(JSON.parse(localStorage.getItem('isCheckedShortFilms')));
+      setCheckedShort(JSON.parse(localStorage.getItem('checkedShort')));
       setShortFilms(JSON.parse(localStorage.getItem('shortFilms')));
       setFoundMovies(JSON.parse(localStorage.getItem('foundMovies')));
     }
   }, [])
 
   useEffect(() => {
-    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
-    handleNotFoundMovies();
+    if (movies[0]) {
+      setNotFoundMovies(false);
+    }
+    handleNotFoundMovies(shortFilms, foundMovies);
     savingLocalData();
+    handleShowButtonMore(startItems);
   }, [foundMovies, shortFilms])
 
   function handleChange(evt) {
@@ -78,61 +85,52 @@ export default function Movies({
 
   function settingAmountFilms() {
     if (windowWidth >= SCREEN_DESCTOP) {
-      setStartingItems(STARTING_ITEMS_DESCTOP);
-      setAdditionalItems(ADDITIONAL_ITEMS_DESCTOP);
+      setStartItems(STARTING_ITEMS_DESCTOP);
+      setAddedItems(ADDITIONAL_ITEMS_DESCTOP);
     } else if (windowWidth >= SCREEN_TABLET) {
-      setStartingItems(STARTING_ITEMS_TABLET);
-      setAdditionalItems(ADDITIONAL_ITEMS_TABLET);
+      setStartItems(STARTING_ITEMS_TABLET);
+      setAddedItems(ADDITIONAL_ITEMS_TABLET);
     } else if (windowWidth >= SCREEN_MOBILE) {
-      setStartingItems(STARTING_ITEMS_MOBILE);
-      setAdditionalItems(ADDITIONAL_ITEMS_MOBILE);
+      setStartItems(STARTING_ITEMS_MOBILE);
+      setAddedItems(ADDITIONAL_ITEMS_MOBILE);
     } else {
-      setStartingItems(STARTING_ITEMS_MINIMUM);
-      setAdditionalItems(ADDITIONAL_ITEMS_MINIMUM);
+      setStartItems(STARTING_ITEMS_MINIMUM);
+      setAddedItems(ADDITIONAL_ITEMS_MINIMUM);
     }
   }
 
-  useEffect(() => {
-    isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
-  }, [handleClickMore])
-
-  function handleVisibilityButtonMore(listFilms) {
-    listFilms.length >= startingItems + ONE_ADDITIONAL_ELEMENT ?
-      setButtonMoreDisplay(true) : setButtonMoreDisplay(false);
+  function showButtonMore(listFilms, visibleFilms) {
+    listFilms.length >= visibleFilms + ONE_ADDITIONAL_ELEMENT ?
+      setButtonMore(true) : setButtonMore(false);
   }
 
-  function handleNotFoundMovies() {
-    if (movies[0]) {
-      if (isChecked) {
-        shortFilms.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
-      } else {
-        foundMovies.length === 0 ? setNotFoundMovies(true) : setNotFoundMovies(false);
-      }
-      if (foundMovies.length === 0) {
-        setNotFoundMovies(true);
-      }
-    } else {
-      setNotFoundMovies(false);
-    }
+  function handleShowButtonMore(visibleFilms) {
+    checkedShort ?
+      showButtonMore(shortFilms, visibleFilms) :
+      showButtonMore(foundMovies, visibleFilms);
+  }
+
+  function handleClickMore() {
+    const sum = startItems + addedItems;
+    setStartItems(sum);
+    handleShowButtonMore(sum);
   }
 
   function savingLocalData() {
     localStorage.setItem('movieSearchText', value);
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('isCheckedShortFilms', JSON.stringify(isChecked));
+    localStorage.setItem('checkedShort', JSON.stringify(checkedShort));
     localStorage.setItem('shortFilms', JSON.stringify(shortFilms));
   }
 
   function handleGetAllMovies(moviesList) {
+    setButtonMore(false);
     getAllMovies()
       .then((res) => {
         setMovies(res);
         moviesList === foundMovies ?
           setFoundMovies(filterMovies(res, value, false)) :
           setShortFilms(filterMovies(res, value, true));
-      })
-      .then(() => {
-        isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
       })
       .catch((err) => {
         setErrorFoundMovies(true);
@@ -144,75 +142,37 @@ export default function Movies({
       })
   }
 
-  function handleChecked() {
-    !isChecked ? handleVisibilityButtonMore(shortFilms) : handleVisibilityButtonMore(foundMovies);
+  function findMovies(checked) {
     setButtonDisabled(true);
     if (value === '') {
       setIsValid(false);
     } else {
       setPreloaderEnabled(true);
       setErrorFoundMovies(false);
-      savingLocalData();
       setIsValid(true);
       settingAmountFilms();
       if (movies[0]) {
         setButtonDisabled(false);
         setPreloaderEnabled(false);
-        if (isChecked) {
-          setFoundMovies(filterMovies(movies, value, false));
-          handleVisibilityButtonMore(foundMovies);
-        } else {
+        checked ?
+          setFoundMovies(filterMovies(movies, value, false)) :
           setShortFilms(filterMovies(movies, value, true));
-          handleVisibilityButtonMore(shortFilms);
-        }
       } else {
-        if (isChecked) {
-          handleGetAllMovies(foundMovies);
-          handleVisibilityButtonMore(foundMovies);
-        } else {
+        checked ?
+          handleGetAllMovies(foundMovies) :
           handleGetAllMovies(shortFilms);
-          handleVisibilityButtonMore(shortFilms);
-        }
       }
     }
-    setIsChecked(!isChecked);
+  }
+
+  function handleChecked() {
+    findMovies(checkedShort);
+    setCheckedShort(!checkedShort);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setPreloaderEnabled(true);
-    setErrorFoundMovies(false);
-    setButtonDisabled(true);
-    if (value === '') {
-      setIsValid(false);
-    } else {
-      savingLocalData();
-      setIsValid(true);
-      settingAmountFilms();
-      if (movies[0]) {
-        setPreloaderEnabled(false);
-        setButtonDisabled(false);
-        if (!isChecked) {
-          setFoundMovies(filterMovies(movies, value, false));
-          handleVisibilityButtonMore(foundMovies);
-        } else {
-          setShortFilms(filterMovies(movies, value, true));
-          handleVisibilityButtonMore(shortFilms);
-        }
-      } else {
-        if (!isChecked) {
-          handleGetAllMovies(foundMovies);
-          handleVisibilityButtonMore(foundMovies);
-        } else {
-          handleGetAllMovies(shortFilms);
-          handleVisibilityButtonMore(shortFilms);
-        }
-      }
-    }
-  }
-
-  function handleClickMore() {
-    setStartingItems(startingItems + additionalItems);
+    findMovies(!checkedShort);
   }
 
   return (
@@ -223,7 +183,7 @@ export default function Movies({
         handleChange={handleChange}
         isValid={isValid}
         buttonDisabled={buttonDisabled}
-        isChecked={isChecked}
+        checkedShort={checkedShort}
         handleChecked={handleChecked}
       />
       {preloaderEnabled ? <Preloader /> :
@@ -231,13 +191,15 @@ export default function Movies({
           foundMovies={foundMovies}
           notFoundMovies={notFoundMovies}
           errorFoundMovies={errorFoundMovies}
-          startingItems={startingItems}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          startItems={startItems}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
           shortFilms={shortFilms}
-          isChecked={isChecked}
+          checkedShort={checkedShort}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
         />}
-      {buttonMoreDisplay && <MoreMovies handleClickMore={handleClickMore} />}
+      {buttonMore && <MoreMovies handleClickMore={handleClickMore} />}
     </main>
   )
 }

@@ -6,41 +6,50 @@ export default function MoviesCardList({
   foundMovies,
   notFoundMovies,
   errorFoundMovies,
-  startingItems,
-  selectedFilms,
-  setSelectedFilms,
+  startItems,
+  savedFilms,
+  setSavedFilms,
   shortFilms,
-  isChecked,
+  checkedShort,
+  setIsInfoTooltipOpen,
+  setInfoTooltipMessage,
+  foundSavedMovies,
 }) {
   const { pathname } = useLocation();
 
   const movieFoundItems = () => {
-    if (isChecked) {
-      return shortFilms.slice(0, startingItems).map((movieItem) => {
+    if (checkedShort) {
+      return shortFilms.slice(0, startItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
           key={movieItem.id} />
       });
     } else {
-      return foundMovies.slice(0, startingItems).map((movieItem) => {
+      return foundMovies.slice(0, startItems).map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
           key={movieItem.id} />
       });
     }
   }
 
   const movieSavedItems = () => {
-    if (selectedFilms[0]) {
-      return selectedFilms.map((movieItem) => {
+    if (savedFilms[0]) {
+      return foundSavedMovies.map((movieItem) => {
         return <MoviesCard
           movie={movieItem}
-          selectedFilms={selectedFilms}
-          setSelectedFilms={setSelectedFilms}
+          savedFilms={savedFilms}
+          setSavedFilms={setSavedFilms}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
           key={movieItem.movieId} />
       })
     }

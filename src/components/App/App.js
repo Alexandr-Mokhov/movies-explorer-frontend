@@ -14,6 +14,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
 import { checkToken } from '../../utils/MainApi';
 import { getSavedMovies } from '../../utils/MainApi';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import { MOVIE_DOWNLOAD_ERROR, TOKEN_VERIFICATION_ERROR } from '../../constans';
 import './App.css';
 
 export default function App() {
@@ -21,11 +23,14 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '', ownerId: '' });
-  const [selectedFilms, setSelectedFilms] = useState([]);
+  const [savedFilms, setSavedFilms] = useState([]);
   const [movies, setMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [notFoundMovies, setNotFoundMovies] = useState(false);
   const [isTokenChecked, setIsTokenChecked] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
+  const [checkedShort, setCheckedShort] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -36,10 +41,12 @@ export default function App() {
     if (loggedIn) {
       getSavedMovies()
         .then((res) => {
-          setSelectedFilms(res.filter(movie => movie.owner === currentUser.ownerId));
+          setSavedFilms(res.filter(movie => movie.owner === currentUser.ownerId));
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage(MOVIE_DOWNLOAD_ERROR);
         })
     }
   }, [isTokenChecked]);
@@ -71,6 +78,8 @@ export default function App() {
         })
         .catch((err) => {
           console.log(err);
+          setIsInfoTooltipOpen(true);
+          setInfoTooltipMessage(TOKEN_VERIFICATION_ERROR);
         });
     }
   }
@@ -82,16 +91,30 @@ export default function App() {
     localStorage.removeItem('movieSearchText');
     localStorage.removeItem('shortFilms');
     localStorage.removeItem('foundMovies');
-    localStorage.removeItem('isCheckedShortFilms');
+    localStorage.removeItem('checkedShort');
     localStorage.removeItem('ownerId');
     setLoggedIn(false);
     setCurrentUser({ name: '', email: '', ownerId: '' });
-    setSelectedFilms([]);
+    setSavedFilms([]);
     setMovies([]);
     setFoundMovies([]);
     setNotFoundMovies(false);
     setIsTokenChecked(false);
     navigate('/', { replace: true });
+  }
+
+  function handleNotFoundMovies(shortList, foundList) {
+    if (movies[0]) {
+      if (checkedShort) {
+        shortList.length === 0 ?
+          setNotFoundMovies(true) :
+          setNotFoundMovies(false);
+      } else {
+        foundList.length === 0 ?
+          setNotFoundMovies(true) :
+          setNotFoundMovies(false);
+      }
+    }
   }
 
   return (
@@ -121,24 +144,31 @@ export default function App() {
             <ProtectedRouteElement
               element={Movies}
               loggedIn={loggedIn}
-              selectedFilms={selectedFilms}
-              setSelectedFilms={setSelectedFilms}
+              savedFilms={savedFilms}
+              setSavedFilms={setSavedFilms}
               foundMovies={foundMovies}
               setFoundMovies={setFoundMovies}
               movies={movies}
               setMovies={setMovies}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
+              setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+              setInfoTooltipMessage={setInfoTooltipMessage}
+              handleNotFoundMovies={handleNotFoundMovies}
+              checkedShort={checkedShort}
+              setCheckedShort={setCheckedShort}
             />}
           />
           <Route path="/saved-movies" element={
             <ProtectedRouteElement
               element={SavedMovies}
               loggedIn={loggedIn}
-              selectedFilms={selectedFilms}
-              setSelectedFilms={setSelectedFilms}
+              savedFilms={savedFilms}
+              setSavedFilms={setSavedFilms}
               notFoundMovies={notFoundMovies}
               setNotFoundMovies={setNotFoundMovies}
+              setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+              setInfoTooltipMessage={setInfoTooltipMessage}
             />}
           />
           <Route path="/profile" element={
@@ -154,6 +184,12 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          infoTooltipMessage={infoTooltipMessage}
+          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+          setInfoTooltipMessage={setInfoTooltipMessage}
+        />
       </CurrentUserContext.Provider>
     </div>
   );

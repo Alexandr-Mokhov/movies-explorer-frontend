@@ -1,8 +1,17 @@
 import { Link } from 'react-router-dom';
 import './Form.css';
 
-export default function Form({ children, name, buttonText, onSubmit, isLoading, isDisabledButton, errorText }) {
-
+export default function Form({
+  children,
+  name,
+  buttonText,
+  onSubmit,
+  isLoading,
+  isDisabledButton,
+  errorText
+}) {
+  const isRegister = name === 'register';
+  
   return (
     <form className="form" onSubmit={onSubmit} name={name} noValidate>
       <div className="form__container">
@@ -18,12 +27,12 @@ export default function Form({ children, name, buttonText, onSubmit, isLoading, 
           {buttonText}
         </button>
         <p className="form__login">
-          {name === 'register' ? 'Уже зарегистрированы? ' : 'Еще не зарегистрированы? '}
+          {isRegister ? 'Уже зарегистрированы? ' : 'Еще не зарегистрированы? '}
           <Link
             className="form__login-link"
-            to={name === 'register' ? '/sign-in' : '/sign-up'}
+            to={isRegister ? '/sign-in' : '/sign-up'}
           >
-            {name === 'register' ? 'Войти' : 'Регистрация'}
+            {isRegister ? 'Войти' : 'Регистрация'}
           </Link>
         </p>
       </div>

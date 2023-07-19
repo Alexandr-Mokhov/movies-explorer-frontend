@@ -3,10 +3,13 @@ import './Footer.css';
 
 export default function Footer() {
   const { pathname } = useLocation();
+  const isMain = pathname === '/';
+  const isMovies = pathname === '/movies';
+  const isSavedMovies = pathname === '/saved-movies';
 
   return (
     <>
-      {pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" ?
+      {isMain || isMovies || isSavedMovies ?
         <footer className="footer">
           <div className="footer__container">
             <p className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</p>

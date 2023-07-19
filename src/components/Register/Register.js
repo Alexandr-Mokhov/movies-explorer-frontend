@@ -3,10 +3,20 @@ import { useState } from 'react';
 import Form from '../Form/Form';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
-import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
-import './Register.css';
+import handleError from '../../utils/handleError';
+import {
+  DEFAULT_ERROR,
+  NAME_RULE,
+  EMAIL_RULE,
+} from '../../constans';
+import '../Login/Login.css';
 
-export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurrentUser }) {
+export default function Register({
+  setLoggedIn,
+  isLoading,
+  setIsLoading,
+  setCurrentUser
+}) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
   const [errorText, setErrorText] = useState('');
@@ -47,14 +57,8 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
           })
       })
       .catch((err) => {
-        if (err === CONFLICTING_REQUEST_ERROR) {
-          setErrorText('Пользователь с таким email уже существует.');
-        } else if (err === INTERNAL_SERVER_ERROR) {
-          setErrorText('500 На сервере произошла ошибка.');
-        } else {
-          setErrorText('При регистрации пользователя произошла ошибка.');
-        }
-        console.log(err);
+        const page = 'register';
+        setErrorText(handleError(err, page));
       })
       .finally(() => {
         setIsLoading(false);
@@ -62,10 +66,10 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
   }
 
   return (
-    <main className="register">
-      <section className="register__container">
-        <Link className="register__link" to="/"><div className="register__logo" /></Link>
-        <h1 className="register__title">Добро пожаловать!</h1>
+    <main className="auth">
+      <section className="auth__container">
+        <Link className="auth__link" to="/"><div className="auth__logo" /></Link>
+        <h1 className="auth__title">Добро пожаловать!</h1>
         <Form
           name={"register"}
           buttonText={isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
@@ -82,13 +86,16 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
             type="text"
             placeholder="Ваше имя"
             required
+            minLength="2"
             maxLength="45"
             value={values['name'] || ''}
             onChange={handleChange}
             autoComplete="off"
-            pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
+            pattern="[a-zA-Zа-яёА-ЯЁ\-\s]+"
           />
-          <span className="form__input-error">{errors['name']}</span>
+          <span className="form__input-error">
+            {errors['name'] === DEFAULT_ERROR ? NAME_RULE : errors['name']}
+          </span>
           <label className="form__label" htmlFor="input-email">E-mail</label>
           <input
             id="input-email"
@@ -102,7 +109,9 @@ export default function Register({ setLoggedIn, isLoading, setIsLoading, setCurr
             autoComplete="off"
             pattern=".+@.+\.[a-z]{2,}"
           />
-          <span className="form__input-error">{errors['email']}</span>
+          <span className="form__input-error">
+            {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}
+          </span>
           <label className="form__label" htmlFor="input-password">Пароль</label>
           <input
             id="input-password"

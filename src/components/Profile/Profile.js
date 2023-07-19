@@ -3,7 +3,12 @@ import { useContext, useEffect, useState } from 'react';
 import { useFormWithValidation } from '../../utils/formValidator';
 import { updateUserInfo } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { CONFLICTING_REQUEST_ERROR, INTERNAL_SERVER_ERROR } from '../../constans';
+import handleError from '../../utils/handleError';
+import {
+  DEFAULT_ERROR,
+  NAME_RULE,
+  EMAIL_RULE,
+} from '../../constans';
 import './Profile.css';
 
 export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSignOut }) {
@@ -53,14 +58,8 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
         }
       })
       .catch((err) => {
-        if (err === CONFLICTING_REQUEST_ERROR) {
-          setNotificationText('Пользователь с таким email уже существует.');
-        } else if (err === INTERNAL_SERVER_ERROR) {
-          setNotificationText('500 На сервере произошла ошибка.');
-        } else {
-          setNotificationText('При обновлении профиля произошла ошибка.');
-        }
-        console.log(err);
+        const page = 'profile';
+        setNotificationText(handleError(err, page));
       })
       .finally(() => {
         setIsLoading(false);
@@ -83,15 +82,18 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
                 type="text"
                 placeholder="Ваше имя"
                 required
+                minLength="2"
                 maxLength="45"
                 value={profileEdit ? values['name'] : currentUser.name || ''}
                 onChange={handleChange}
                 autoComplete="off"
                 disabled={!profileEdit}
-                pattern="[a-zA-Zа-яёА-ЯЁ\-\s]{2,45}"
+                pattern="[a-zA-Zа-яёА-ЯЁ\-\s]+"
               />
             </div>
-            <span className="profile__input-error">{errors['name']}</span>
+            <span className="profile__input-error">
+              {errors['name'] === DEFAULT_ERROR ? NAME_RULE : errors['name']}
+            </span>
             <div className="profile__inputs-container">
               <label className="profile__label" htmlFor="input-email">E-mail</label>
               <input
@@ -108,12 +110,20 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
                 pattern=".+@.+\.[a-z]{2,}"
               />
             </div>
-            <span className="profile__input-error">{errors['email']}</span>
+            <span className="profile__input-error">
+              {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}  
+            </span>
           </div>
           {profileEdit && <div className="profile__profile-edit">
-            <span className="profile__notification profile__notification_type_error">{notificationText}</span>
+            <span className="profile__notification profile__notification_type_error">
+              {notificationText}
+            </span>
             <button
-              className={`profile__button profile__button_type_save profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`}
+              className={
+                `profile__button 
+                profile__button_type_save 
+                profile__button_type_${isLoading || !isValid || isMatches ? 'inactive' : 'active'}`
+              }
               type="submit"
               disabled={isLoading || !isValid || isMatches}
             >

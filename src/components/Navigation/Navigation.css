@@ -143,7 +143,7 @@
 
   .navigation__links {
     flex-direction: column;
-    margin: 156px 0 0;
+    margin: 15.3vh 0 0;
   }
 
   .navigation__link {
@@ -165,7 +165,7 @@
   }
 
   .navigation__account {
-    margin: 40px 0 90px;
+    margin: 4vh 0 9vh;
     line-height: 16px;
     align-items: center;
   }
@@ -206,7 +206,7 @@
   }
 
   .navigation__links {
-    margin: 142px 0 0;
+    margin: 18.3vh 0 0;
   }
 
   .navigation__link {
@@ -215,6 +215,6 @@
   }
 
   .navigation__account {
-    margin: 40px 0 50px;
+    margin: 4vh 0 6.2vh;
   }
 }
