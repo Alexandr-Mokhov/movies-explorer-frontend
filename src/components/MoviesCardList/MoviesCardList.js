@@ -17,41 +17,28 @@ export default function MoviesCardList({
 }) {
   const { pathname } = useLocation();
 
+  function createMovieCard(movie) {
+    return <MoviesCard
+      movie={movie}
+      savedFilms={savedFilms}
+      setSavedFilms={setSavedFilms}
+      setIsInfoTooltipOpen={setIsInfoTooltipOpen}
+      setInfoTooltipMessage={setInfoTooltipMessage}
+      key={movie.id}
+    />
+  }
+
+  function createMovieList(list) {
+    return list.slice(0, startItems).map((movieItem) => createMovieCard(movieItem));
+  }
+
   const movieFoundItems = () => {
-    if (checkedShort) {
-      return shortFilms.slice(0, startItems).map((movieItem) => {
-        return <MoviesCard
-          movie={movieItem}
-          savedFilms={savedFilms}
-          setSavedFilms={setSavedFilms}
-          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
-          setInfoTooltipMessage={setInfoTooltipMessage}
-          key={movieItem.id} />
-      });
-    } else {
-      return foundMovies.slice(0, startItems).map((movieItem) => {
-        return <MoviesCard
-          movie={movieItem}
-          savedFilms={savedFilms}
-          setSavedFilms={setSavedFilms}
-          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
-          setInfoTooltipMessage={setInfoTooltipMessage}
-          key={movieItem.id} />
-      });
-    }
+    return checkedShort ? createMovieList(shortFilms) : createMovieList(foundMovies);
   }
 
   const movieSavedItems = () => {
     if (savedFilms[0]) {
-      return foundSavedMovies.map((movieItem) => {
-        return <MoviesCard
-          movie={movieItem}
-          savedFilms={savedFilms}
-          setSavedFilms={setSavedFilms}
-          setIsInfoTooltipOpen={setIsInfoTooltipOpen}
-          setInfoTooltipMessage={setInfoTooltipMessage}
-          key={movieItem.movieId} />
-      })
+      return foundSavedMovies.map((movieItem) => createMovieCard(movieItem));
     }
   }
 
