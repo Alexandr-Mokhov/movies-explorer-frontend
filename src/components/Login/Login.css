@@ -49,7 +49,7 @@
 @media screen and (max-width: 500px) {
   .auth {
     padding: 0 30px;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
   
   .auth__container {
@@ -58,11 +58,11 @@
   }
 
   .auth__logo {
-    margin-top: min(25px, 3vh);
+    margin-top: min(35px, 4.5dvh);
   }
 
   .auth__title {
-    margin: clamp(20px, 7vh, 50px) 0 clamp(20px, 10.5vh, 82px);
+    margin: clamp(20px, 7dvh, 50px) 0 clamp(20px, 10.5dvh, 82px);
     text-align: center;
   }
 }
