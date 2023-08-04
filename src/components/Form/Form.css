@@ -124,7 +124,7 @@
   }
 
   .form__container {
-    min-height: clamp(140px, 47dvh, 400px);
+    min-height: clamp(205px, calc(100dvh - 413px), 400px);
   }
 
   .form__buttons-container {

@@ -79,7 +79,7 @@
 .profile__profile-edit {
   display: flex;
   flex-direction: column;
-  margin: 0.5vh 0 0;
+  margin: 0.5vh 0 10px;
 }
 
 .profile__notification {
@@ -103,7 +103,7 @@
 .profile__buttons {
   display: flex;
   flex-direction: column;
-  margin: 0.5vh 0 0;
+  margin: 0.5vh 0 10px;
 }
 
 .profile__button {
@@ -160,43 +160,32 @@
   .profile__form-container {
     margin-bottom: 7.5vh;
   }
-
-  /* .profile__profile-edit {
-    margin: 0.3vh 0 0;
-  } */
-
-  /* .profile__buttons {
-    margin: 0.3vh 0 0;
-  } */
 }
 
 @media screen and (max-width: 500px) {
   .profile {
     padding: 0 30px;
+    min-height: calc(100dvh - 74px);
   }
 
   .profile__form {
-    min-height: clamp(100px, 78vh, 650px);
+    min-height: clamp(100px, 79dvh, 650px);
     margin-bottom: 0;
-    margin-top: 2.7vh;
+    margin-top: 3.7dvh;
     width: 100%;
   }
 
   .profile__form-container {
-    margin-bottom: min(36.5vh, 320px);
+    margin-bottom: clamp(20px, calc(100dvh - 374px), 280px);
   }
 
   .profile__title {
-    margin: 1.3vh 0 clamp(10px, 4vh, 25px);
+    margin: 1.3vh 0 clamp(10px, 4dvh, 25px);
   }
 
   .profile__inputs-container {
     width: 100%;
   }
-
-  /* .profile__buttons {
-    margin: 0.5vh 0 0;
-  } */
 
   .profile__button {
     font-size: 12px;
