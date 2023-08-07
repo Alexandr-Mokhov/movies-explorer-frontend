@@ -17,19 +17,19 @@ export default function MoviesCardList({
 }) {
   const { pathname } = useLocation();
 
-  function createMovieCard(movie) {
+  function createMovieCard(movie, id) {
     return <MoviesCard
       movie={movie}
       savedFilms={savedFilms}
       setSavedFilms={setSavedFilms}
       setIsInfoTooltipOpen={setIsInfoTooltipOpen}
       setInfoTooltipMessage={setInfoTooltipMessage}
-      key={movie.id}
+      key={id}
     />
   }
 
   function createMovieList(list) {
-    return list.slice(0, startItems).map((movieItem) => createMovieCard(movieItem));
+    return list.slice(0, startItems).map((movieItem) => createMovieCard(movieItem, movieItem.id));
   }
 
   const movieFoundItems = () => {
@@ -38,7 +38,7 @@ export default function MoviesCardList({
 
   const movieSavedItems = () => {
     if (savedFilms[0]) {
-      return foundSavedMovies.map((movieItem) => createMovieCard(movieItem));
+      return foundSavedMovies.map((movieItem) => createMovieCard(movieItem, movieItem.movieId));
     }
   }
 
