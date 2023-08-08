@@ -4,10 +4,7 @@ import { useFormWithValidation } from '../../utils/formValidator';
 import Form from '../Form/Form';
 import { authorizeUser } from '../../utils/MainApi';
 import handleError from '../../utils/handleError';
-import {
-  DEFAULT_ERROR,
-  EMAIL_RULE,
-} from '../../constans';
+import { EMAIL_RULE } from '../../constans';
 import './Login.css';
 
 export default function Login({
@@ -16,7 +13,7 @@ export default function Login({
   setIsLoading
 }) {
   const navigate = useNavigate();
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid, resetForm, isRegEx } = useFormWithValidation();
   const [errorText, setErrorText] = useState('');
 
   function handleSubmit(evt) {
@@ -75,7 +72,7 @@ export default function Login({
             pattern=".+@.+\.[a-z]{2,}"
           />
           <span className="form__input-error">
-            {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}
+            {errors['email'] && !isRegEx['email'] && values['email'] ? EMAIL_RULE : errors['email']}
           </span>
           <label className="form__label" htmlFor="input-password">Пароль</label>
           <input
