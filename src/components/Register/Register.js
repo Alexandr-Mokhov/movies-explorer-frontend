@@ -5,7 +5,6 @@ import { useFormWithValidation } from '../../utils/formValidator';
 import { registerUser, authorizeUser } from '../../utils/MainApi';
 import handleError from '../../utils/handleError';
 import {
-  DEFAULT_ERROR,
   NAME_RULE,
   EMAIL_RULE,
 } from '../../constans';
@@ -18,7 +17,7 @@ export default function Register({
   setCurrentUser
 }) {
   const navigate = useNavigate();
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid, resetForm, isRegEx } = useFormWithValidation();
   const [errorText, setErrorText] = useState('');
 
   function handleSubmit(evt) {
@@ -94,7 +93,7 @@ export default function Register({
             pattern="[a-zA-Zа-яёА-ЯЁ\-\s]+"
           />
           <span className="form__input-error">
-            {errors['name'] === DEFAULT_ERROR ? NAME_RULE : errors['name']}
+            {errors['name'] && !isRegEx['name'] && values['name'] ? NAME_RULE : errors['name']}
           </span>
           <label className="form__label" htmlFor="input-email">E-mail</label>
           <input
@@ -110,7 +109,7 @@ export default function Register({
             pattern=".+@.+\.[a-z]{2,}"
           />
           <span className="form__input-error">
-            {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}
+            {errors['email'] && !isRegEx['email'] && values['email'] ? EMAIL_RULE : errors['email']}
           </span>
           <label className="form__label" htmlFor="input-password">Пароль</label>
           <input

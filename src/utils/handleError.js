@@ -8,16 +8,16 @@ import {
 export default function handleError(err, page) {
   console.log(err);
   if (err === CONFLICTING_REQUEST_ERROR) {
-    return 'Пользователь с таким email уже существует.';
+    return 'Пользователь с таким E-mail уже существует.';
   } else if (err === INTERNAL_SERVER_ERROR) {
     return '500 На сервере произошла ошибка.';
   } else if (err === AUTHORISATION_ERROR) {
     return 'Вы ввели неправильный логин или пароль.';
   } else if (err === BAD_REQUEST_ERROR) {
-    return 'При авторизации произошла ошибка. Токен не передан или передан не в том формат.';
+    return 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.';
   } else {
     if (page === 'register') {
-      return 'При регистрации пользователя произошла ошибка.';
+      return 'При регистрации на сервере произошла ошибка.';
     } else if (page === 'login') {
       return 'При авторизации на сервере произошла ошибка.';
     } else if (page === 'profile') {
