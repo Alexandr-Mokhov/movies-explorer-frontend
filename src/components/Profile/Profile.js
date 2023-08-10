@@ -5,7 +5,6 @@ import { updateUserInfo } from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import handleError from '../../utils/handleError';
 import {
-  DEFAULT_ERROR,
   NAME_RULE,
   EMAIL_RULE,
 } from '../../constans';
@@ -14,7 +13,7 @@ import './Profile.css';
 export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSignOut }) {
   const [profileEdit, setProfileEdit] = useState(false);
   const [isMatches, setIsMatches] = useState(true);
-  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const { values, handleChange, errors, isValid, isRegEx } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
   const [notificationText, setNotificationText] = useState('');
 
@@ -92,7 +91,7 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
               />
             </div>
             <span className="profile__input-error">
-              {errors['name'] === DEFAULT_ERROR ? NAME_RULE : errors['name']}
+              {errors['name'] && !isRegEx['name'] && values['name'] ? NAME_RULE : errors['name']}
             </span>
             <div className="profile__inputs-container">
               <label className="profile__label" htmlFor="input-email">E-mail</label>
@@ -111,7 +110,7 @@ export default function Profile({ isLoading, setIsLoading, setCurrentUser, onSig
               />
             </div>
             <span className="profile__input-error">
-              {errors['email'] === DEFAULT_ERROR ? EMAIL_RULE : errors['email']}  
+              {errors['email'] && !isRegEx['email'] && values['email'] ? EMAIL_RULE : errors['email']}  
             </span>
           </div>
           {profileEdit && <div className="profile__profile-edit">

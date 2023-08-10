@@ -16,7 +16,6 @@ export const AUTHORISATION_ERROR = 401;
 export const BAD_REQUEST_ERROR = 400;
 export const INTERNAL_SERVER_ERROR = 500;
 export const CONFLICTING_REQUEST_ERROR = 409;
-export const DEFAULT_ERROR = 'Введите данные в указанном формате.';
 export const NAME_RULE = 'Имя может содержать латиницу, кириллицу, пробел и дефис. Длина от 2 до 45 символов.';
 export const EMAIL_RULE = 'E-mail должен быть в формате "mail@domain.ru"';
 export const MOVIE_DOWNLOAD_ERROR = 'Сбой! Фильмы не загружены с сервера. Попробуйте позже.';
