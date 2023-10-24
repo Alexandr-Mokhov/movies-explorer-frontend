@@ -128,7 +128,7 @@
 
   .navigation__button-menu_type_light {
     background-image: url(../../images/button-menu-open-light.svg);
-    background-color: #073042;
+    background-color: #000;
   }
 
   .navigation__button-menu_type_close {
