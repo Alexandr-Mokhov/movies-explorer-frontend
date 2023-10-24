@@ -12,17 +12,11 @@ export default function Footer() {
       {isMain || isMovies || isSavedMovies ?
         <footer className="footer">
           <div className="footer__container">
-            <p className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</p>
             <div className="footer__info">
-              <p className="footer__copyright">&copy; {new Date().getFullYear()}</p>
+              <p className="footer__copyright">&copy; {new Date().getFullYear()} Киноман. Александр Мохов</p>
               <ul className="footer__links">
                 <li className="footer__list">
-                  <a className="footer__link" href="https://practicum.yandex.ru/" target="_blank" rel="noreferrer">
-                    Яндекс.Практикум
-                  </a>
-                </li>
-                <li className="footer__list">
-                  <a className="footer__link" href="https://github.com/" target="_blank" rel="noreferrer">
+                  <a className="footer__link" href="https://github.com/Alexandr-Mokhov" target="_blank" rel="noreferrer">
                     Github
                   </a>
                 </li>
